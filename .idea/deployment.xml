@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" persistUploadOnCheckin="false" />
+  <component name="PublishConfigData" serverName="Kark" uploadOnCheckin="4070dac6-7692-4fb5-b171-13a9c95c637d">
+    <serverData>
+      <paths name="Kark">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/webapplikasjoner/cobal" local="$PROJECT_DIR$" web="/~530241/webapplikasjoner/cobal" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myUploadOnCheckinName" value="Kark" />
+  </component>
 </project>
