@@ -111,7 +111,7 @@ class User {
         try{
 
             //Generere saltet
-            $salt = generateSalt();
+            $salt = USER::generateSalt();
 
             $stmt = $db->prepare("INSERT INTO 'USER' (EMAIL, PWD_HASH, SALT, USERNAME) VALUES (?, ?, ?, ?)");
             //Binder parametrene og lager passord hashen
@@ -131,7 +131,7 @@ class User {
      * Genererer et salt på 15 karakterer
      * @return string
      */
-    function generateSalt() {
+     private static function generateSalt() {
         //Lengden på saltet
         $max = 15;
         //De forskjellige karakterene saltet kan bestå av
