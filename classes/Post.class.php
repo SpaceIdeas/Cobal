@@ -57,6 +57,10 @@ class Post {
         }
     }
 
+    public function getAuthorName(PDO $db) {
+        User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
+    }
+
     public static function  getPost(PDO $db, $id) {
         $statement = $db->prepare("SELECT * FROM POST WHERE ID = ?");
         $statement->bindParam(1, $id);

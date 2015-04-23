@@ -40,6 +40,10 @@ class Comment {
         $this->POST_ID;
     }
 
+    public function getAuthorName(PDO $db) {
+        User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
+    }
+
     public function addToDB(PDO $db) {
         try
         {
