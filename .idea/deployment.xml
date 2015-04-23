@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="Kark" persistUploadOnCheckin="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Kark" persistUploadOnCheckin="false">
     <serverData>
       <paths name="Kark">
         <serverdata>
           <mappings>
-            <mapping deploy="/public_html/PHP/Cobal" local="$PROJECT_DIR$" web="/~530477/PHP/Cobal" />
+            <mapping deploy="webapplikasjoner/cobal" local="$PROJECT_DIR$" web="/~530241/webapplikasjoner/cobal" />
           </mappings>
         </serverdata>
       </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
