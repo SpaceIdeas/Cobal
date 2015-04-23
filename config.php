@@ -6,5 +6,5 @@
  * Time: 11:29
  */
 function __autoload($class) {
-    require_once("classes" .  DIRECTORY_SEPARATOR . "$class.class.php");
+    require_once(_DIR_ . 'classes' .  DIRECTORY_SEPARATOR . $class . 'class.php');
 }
