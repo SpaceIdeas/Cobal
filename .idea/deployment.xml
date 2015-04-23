@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Kark" persistUploadOnCheckin="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Kark" uploadOnCheckin="6d6bed3e-9205-4f82-8fe6-bd3c1b02ac08">
     <serverData>
       <paths name="Kark">
         <serverdata>
@@ -9,7 +9,15 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="XAMPP">
+        <serverdata>
+          <mappings>
+            <mapping deploy="Cobal" local="$PROJECT_DIR$" web="/php/Cobal" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="Kark" />
     <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

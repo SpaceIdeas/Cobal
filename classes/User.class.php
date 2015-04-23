@@ -66,7 +66,6 @@ class User {
         }
     }
 
-/** TODO: sammenligner hashen i databasen */
     /**
      * Logger en bruker på siden
      * @param $db
@@ -75,7 +74,7 @@ class User {
      * @return bool
      * @throws Exception
      */
-    public static function login($db, $email, $password) {
+    public static function login(PDO $db, $email, $password) {
         try{
             $stmt = $db->prepare("SELECT EMAIL, PWD_HASH, SALT, USERNAME FROM 'USER' WHERE EMAIL = ?");
             $stmt->bindParam(1, $email);
@@ -108,7 +107,7 @@ class User {
      * @return bool
      * @throws Exception
      */
-    public static function registerUser($db, $email, $password, $username) {
+    public static function registerUser(PDO $db, $email, $password, $username) {
         try{
 
             //Generere saltet
