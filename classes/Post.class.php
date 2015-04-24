@@ -13,11 +13,12 @@ class Post {
     private $AUTHOR_EMAIL;
     private $TIME_CREATED;
 
+    /*
     public function __construct($title, $text, $authorEmail) {
         $this->TITLE = $title;
         $this->TEXT = $text;
         $this->AUTHOR_EMAIL = $authorEmail;
-    }
+    } */
 
     public function getID() {
         return $this->ID;

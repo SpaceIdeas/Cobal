@@ -11,6 +11,6 @@ require_once('db.php');
 require_once('index.php');
 
 $smarty = new Smarty();
-$smarty->assign('posts', Post::getAllPosts($db));
+$smarty->assign('posts', Post::getAllPosts(Database::getDatabase()));
+$smarty->assign('db', Database::getDatabase());
 $smarty->display('index.tpl');
-$smarty->display('postPreview.tpl');
