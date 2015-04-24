@@ -19,4 +19,3 @@
     {
         throw new Exception($e->getMessage(), $e->getCode);
     }
-?>
