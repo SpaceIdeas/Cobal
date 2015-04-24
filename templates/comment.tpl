@@ -2,6 +2,7 @@
     <div class="panel-heading">
         <h4 class="panel-title">Klokken {$comment->getTimeCreated($db)} kommenterte {$comment->getAuthorName($db)}
             {if $comment->getAuthorEmail() eq $post->getAuthorEmail()}
+                cla
                 (forfatter)
             {/if}
             :
