@@ -82,4 +82,8 @@ class Post {
     public function getComments(PDO $db) {
         return Comment::getCommentsByPost($db, $this);
     }
+
+    public function getCommentCount(PDO $db) {
+        return Comment::getCommentsByPost($db, $this);
+    }
 }

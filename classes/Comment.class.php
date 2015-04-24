@@ -64,4 +64,11 @@ class Comment {
         }
         return $comments;
     }
+
+    public static function  getCommentCountByPost(PDO $db, Post $post) {
+        $statement = $db->prepare("SELECT COUNT(ID) FROM COMMENT WHERE POST_ID = ?");
+        $statement->bindParam(1, $post->getID());
+        $statement->execute();
+        return $statement->fetch();
+    }
 }
