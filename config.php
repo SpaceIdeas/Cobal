@@ -5,6 +5,25 @@
  * Date: 23.04.2015
  * Time: 11:29
  */
-function __autoload($class) {
-    require_once(_DIR_ . 'classes' .  DIRECTORY_SEPARATOR . $class . 'class.php');
+
+
+
+
+spl_autoload_extensions('.class.php');
+
+function classLoader($class){
+    $filename = $class . '.class.php';
+    $file ='classes'. DIRECTORY_SEPARATOR . $filename;
+    if (!file_exists($file))
+    {
+        return false;
+    }
+
+    include $file;
 }
+
+spl_autoload_register('classLoader');
+/*
+function __autoload($class) {
+    include ('classes/' . $class . '.class.php');
+} */
