@@ -10,6 +10,10 @@
         <a href="post.php?id={$post->getID()}" class="btn btn-default" role="button" aria-label="Left Align">
             <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
         </a>
-        {$post->getCommentCount($db)} kommentar(er)
+        {if $post->getCommentCount($db) gt 1}
+        {$post->getCommentCount($db)} kommentarer)
+        {else}
+            En kommentar
+        {/if}
     </div>
 </div>
