@@ -52,7 +52,7 @@ class User {
      */
     public static function getUsernameFromDB(PDO $db, $email){
         try{
-            $stmt = $db->prepare("SELECT USERNAME FROM 'USER' WHERE EMAIL = ?");
+            $stmt = $db->prepare("SELECT USERNAME FROM USER WHERE EMAIL = ?");
             $stmt->bindParam(1, $email);
             $stmt->execute();
             if ($row = $stmt->fetch() )
@@ -76,18 +76,19 @@ class User {
      */
     public static function login(PDO $db, $email, $password) {
         try{
-            $stmt = $db->prepare("SELECT EMAIL, PWD_HASH, SALT, USERNAME FROM 'USER' WHERE EMAIL = ?");
+            $stmt = $db->prepare("SELECT EMAIL, PWD_HASH, SALT, USERNAME FROM USER WHERE EMAIL = ?");
             $stmt->bindParam(1, $email);
             $stmt->execute();
             if ($row = $stmt->fetch() )
             {
-                $hashpassord = $row["PWS_HASH"];
+                $hashpassord = $row["PWD_HASH"];
                 $salt = $row["SALT"];
-                if($hashpassord == sha1($password + $salt)){
+                if($hashpassord == sha1($password . $salt)){
                     $_SESSION['loggedin'] = true;
                     $_SESSION['user'] = new User($email , $row["USERNAME"]);
                     return true;
                 }
+                $result = sha1($password + $salt);
             }else {
                 return false;
             }
@@ -113,7 +114,7 @@ class User {
             //Generere saltet
             $salt = USER::generateSalt();
 
-            $stmt = $db->prepare("INSERT INTO 'USER' (EMAIL, PWD_HASH, SALT, USERNAME) VALUES (?, ?, ?, ?)");
+            $stmt = $db->prepare("INSERT INTO USER (EMAIL, PWD_HASH, SALT, USERNAME) VALUES (?, ?, ?, ?)");
             //Binder parametrene og lager passord hashen
             //$stmt->bindParam(array($email, sha1($password . $salt),$salt, $username);
             $result = $stmt->execute(array($email, sha1($password . $salt), $salt, $username));
