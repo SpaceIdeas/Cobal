@@ -19,6 +19,5 @@
         </form>
     </div>
 </div>
-<p>Logg inn med email: "admin@adminhaven.edu" & password: "adminpassord"</p>
 {include file="footer.tpl"}
 
