@@ -115,8 +115,8 @@ class User {
 
             $stmt = $db->prepare("INSERT INTO 'USER' (EMAIL, PWD_HASH, SALT, USERNAME) VALUES (?, ?, ?, ?)");
             //Binder parametrene og lager passord hashen
-            $stmt->bindParam(1, $email, 2, sha1($password . $salt), 3, $salt, 4, $username);
-            $result = $stmt->execute();
+            //$stmt->bindParam(array($email, sha1($password . $salt),$salt, $username);
+            $result = $stmt->execute(array($email, sha1($password . $salt), $salt, $username));
             //Returnerer om INSERT setningen var vellykket
             return $result;
 
