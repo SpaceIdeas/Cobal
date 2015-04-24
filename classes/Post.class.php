@@ -40,9 +40,6 @@ class Post {
         return $this->TIME_CREATED;
     }
 
-    public function getAuthorUsername(PDO $db) {
-        //return dbConnection::getAuthorName($this->AUTHOR_EMAIL);
-    }
 
     public function getShortText() {
         return substr($this->TEXT, 0, 150) . '...';
@@ -59,7 +56,7 @@ class Post {
     }
 
     public function getAuthorName(PDO $db) {
-        User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
+        return User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
     }
 
     public static function  getPost(PDO $db, $id) {
@@ -84,6 +81,6 @@ class Post {
     }
 
     public function getCommentCount(PDO $db) {
-        return Comment::getCommentsByPost($db, $this);
+        return Comment::getCommentCount($db, $this);
     }
 }

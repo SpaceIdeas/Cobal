@@ -10,5 +10,6 @@
         <a href="post.php?id={$post->getID()}" class="btn btn-default" role="button" aria-label="Left Align">
             <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
         </a>
+        {$post->getCommentCount($db)} kommentar(er)
     </div>
 </div>

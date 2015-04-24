@@ -14,7 +14,11 @@ if ($_GET ['id']) {
     $post = Post::getPost($db, ( int ) $_GET ['id']);
     if (isset($post)) {
         $smarty->assign('post', $post);
-        $smarty->assign('comments', $post->getComments());
+        $comments = $post->getComments($db, $post);
+        $smarty->assign('comments', $post->getComments($db));
+        $smarty->display('post.tpl');
+    }
+    else {
+
     }
 }
-$smarty->display('post.tpl');

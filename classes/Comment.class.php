@@ -13,35 +13,37 @@ class Comment {
     private $TIME_CREATED;
     private $POST_ID;
 
+    /*
     public function __construct($title, $text, $authorEmail, $postID) {
         $this->TITLE = $title;
         $this->TEXT = $text;
         $this->AUTHOR_EMAIL = $authorEmail;
         $this->$POST_ID = $postID;
     }
+    */
 
     public function getID(){
     $this->ID;
     }
 
     public function getText(){
-    $this->TEXT;
+    return $this->TEXT;
     }
 
     public function getAuthorEmail(){
-        $this->AUTHOR_EMAIL;
+        return $this->AUTHOR_EMAIL;
     }
 
     public function getTimeCreated(){
-        $this->TIME_CREATED;
+        return $this->TIME_CREATED;
     }
 
     public function getPostID(){
-        $this->POST_ID;
+        return $this->POST_ID;
     }
 
     public function getAuthorName(PDO $db) {
-        User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
+        return User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
     }
 
     public function addToDB(PDO $db) {
@@ -65,10 +67,10 @@ class Comment {
         return $comments;
     }
 
-    public static function  getCommentCountByPost(PDO $db, Post $post) {
+    public static function  getCommentCount(PDO $db, Post $post) {
         $statement = $db->prepare("SELECT COUNT(ID) FROM COMMENT WHERE POST_ID = ?");
         $statement->bindParam(1, $post->getID());
         $statement->execute();
-        return $statement->fetch();
+        return $statement->fetch()['COUNT(ID)'];
     }
 }
