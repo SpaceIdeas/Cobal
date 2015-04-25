@@ -83,4 +83,26 @@ class Post {
     public function getCommentCount(PDO $db) {
         return Comment::getCommentCount($db, $this);
     }
+
+    public function getNextPostID(PDO $db) {
+        return $this->ID + 1;
+    }
+
+    public function getPreviousPostID(PDO $db) {
+        return $this->ID - 1;
+    }
+
+    public function hasNextPostID(PDO $db) {
+        return true;
+    }
+
+    public function hasPreviousPostID(PDO $db) {
+        return false;
+    }
+
+
+
+
+
+
 }
