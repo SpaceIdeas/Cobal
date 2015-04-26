@@ -9,6 +9,7 @@ require_once('config.php');
 require_once('libs/Smarty.class.php');
 require_once('db.php');
 $smarty = new Smarty();
+session_start();
 if ($_GET ['id']) {
     $smarty->assign('db', $db);
     $post = Post::getPost($db, ( int ) $_GET ['id']);
@@ -17,6 +18,15 @@ if ($_GET ['id']) {
         $comments = $post->getComments($db, $post);
         $smarty->assign('comments', $post->getComments($db));
         $smarty->display('post.tpl');
+
+        if (isset($_POST['btnComment']))
+        {
+            $comment = new Comment();
+            $comment->setText($_POST['txtComment']);
+            $comment->setAuthorEmail($_SESSION['user']->getEmail());
+            $comment->setPostID($post->getID());
+            $comment->addToDB($db);
+        }
     }
     else {
 

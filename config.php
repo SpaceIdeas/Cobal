@@ -10,7 +10,6 @@
 
 
 spl_autoload_extensions('.class.php');
-
 function classLoader($class){
     $filename = $class . '.class.php';
     $file ='classes'. DIRECTORY_SEPARATOR . $filename;

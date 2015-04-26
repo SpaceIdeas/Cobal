@@ -13,14 +13,6 @@ class Comment {
     private $TIME_CREATED;
     private $POST_ID;
 
-    /*
-    public function __construct($title, $text, $authorEmail, $postID) {
-        $this->TITLE = $title;
-        $this->TEXT = $text;
-        $this->AUTHOR_EMAIL = $authorEmail;
-        $this->$POST_ID = $postID;
-    }
-    */
 
     public function getID(){
     $this->ID;
@@ -30,8 +22,16 @@ class Comment {
     return $this->TEXT;
     }
 
+    public function setText($text) {
+        $this->TEXT = $text;
+    }
+
     public function getAuthorEmail(){
         return $this->AUTHOR_EMAIL;
+    }
+
+    public function setAuthorEmail($authorEmail) {
+        $this->AUTHOR_EMAIL = $authorEmail;
     }
 
     public function getTimeCreated(){
@@ -42,6 +42,10 @@ class Comment {
         return $this->POST_ID;
     }
 
+    public function setPostID($postID) {
+        $this->POST_ID = $postID;
+    }
+
     public function getAuthorName(PDO $db) {
         return User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
     }
@@ -50,14 +54,14 @@ class Comment {
         try
         {
             $statement = $db->prepare("INSERT INTO COMMENT (TEXT, AUTHOR_EMAIL, POST_ID) VALUES (?, ?, ?)");
-            return $statement->execute(array($this->TEXT, $this->AUTHOR_EMAIL, $this->$POST_ID));
+            return $statement->execute(array($this->TEXT, $this->AUTHOR_EMAIL, $this->POST_ID));
         }catch(Exception $e) {
             return false;
         }
     }
 
     public static function  getCommentsByPost(PDO $db, Post $post) {
-        $statement = $db->prepare("SELECT * FROM COMMENT WHERE POST_ID = ?");
+        $statement = $db->prepare("SELECT * FROM COMMENT WHERE POST_ID = ? ORDER BY TIME_CREATED DESC");
         $statement->bindParam(1, $post->getID());
         $statement->execute();
         $comments = [];
