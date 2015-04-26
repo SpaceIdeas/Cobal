@@ -1,6 +1,6 @@
 {include file='header.tpl'}
 <h1>{$post->getTitle()}</h1>
-<p><b>Oprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)}</b></p>
+<p><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)}</b></p>
 <p>{$post->getText()}</p>
 {if isset($smarty.session.user)}
     <div class="panel panel-default">
