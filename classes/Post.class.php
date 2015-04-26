@@ -113,7 +113,8 @@ class Post {
     }
 
     public static function  getAllPostsWhere(PDO $db, $searchWord) {
-        $statement = $db->prepare("SELECT * FROM POST WHERE UPPER(TITLE) LIKE '%?%' OR UPPER(TEXT) LIKE '%?%' ORDER BY TIME_CREATED DESC");
+        $searchWord = "%" . $searchWord . "%";
+        $statement = $db->prepare("SELECT * FROM POST WHERE UPPER(TITLE) LIKE ? OR UPPER(TEXT) LIKE ? ORDER BY TIME_CREATED DESC");
         $statement->execute(array($searchWord, $searchWord));
         $posts = [];
         while ($post = $statement->fetchObject('Post')) {
