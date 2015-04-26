@@ -22,6 +22,7 @@
                     <li><a>Velkommen {$smarty.session.user->getUsername()}</a></li>
                     <li><a href="logout.php?return="{$smarty.server.REQUEST_URI}>Logg ut</a></li>
                 {else}
+                    <li><a href="registrerUser.php">Registrer ny bruker</a></li>
                     <li><a href="login.php">Logg inn</a></li>
                 {/if}
             </ul>
