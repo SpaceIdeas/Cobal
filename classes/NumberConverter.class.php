@@ -7,14 +7,14 @@
  */
 
 class NumberConverter {
-    private $numberStrings = array('En', 'To', 'Tre', 'Fire', 'Fem', 'Seks', 'Sju', 'Åtte', 'Ni', 'Ti', 'Elleve', 'Tolv');
 
-    public function convert($number) {
+    public static function convert($number) {
+        $numberStrings = array('Én', 'To', 'Tre', 'Fire', 'Fem', 'Seks', 'Sju', 'Åtte', 'Ni', 'Ti', 'Elleve', 'Tolv');
         if ($number <= 12) {
-            return $this->numberStrings[$number];
+            return $numberStrings[$number - 1];
         }
         else {
-            return -1;
+            return $number;
         }
     }
 }

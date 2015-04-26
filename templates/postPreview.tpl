@@ -13,7 +13,7 @@
         {if $post->getCommentCount($db) gt 0}
             {if $post->getCommentCount($db) gt 1}
                 {if $post->getCommentCount($db) lte 12}
-                {NumberConverter::Convert($post->getCommentCount($db))} kommentarer
+                {$post->getCommentCountAsString($db)} kommentarer
                 {else}
                 $post->getCommentCount($db) kommentarer
                  {/if}
