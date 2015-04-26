@@ -67,7 +67,7 @@ class Post {
     }
 
     public static function  getAllPosts(PDO $db) {
-        $statement = $db->prepare("SELECT * FROM POST");
+        $statement = $db->prepare("SELECT * FROM POST ORDER BY TIME_CREATED DESC");
         $statement->execute();
         $posts = [];
         while ($post = $statement->fetchObject('Post')) {
@@ -85,19 +85,27 @@ class Post {
     }
 
     public function getNextPostID(PDO $db) {
-        return $this->ID + 1;
+        $statement = $db->prepare("SELECT MIN(ID) AS NEXT_ID FROM POST WHERE ID > ?");
+        $statement->bindParam(1, $this->ID);
+        $statement->execute();
+        return $statement->fetch()['NEXT_ID'];
     }
 
     public function getPreviousPostID(PDO $db) {
-        return $this->ID - 1;
+        $statement = $db->prepare("SELECT MAX(ID) AS PREVIOUS_ID FROM POST WHERE ID < ?");
+        $statement->bindParam(1, $this->ID);
+        $statement->execute();
+        return $statement->fetch()['PREVIOUS_ID'];
     }
 
     public function hasNextPostID(PDO $db) {
-        return true;
+        $nextID = $this->getNextPostID($db);
+        return isset($nextID);
     }
 
     public function hasPreviousPostID(PDO $db) {
-        return false;
+        $previousID = $this->getPreviousPostID($db);
+        return isset($previousID);
     }
 
 
