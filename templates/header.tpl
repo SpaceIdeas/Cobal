@@ -19,7 +19,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {if isset($smarty.session.loggedin)}
-                    <li><a>Vellkommen Herr/Frue {$smarty.session.user->getUsername()}</a></li>
+                    <li><a>Velkommen {$smarty.session.user->getUsername()}</a></li>
                     <li><a href="logout.php?return="{$smarty.server.REQUEST_URI}>Logg ut</a></li>
                 {else}
                     <li><a href="login.php">Logg inn</a></li>
