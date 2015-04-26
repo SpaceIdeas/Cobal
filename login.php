@@ -7,18 +7,17 @@
  * All Rights Reserved
  */
 
-// TODO: Validere input før postback i login.tpl
 require_once('libs/Smarty.class.php');
 require_once('config.php');
-require_once('classes/User.class.php');
 require_once('db.php');
 $smarty = new Smarty();
 
+//Blir kalt når bruker trykker på knapp for å logge inn
 if (isset($_POST['action'])) {
 
-    // Sjekk bruker mot databasen
+    // Sjekk bruker mot databasen. Returnerer sant hvis bruker ikke blir logget inn
     if (!User::login($db, $_POST['inputEmail'], $_POST['inputPassword'])) {
-        $smarty->assign('loginSucsess', false);
+        $smarty->assign('errorMessage', 'Login feilet. Kontakt ditt nærmeste kammskjell for mer hjelp');
     } else {
         // Bruker er innlogget
         //  Send brukeren til forespurt side dersom det ligger en slik lagret i session
@@ -27,8 +26,7 @@ if (isset($_POST['action'])) {
             unset($_SESSION['page']);
             exit;
         }
-        $smarty->assign('loginSucsess', true);
-        $smarty->assign('message', "Login sucsessfull");
+        $smarty->assign('successMessage', 'Gratulerer! Du er nå logget inn');
     }
 }
 
