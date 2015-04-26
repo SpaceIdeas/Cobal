@@ -17,6 +17,12 @@
                 <li><a href="index.php">Hjem</a></li>
                 <li><a href="addPost.php">Legg til innlegg</a></li>
             </ul>
+            <form class="navbar-form navbar-right" role="search" action="search.php" method="get">
+                <div class="form-group">
+                    <input type="search" class="form-control" placeholder="Søk i bloggen">
+                </div>
+                <button type="submit" class="btn btn-default">Søk</button>
+            </form>
             <ul class="nav navbar-nav navbar-right">
                 {if isset($smarty.session.loggedin)}
                     <li><a>Velkommen {$smarty.session.user->getUsername()}</a></li>
