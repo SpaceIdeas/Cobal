@@ -84,6 +84,10 @@ class Post {
         return Comment::getCommentCount($db, $this);
     }
 
+    public function getCommentCountAsString(PDO $db) {
+        return NumberConverter::convert(Comment::getCommentCount($db, $this));
+    }
+
     public function getNextPostID(PDO $db) {
         $statement = $db->prepare("SELECT MIN(ID) AS NEXT_ID FROM POST WHERE ID > ?");
         $statement->bindParam(1, $this->ID);
