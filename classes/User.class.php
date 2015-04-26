@@ -57,7 +57,7 @@ class User {
             $stmt->execute();
             if ($row = $stmt->fetch() )
             {
-               return $row["USERNAME"];
+               return htmlentities($row["USERNAME"]);
             }else {
                 return null;
             }
@@ -85,10 +85,9 @@ class User {
                 $salt = $row["SALT"];
                 if($hashpassord == sha1($password . $salt)){
                     $_SESSION['loggedin'] = true;
-                    $_SESSION['user'] = new User($email , $row["USERNAME"]);
+                    $_SESSION['user'] = new User(htmlentities($email) , htmlentities($row["USERNAME"]));
                     return true;
                 }
-                $result = sha1($password + $salt);
             }else {
                 return false;
             }

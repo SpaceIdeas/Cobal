@@ -18,14 +18,13 @@ if (isset($_POST['action'])) {
     // Sjekk bruker mot databasen. Returnerer sant hvis bruker ikke blir logget inn
     if (!User::login($db, $_POST['inputEmail'], $_POST['inputPassword'])) {
         $smarty->assign('errorMessage', 'Login feilet. Kontakt ditt nærmeste kammskjell for mer hjelp');
-    } else {
+    } else if(isset($_SESSION['returnPage'])){
         // Bruker er innlogget
         //  Send brukeren til forespurt side dersom det ligger en slik lagret i session
-        if(isset($_SESSION['returnPage'])) {
-            header("Location: " . $_SESSION['returnPage']);
-            unset($_SESSION['page']);
-            exit;
-        }
+        header("Location: " . $_SESSION['returnPage']);
+        unset($_SESSION['returnPage']);
+        exit;
+    } else {
         $smarty->assign('successMessage', 'Gratulerer! Du er nå logget inn');
     }
 }
