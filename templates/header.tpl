@@ -17,9 +17,9 @@
                 <li><a href="index.php">Hjem</a></li>
                 <li><a href="addPost.php">Legg til innlegg</a></li>
             </ul>
-            <form class="navbar-form navbar-right" role="search" action="search.php" method="get">
+            <form class="navbar-form navbar-right" role="search" action="index.php" method="get">
                 <div class="form-group">
-                    <input type="search" class="form-control" placeholder="Søk i bloggen">
+                    <input name="searchWord" type="search" class="form-control" placeholder="Søk i bloggen">
                 </div>
                 <button type="submit" class="btn btn-default">Søk</button>
             </form>

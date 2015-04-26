@@ -9,6 +9,10 @@ require_once('config.php');
 require_once('libs/Smarty.class.php');
 require_once('db.php');
 $smarty = new Smarty();
-$smarty->assign('posts',Post::getAllPosts($db));
+if(isset($_GET['searchWord'])){
+    $smarty->assign('posts',Post::getAllPostsWhere($db, $_GET['searchWord']));
+} else {
+    $smarty->assign('posts',Post::getAllPosts($db));
+}
 $smarty->assign('db', $db);
 $smarty->display('index.tpl');
