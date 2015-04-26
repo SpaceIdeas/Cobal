@@ -112,15 +112,41 @@ class Post {
         return isset($previousID);
     }
 
+    /**
+     * Returnerer alle blog innleggene hvor tittel eller tekst inneholder $searchWord
+     * @param PDO $db
+     * @param $searchWord
+     * @return array
+     */
     public static function  getAllPostsWhere(PDO $db, $searchWord) {
-        $searchWord = "%" . $searchWord . "%";
-        $statement = $db->prepare("SELECT * FROM POST WHERE UPPER(TITLE) LIKE ? OR UPPER(TEXT) LIKE ? ORDER BY TIME_CREATED DESC");
-        $statement->execute(array($searchWord, $searchWord));
-        $posts = [];
-        while ($post = $statement->fetchObject('Post')) {
-            $posts[] = $post;
+        try
+        {
+            $searchWord = "%" . $searchWord . "%";
+            $statement = $db->prepare("SELECT * FROM POST WHERE UPPER(TITLE) LIKE ? OR UPPER(TEXT) LIKE ? ORDER BY TIME_CREATED DESC");
+            $statement->execute(array($searchWord, $searchWord));
+            $posts = [];
+            while ($post = $statement->fetchObject('Post')) {
+                $posts[] = $post;
+            }
+            return $posts;
+        }catch(Exception $e) {
+            return null;
         }
-        return $posts;
+    }
+
+    /**
+     * Legger til en i antallet hits på det aktuelle innlegget
+     * @param PDO $db
+     * @return bool
+     */
+    public function iGotHit(PDO $db){
+        try
+        {
+            $statement = $db->prepare("UPDATE POST SET HITS = HITS + 1 WHERE ID = ?");
+            return $statement->execute(array($this->ID));
+        }catch(Exception $e) {
+            return false;
+        }
     }
 
 

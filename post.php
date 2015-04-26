@@ -13,6 +13,13 @@ session_start();
 if ($_GET ['id']) {
     $smarty->assign('db', $db);
     $post = Post::getPost($db, ( int ) $_GET ['id']);
+    if(!isset($_SESSION['lastHitPost'])){
+        $_SESSION['lastHitPost'] = "-1";
+    }
+    if($_SESSION['lastHitPost'] != $post->getID()){
+        $post->iGotHit($db);
+        $_SESSION['lastHitPost'] = $post->getID();
+    }
     if (isset($post)) {
         $smarty->assign('post', $post);
         $comments = $post->getComments($db, $post);
