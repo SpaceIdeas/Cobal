@@ -12,6 +12,7 @@ class Post {
     private $TEXT;
     private $AUTHOR_EMAIL;
     private $TIME_CREATED;
+    private $HITS;
 
     /*
     public function __construct($title, $text, $authorEmail) {
@@ -38,6 +39,10 @@ class Post {
 
     public function getTimeCreated() {
         return $this->TIME_CREATED;
+    }
+
+    public function getHits(){
+        return $this->HITS;
     }
 
 

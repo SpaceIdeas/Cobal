@@ -1,7 +1,11 @@
 {include file='header.tpl'}
-<h1>{$post->getTitle()}</h1>
-<p><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)}</b></p>
-<p>{$post->getText()}</p>
+<div class="blog-main"> <!--blog   -->
+    <div class="blog-post">
+        <h1 class="blog-post-title">{$post->getTitle($db)}</h1>
+        <p class="blog-post-meta"><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)} <span class="label label-info">Treff: {$hits}</span></b></p>
+        <p>{$post->getText()}</p>
+    </div>
+</div>
 {if isset($smarty.session.user)}
     <div class="panel panel-default">
         <div class="panel-heading">
