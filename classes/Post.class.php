@@ -28,12 +28,24 @@ class Post {
         return $this->TITLE;
     }
 
+    public function setTitle($title) {
+        $this->TITLE = $title;
+    }
+
     public function getText() {
         return $this->TEXT;
     }
 
+    public function setText($text) {
+        $this->TEXT = $text;
+    }
+
     public function getAuthorEmail() {
         return $this->AUTHOR_EMAIL;
+    }
+
+    public function setAuthorEmail($authorEmail) {
+        $this->AUTHOR_EMAIL = $authorEmail;
     }
 
     public function getTimeCreated() {
@@ -49,7 +61,7 @@ class Post {
         try
         {
             $statement = $db->prepare("INSERT INTO POST (TITLE, TEXT, AUTHOR_EMAIL) VALUES (?, ?, ?)");
-            return $statement->execute(array($this->TITLE, $this->TEXT, $this->$AUTHOR_EMAIL));
+            return $statement->execute(array($this->TITLE, $this->TEXT, $this->AUTHOR_EMAIL));
         }catch(Exception $e) {
             return false;
         }

@@ -126,6 +126,18 @@ class User {
 
     }
 
+    public static function sendVerificationEmail (PDO $db, $userEmail) {
+        $verificationToken = User::generateSalt();
+        $statement = $db->prepare("UPDATE USER SET VERIFICATION_TOKEN  = ? WHERE EMAIL = ?");
+        $statement->execute(array($verificationToken, $userEmail ));
+        $verificationURL = "localhost/cobal?token=" . $verificationToken;
+        mail($userEmail, "Godkjenn din bruker på bloggen", $verificationURL, "From:danielsen.oeystein@gmail.com\r\n");
+    }
+
+    public static function verifyUserEmail(PDO $db, $verificationToken) {
+        $statement = $db->prepare("UPDATE USER SET TIME_VERIFIED  = CURRENT_TIMESTAMP WHERE VERIFICATION_TOKEN = ?");
+        $statement->execute(array($verificationToken));
+    }
 
     /**
      * Genererer et salt på 15 karakterer
