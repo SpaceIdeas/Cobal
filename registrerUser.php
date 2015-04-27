@@ -34,14 +34,14 @@ $smarty->display('registrerUser.tpl');
  * Setter smartyvariablene som skal bli satt når passordene ikke er like
  * @param $smarty
  */
-function nonMatchingPasswords(Smarty $smarty){
+function nonMatchingPasswords(){
     //Varselbeskjeden til smarty når noe er galt
-    $smarty->assign("errorMessage", "Passordene er ikke like");
+    $this->smarty->assign("errorMessage", "Passordene er ikke like");
     //Sender med ekstra css til passord input feltene, som passer til situasjonen
-    $smarty->assign("passwordCSS", "has-error");
+    $this->smarty->assign("passwordCSS", "has-error");
     //Sender brukernavn og email som brukeren har sendt inn, tilbake til smarty slik at de automatisk blir fylt inn for brukeren
-    $smarty->assign("inputUsername", $_POST['inputUsername']);
-    $smarty->assign("inputEmail", $_POST['inputEmail']);
+    $this->smarty->assign("inputUsername", $_POST['inputUsername']);
+    $this->smarty->assign("inputEmail", $_POST['inputEmail']);
 }
 
 /**
@@ -49,13 +49,13 @@ function nonMatchingPasswords(Smarty $smarty){
  * Setter smartyvariablene som passer til situasjonen
  * @param $smarty
  */
-function userAlreadyExists(Smarty $smarty){
+function userAlreadyExists(){
     //Varselbeskjeden til smarty når noe er galt
-    $smarty->assign("errorMessage", "Emailen er allerede tatt");
+    $this->smarty->assign("errorMessage", "Emailen er allerede tatt");
     //Sender med ekstra css til email inputfeltene, som passer til situasjonen
-    $smarty->assign("emailCSS", "has-error");
+    $this->smarty->assign("emailCSS", "has-error");
     //Sender brukernavn som brukeren har sendt inn, tilbake til smarty slik at den automatisk blir fylt inn for brukeren
-    $smarty->assign("inputUsername", $_POST['inputUsername']);
+    $this->smarty->assign("inputUsername", $_POST['inputUsername']);
 
 }
 
@@ -64,10 +64,10 @@ function userAlreadyExists(Smarty $smarty){
  * Setter smartyvariablene som passer til situasjonen
  * @param $smarty
  */
-function unknownError($smarty){
+function unknownError(){
     //Varselbeskjeden til smarty når noe er galt
-    $smarty->assign("errorMessage", "Noe gikk galt og brukeren ble ikke dannet");
+    $this->smarty->assign("errorMessage", "Noe gikk galt og brukeren ble ikke dannet");
     //Sender brukernavn og email som brukeren har sendt inn, tilbake til smarty slik at de automatisk blir fylt inn for brukeren
-    $smarty->assign("inputUsername", $_POST['inputUsername']);
-    $smarty->assign("inputEmail", $_POST['inputEmail']);
+    $this->smarty->assign("inputUsername", $_POST['inputUsername']);
+    $this->smarty->assign("inputEmail", $_POST['inputEmail']);
 }
