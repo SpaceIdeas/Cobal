@@ -130,13 +130,18 @@ class User {
         $verificationToken = User::generateSalt();
         $statement = $db->prepare("UPDATE USER SET VERIFICATION_TOKEN  = ? WHERE EMAIL = ?");
         $statement->execute(array($verificationToken, $userEmail ));
-        $verificationURL = "localhost/cobal?token=" . $verificationToken;
+        $verificationURL = "kark.hin.no/cobal?token=" . $verificationToken;
         mail($userEmail, "Godkjenn din bruker på bloggen", $verificationURL, "From:danielsen.oeystein@gmail.com\r\n");
     }
 
     public static function verifyUserEmail(PDO $db, $verificationToken) {
-        $statement = $db->prepare("UPDATE USER SET TIME_VERIFIED  = CURRENT_TIMESTAMP WHERE VERIFICATION_TOKEN = ?");
-        $statement->execute(array($verificationToken));
+        $statement = $db->prepare("UPDATE USER SET TIME_VERIFIED  = CURRENT_TIMESTAMP WHERE VERIFICATION_TOKEN = ? AND TIME_VERIFIED IS NULL");
+        if ($statement->execute(array($verificationToken))) {
+            return $statement->rowCount();
+        }
+        else {
+            return -1;
+        }
     }
 
     /**
