@@ -130,9 +130,11 @@ class User {
         $verificationToken = User::generateSalt();
         $statement = $db->prepare("UPDATE USER SET VERIFICATION_TOKEN  = ? WHERE EMAIL = ?");
         $statement->execute(array($verificationToken, $userEmail ));
-        $verificationURL = "kark.hin.no/cobal?token=" . $verificationToken;
+        $verificationURL = "Token: " . $verificationToken;
         mail($userEmail, "Godkjenn din bruker på bloggen", $verificationURL, "From:danielsen.oeystein@gmail.com\r\n");
     }
+
+
 
     public static function verifyUserEmail(PDO $db, $verificationToken) {
         $statement = $db->prepare("UPDATE USER SET TIME_VERIFIED  = CURRENT_TIMESTAMP WHERE VERIFICATION_TOKEN = ? AND TIME_VERIFIED IS NULL");
@@ -141,6 +143,38 @@ class User {
         }
         else {
             return -1;
+        }
+    }
+
+    public static function sendNewPasswordEmail (PDO $db, $userEmail) {
+        $lostPwdToken = User::generateSalt();
+        $statement = $db->prepare("UPDATE USER SET LOST_PWD_TOKEN  = ? WHERE EMAIL = ?");
+        if ($statement->execute(array($lostPwdToken, $userEmail ))) {
+            $lostPwdnURL = "Token: " . $lostPwdToken;
+            mail($userEmail, "Få et nytt passord", $lostPwdnURL, "From:danielsen.oeystein@gmail.com\r\n");
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static function updatePassword(PDO $db, $userEmail, $password) {
+        $salt = USER::generateSalt();
+        $statement = $db->prepare("UPDATE USER SET PWD_HASH = ?, SALT = ?, LOST_PWD_TOKEN = NULL WHERE EMAIL = ?");
+        return $statement->execute(array(sha1($password . $salt), $salt, $userEmail));
+    }
+
+    public static function updatePasswordFromToken(PDO $db, $token, $password) {
+        $statement = $db->prepare("SELECT EMAIL FROM USER WHERE LOST_PWD_TOKEN = ?");
+        $statement->bindParam(1, $token);
+        $statement->execute();
+        $row = $statement->fetch();
+        if ($row != null) {
+            return User::updatePassword($db, $row['EMAIL'], $password );
+        }
+        else {
+            return false;
         }
     }
 
@@ -162,6 +196,4 @@ class User {
         }
         return $salt;
     }
-
-
 }
