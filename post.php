@@ -19,6 +19,9 @@ if ($_GET ['id']) {
     if($_SESSION['lastHitPost'] != $post->getID()){
         $post->iGotHit($db);
         $_SESSION['lastHitPost'] = $post->getID();
+        $smarty->assign('hits', $post->getHits() + 1);
+    }else{
+        $smarty->assign('hits', $post->getHits());
     }
     if (isset($post)) {
         $smarty->assign('post', $post);
