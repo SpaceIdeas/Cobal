@@ -19,6 +19,7 @@ if (isset($_POST['btnRegisterUser'])) {
     }else if(User::registerUser($db, $_POST['inputEmail'], $_POST['inputPassword'], $_POST['inputUsername'])){
         //Setter suksess meldingen i smarty
         $smarty->assign("successMessage", "Din bruker er nå opprettet");
+        User::sendVerificationEmail($db, $_POST['inputEmail']);
     }else{
         //Noe gikk gale så vi forteller smarty dette med unknownError metoden
         unknownError($smarty);

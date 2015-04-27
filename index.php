@@ -14,6 +14,13 @@ if(isset($_GET['searchWord'])){
 } else {
     $posts = Post::getAllPosts($db);
 }
+if (isset($_GET['verToken'])) {
+    if (User::verifyUserEmail($db, $_GET ['verToken']) == 1) {
+        $smarty->assign('successMessage', 'Din epost er nå bekreftet. Takk.');
+    } else {
+        $smarty->assign('errorMessage', 'Din epost kunne ikke bekreftes.');
+    }
+}
 $smarty->assign('posts', $posts);
 
 //Metoden gjør postList.tpl templeten klar til å bli kjørt

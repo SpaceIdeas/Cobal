@@ -36,6 +36,7 @@ if ($_GET ['id']) {
             $comment->setAuthorEmail($_SESSION['user']->getEmail());
             $comment->setPostID($post->getID());
             $comment->addToDB($db);
+            echo 'hello';
         }
     }
     else {
