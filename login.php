@@ -23,7 +23,7 @@ if (isset($_POST['btnLogin'])) {
         if (isset($_SESSION['returnPage'])) {
             $returnpage = $_SESSION['returnPage'];
             unset($_SESSION['returnPage']);
-            $alert->displayAlertOnOtherPage($returnpage);
+            $alert->displayOnOtherPage($returnpage);
         } else {
             $alert->displayOnIndex();
         }
