@@ -26,13 +26,14 @@ class Verify {
     }
 
     /**
-     * Redirigerer bruker til index.php hvis bruker ikke er logget inn
+     * Redirigerer bruker til login.php hvis bruker ikke er logget inn
      */
     public static function userLoggedIn()
     {
         if (!isset($_SESSION['user'])) {   //Hvis en bruker ikke er logget inn, vil han bli sent til login.php
             //Lagrer siden brukeren er på nå slik at han kan bli redirigert hit etter han har logget inn
             //TODO: Set inn en alert som gir beskjed om situasjonen
+            $_SESSION['returnPage'] = $_SERVER['REQUEST_URI'];
             $alert = new Alert(Alert::ERROR, "Du er nøtt til å være logget inn for å se den siden. Ikke prøv deg på noe.");
             $alert->displayOnOtherPage("login.php");
 
