@@ -11,8 +11,12 @@ require_once('db.php');
 session_start();
 $smarty = new Smarty();
 if(isset($_GET['searchWord'])){
-    $posts = Post::getAllPostsWhere($db, $_GET['searchWord']);
-} else {
+    $posts = Post::getPostsBySearch($db, $_GET['searchWord']);
+} else if(isset($_GET['year']) && isset($_GET['month'])) {
+    //Henter alle innleggene i fra den spesifike måneden og året.
+    //array_search($_GET['month'], YearPostList::$norwegianMonth) gjør en måned i norske bokstaver om til tallet til måneden
+    $posts = Post::getPostsByMonthYear($db, array_search($_GET['month'], YearPostList::$norwegianMonth), $_GET['year']);
+}else {
     $posts = Post::getAllPosts($db);
 }
 if (isset($_GET['verToken'])) {
@@ -34,51 +38,14 @@ if (isset($_GET['newPassword'])) {
         $smarty->assign('successMessage', 'Ditt nye passord er nå registrert');
     }
 }
+
 $smarty->assign('posts', $posts);
 
-//Metoden gjør postList.tpl templeten klar til å bli kjørt
-createPostList($smarty, $posts);
+//Metoden henter ut elementene som gjør postList.tpl mulig å kjøre
+$yearPostList = Post::getYearMonthCountFromPosts($db);
+$smarty->assign('postList', $yearPostList);
 
 $smarty->assign('db', $db);
 $smarty->display('index.tpl');
 
 
-/**
- * Denne metoden gjør det som er nødvendig for at smarty templeten postList fungerer
- * Metoden finner ut hvor mange innlegg det er på hver måned blant innleggene i $post
- * Dette blir så assign-et til smarty
- * @param Smarty $smarty
- * @param $posts
- */
-function createPostList(Smarty $smarty, $posts){
-    //Blir en array av datoene til innleggene i $post
-    $listPosts = array();
-
-    foreach($posts as $post){
-        //Gjør timestampet til et innlegg om til en assosiativ array med datoinformasjon
-        // og legger dette inn i $listPosts
-        $listPosts[] = date_parse($post->getTimeCreated());
-    }
-    //Blir et array med YearPostList items der YearPostList inneholder året og et
-    // assosiativt array med navn på måned som key og antall innlegg denne måneden som value
-    $yearPostList = array();
-    //Setter $i til dette året og innkrementerer nedover
-    for($i = date("Y"); $i > 2000; $i--){
-        //Blir et array som inneholder de innleggsdatoene der år = $i
-        $temp = array();
-        foreach($listPosts as $listPost){
-            //Hvis året i $listPost tilsvarer året i $i, blir det lagt til i $temp
-            if($listPost['year'] == $i){
-                $temp[] = $listPost;
-            }
-        }
-        //Hvis det ikke var ingen datoer med år = $i, avbrytes loopen siden det mest
-        // sannsynelig ikke er noen innlegg i et tidligere år
-        if(empty($temp)){
-            break;
-        }
-        //Lager YearPostList med året $i, og en array datoene i året $i, som parametre.
-        $yearPostList[] = new YearPostList( $i, $temp);
-    }
-    $smarty->assign('postList', $yearPostList);
-}
