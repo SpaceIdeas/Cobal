@@ -34,7 +34,7 @@ class Verify {
             //Lagrer siden brukeren er på nå slik at han kan bli redirigert hit etter han har logget inn
             //TODO: Set inn en alert som gir beskjed om situasjonen
             $alert = new Alert(Alert::ERROR, "Du er nøtt til å være logget inn for å se den siden. Ikke prøv deg på noe.");
-            $alert->displayOnIndex();
+            $alert->displayOnOtherPage("login.php");
 
         }
     }
