@@ -17,10 +17,12 @@ if (isset($_POST['btnNewPassword'])) {
     if (isset($_POST['inputEmail'])) {
         if (User::getUsernameFromDB($db, $_POST['inputEmail']) != null) {
             if (User::sendNewPasswordEmail($db, $_POST['inputEmail'])) {
-                $smarty->assign('successMessage', 'Du har nå fått tilsendt en e-post med instruksjoner for gjenoppretting av passord');
+                $alert = new Alert(Alert::SUCCESS, 'Du har nå fått tilsendt en e-post med instruksjoner for gjenoppretting av passord');
+                $alert->displayOnIndex();
             }
             else {
-                $smarty->assign('errorMessage', 'Feil: Noe gikk galt med databasen vår');
+                $alert = new Alert(Alert::ERROR, 'Databasefeil. Prøv igjen senere.');
+                $alert->displayOnIndex();
             }
         }
         else {
@@ -28,5 +30,4 @@ if (isset($_POST['btnNewPassword'])) {
         }
     }
 }
-
 $smarty->display('forgottenPassword.tpl');

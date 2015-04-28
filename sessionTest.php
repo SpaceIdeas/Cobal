@@ -9,6 +9,7 @@
 
 /** Depricated */
 require_once('config.php');
+session_start();
 
 if (!isset($_SESSION['user']) ) {   //Hvis en bruker ikke er logget inn, vil han bli sent til login.php
     //Lagrer siden brukeren er på nå slik at han kan bli redirigert hit etter han har logget inn

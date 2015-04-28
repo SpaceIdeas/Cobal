@@ -15,13 +15,14 @@ if (isset($_GET['lostPwdToken'])) {
         //Tester om passordene er like
         if ($_POST['inputPassword'] == $_POST['inputPasswordRepeat']) {
             if (User::updatePasswordFromToken($db, $_GET['verToken'], $_POST['inputPassword'])) {
-                $alert = new Alert(Alert::SUCCESS, "Ditt nye passord er nå lagret");
-                $alert->displayOnIndex();
+                $alert = new Alert(Alert::SUCCESS, "Ditt nye passord er nå lagret. Du kan nå logge inn.");
+                $alert->displayAlertOnOtherPage('login.php');
             } else {
-                $smarty->assign('errorMessage', 'Noe gikk galt');
+                $alert = new Alert(Alert::ERROR, 'Noe gikk galt');
+                $alert->displayOnThisPage($smarty);
             }
         }
     }
 }
-$smarty->display('newPassword.tpl');
+$smarty->display('newpassword.tpl');
 

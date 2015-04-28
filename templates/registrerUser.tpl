@@ -1,9 +1,6 @@
 {include file='header.tpl'}
 <h1>Registrer deg som ny bruker</h1>
 <br/>
-
-{include file="alert.tpl"}
-
 <div class="row">
     <div class="col-sm-3 col-md-6 col-lg-4">
         <form method="POST">
@@ -23,5 +20,4 @@
         </form>
     </div>
 </div>
-
 {include file='footer.tpl'}

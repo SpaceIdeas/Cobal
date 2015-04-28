@@ -1,5 +1,4 @@
 {include file='header.tpl'}
-
 {if isset($smarty.session.user)}
 {literal}
     <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>

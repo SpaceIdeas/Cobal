@@ -1,9 +1,6 @@
 {include file="header.tpl"}
-
-<h1>Vennligst log inn</h1>
+<h1>Vennligst logg inn</h1>
 <br/>
-
-{include file="alert.tpl"}
 
 <div class="row">
     <div class="col-sm-3 col-md-6 col-lg-4">
@@ -14,7 +11,7 @@
             <div class="form-group">
                 <input type="password" name="inputPassword" class="form-control" placeholder="Password" pattern=".{literal}{5,45}{/literal}" required>
             </div>
-            <input class="btn btn-lg btn-primary btn-block" type="submit" name="action"  value="Login" />
+            <input class="btn btn-lg btn-primary btn-block" type="submit" name="btnLogin"  value="Login" />
         </form>
         <a href="forgottenPassword.php">Glemt din egen identitet?</a>
     </div>
