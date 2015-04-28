@@ -7,6 +7,7 @@
  * All Rights Reserved
  */
 
+/** Depricated */
 require_once('config.php');
 
 if (!isset($_SESSION['user']) ) {   //Hvis en bruker ikke er logget inn, vil han bli sent til login.php

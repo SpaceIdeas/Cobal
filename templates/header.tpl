@@ -15,7 +15,9 @@
         <div class="container-fluid">
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Hjem</a></li>
+                {if isset($smarty.session.user) && $smarty.session.user->isAdmin()}
                 <li><a href="addPost.php">Legg til innlegg</a></li>
+                {/if}
             </ul>
             <form class="navbar-form navbar-right" role="search" action="index.php" method="get">
                 <div class="form-group">
@@ -26,7 +28,7 @@
             <ul class="nav navbar-nav navbar-right">
                 {if isset($smarty.session.loggedin)}
                     <li><a>Velkommen {$smarty.session.user->getUsername()}</a></li>
-                    <li><a href="logout.php?return="{$smarty.server.REQUEST_URI}>Logg ut</a></li>
+                    <li><a href="logout.php?returnToPage="{$smarty.server.REQUEST_URI}>Logg ut</a></li>
                 {else}
                     <li><a href="registrerUser.php">Registrer ny bruker</a></li>
                     <li><a href="login.php">Logg inn</a></li>
