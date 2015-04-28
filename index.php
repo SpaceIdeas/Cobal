@@ -10,6 +10,7 @@ require_once('libs/Smarty.class.php');
 require_once('db.php');
 session_start();
 $smarty = new Smarty();
+Alert::displayAlertFromSession($smarty);
 if(isset($_GET['searchWord'])){
     $posts = Post::getPostsBySearch($db, $_GET['searchWord']);
 } else if(isset($_GET['year']) && isset($_GET['month'])) {
@@ -26,12 +27,6 @@ if (isset($_GET['verToken'])) {
         $smarty->assign('errorMessage', 'Din epost kunne ikke bekreftes.');
     }
 }
-if (isset($_SESSION['alert'])) {
-    $alert = $_SESSION['alert'];
-    $_SESSION['alert'] = null;
-    $alert->displayOnThisPage($smarty);
-}
-
 
 if (isset($_GET['newPassword'])) {
     if ($_GET['newPassword'] == 1) {

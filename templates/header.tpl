@@ -36,10 +36,8 @@
             </ul>
         </div>
     </nav>
-    {if isset($message)}
-        <p>{$message}</p>
-    {/if}
         <div>
 </head>
 <body>
+{include file='alert.tpl'}
 

@@ -1,5 +1,4 @@
 {include file='header.tpl'}
-{include file='alert.tpl'}
 <div class="row">
     <div class="col-xs-12 col-md-9">
         {foreach from=$posts item=post}
@@ -11,5 +10,4 @@
     </div>
 
 </div>
-
 {include file='footer.tpl'}
