@@ -5,14 +5,20 @@
  * Date: 27.04.2015
  * Time: 18:55
  */
+/**
+ *  Dette scriptet / denne siden er det man skal komme tilbake til etter at man har fått en e-post med instruksjoner
+ * for å oprette et nytt passord etter at det gamle passordet har blitt glemt. Denne siden lar brukeren i hovedsak
+ * skrive inn et nytt passord for så bli bedt om å logge inn. Et $_POST parameter benyttes for å holde styr på hvem som
+ * har glemt hva.
+ */
 require_once('config.php');
 require_once('libs/Smarty.class.php');
 require_once('db.php');
 session_start();
-$smarty = new Smarty();
 
 // Sjekker om det er gitt et token for tapt passord (sendt på epost)
 if (isset($_GET['lostPwdToken'])) {
+    $smarty = new Smarty();
     if (isset($_POST['btnNewPassword'])) {
 
         //Tester om passordene er like
@@ -25,12 +31,18 @@ if (isset($_GET['lostPwdToken'])) {
                 $alert->displayOnOtherPage('login.php');
 
             } else {
-                // Noe gikk galt. Holder brukeren på siden. Viser Alert.
+                // Noe gikk galt. Sender brukern til index med feilmelding.
                 $alert = new Alert(Alert::ERROR, 'Noe gikk galt');
-                $alert->displayOnThisPage($smarty);
+                $alert->displayOnIndex();
             }
         }
     }
+    $smarty->display('newpassword.tpl');
 }
-$smarty->display('newpassword.tpl');
+// Tokenet for glemt passord er ikke satt sender brukeren til index.php med feilmelding.
+else {
+    $alert = new Alert(Alert::ERROR, 'Noe er feil. Har du trykket på riktig link?');
+    $alert->displayOnIndex();
+}
+
 

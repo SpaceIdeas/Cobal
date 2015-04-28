@@ -5,8 +5,9 @@
  * Dato: 26/04/2015
  * Tid: 17:42
  * All Rights Reserved
- */
-/* Denne siden er ment vist for
+/**
+ *  Dette scriptet / denne siden er det man skal kunne skrive inn sin e-postadrresse (registrerte) og få tilsendt en
+ * e-post med en link hvor man kan oprette et nytt passord hvis man har glemt det.
  */
 require_once ('config.php');
 require_once('libs/Smarty.class.php');
@@ -21,7 +22,8 @@ if (isset($_POST['btnNewPassword'])) {
         // Sjekker at brukeren eksister i databasen
         if (User::getUsernameFromDB($db, $_POST['inputEmail']) != null) {
 
-            // Sender brukeren e-post med instruksjoner for å få nytt passord. Metoden blir true hvis dette blir gjort.
+            /*Sender brukeren e-post med instruksjoner for å få nytt passord. Metoden blir true hvis dette blir gjort.
+            endringer i databse håndters også vha. denne metoden */
             if (User::sendNewPasswordEmail($db, $_POST['inputEmail'])) {
                 // Gir beskjed til brukeren om at han får epost på index.php
                 $alert = new Alert(Alert::SUCCESS, 'Du har nå fått tilsendt en e-post med instruksjoner for gjenoppretting av passord');
