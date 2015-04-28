@@ -130,12 +130,50 @@ class Post {
     }
 
     /**
+     * Returnerer en array av YearPostList objekter som blir brukt til å generere en liste over hvor mange innlegg det er i hver måned i hvert år
+     * @param $db
+     * @return array|null
+     */
+    public static function getYearMonthCountFromPosts($db){
+        try
+        {
+            $statement = $db->prepare("Select year(TIME_CREATED) as YEAR, month(TIME_CREATED) as MONTH, count(*) as COUNT FROM POST WHERE year(TIME_CREATED) in(select distinct year(TIME_CREATED) from POST)GROUP BY month(TIME_CREATED) ORDER BY TIME_CREATED desc");
+            $statement->execute();
+            $rows = $statement->fetchAll();
+            //Blir et array med YearPostList items der YearPostList inneholder året og et
+            // assosiativt array med navn på måned som key og antall innlegg denne måneden som value
+            $yearPostList = array();
+            //Kjører igjennom til alle radene er tatt ut og lagt til i en YearPostList som igjenn havner i $yearPostList
+            while(!empty($rows)){
+                //Tar ut den første raden i $rows
+                $row = array_shift($rows);
+                //Lager arrayet som holder på key=Måneden og value=antall innlegg denne måneden
+                //Arrayet blir senere lagt til i et YearPostList objekt
+                $month = array(YearPostList::$norwegianMonth[$row['MONTH']]=>$row['COUNT']);
+                //I while løkken blir hver rad i $row som har årer lik det elementene i $month skal ha. Lagt til i $month
+                while($row['YEAR'] == current($rows)['YEAR']){
+                    $monthRow = array_shift($rows);
+                    $month[YearPostList::$norwegianMonth[$monthRow['MONTH']]] = $monthRow['COUNT'];
+                }
+                //Legger til YearPostList objektet
+                $yearPostList[] = new YearPostList($row['YEAR'], $month);
+            }
+            return $yearPostList;
+
+        }catch(Exception $e) {
+            return null;
+        }
+
+
+    }
+
+    /**
      * Returnerer alle blog innleggene hvor tittel eller tekst inneholder $searchWord
      * @param PDO $db
      * @param $searchWord
      * @return array
      */
-    public static function  getAllPostsWhere(PDO $db, $searchWord) {
+    public static function  getPostsBySearch(PDO $db, $searchWord) {
         try
         {
             $searchWord = "%" . $searchWord . "%";
@@ -150,6 +188,23 @@ class Post {
             return null;
         }
     }
+
+
+    public static function getPostsByMonthYear(PDO $db, $month, $year){
+        try
+        {
+            $statement = $db->prepare("SELECT * FROM POST where month(TIME_CREATED) = ? and year(TIME_CREATED) = ? ORDER BY TIME_CREATED DESC;");
+            $statement->execute(array($month, $year));
+            $posts = [];
+            while ($post = $statement->fetchObject('Post')) {
+                $posts[] = $post;
+            }
+            return $posts;
+        }catch(Exception $e) {
+            return null;
+        }
+    }
+
 
     /**
      * Legger til en i antallet hits på det aktuelle innlegget
