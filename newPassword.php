@@ -14,7 +14,8 @@ if (isset($_GET['lostPwdToken'])) {
         //Tester om passordene er like
         if ($_POST['inputPassword'] == $_POST['inputPasswordRepeat']) {
             if (User::updatePasswordFromToken($db, $_GET['verToken'], $_POST['inputPassword'])) {
-                $smarty->assign('successMessage', 'Ditt passord er nå endret. Velkommen tilbake.');
+                $alert = new Alert(Alert::SUCCESS, "Ditt nye passord er nå lagret");
+                $alert->displayOnIndex();
             } else {
                 $smarty->assign('errorMessage', 'Noe gikk galt');
             }

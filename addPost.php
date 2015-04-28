@@ -10,7 +10,6 @@ require_once('libs/Smarty.class.php');
 require_once('db.php');
 session_start();
 $smarty = new Smarty();
-$smarty->display('addPost.tpl');
 
 if (isset($_POST['btnAddPost']))
 {
@@ -20,3 +19,4 @@ if (isset($_POST['btnAddPost']))
     $post->setAuthorEmail($_SESSION['user']->getEmail());
     $post->addToDB($db);
 }
+$smarty->display('addPost.tpl');

@@ -21,6 +21,18 @@ if (isset($_GET['verToken'])) {
         $smarty->assign('errorMessage', 'Din epost kunne ikke bekreftes.');
     }
 }
+if (isset($_SESSION['alert'])) {
+    $alert = $_SESSION['alert'];
+    $_SESSION['alert'] = null;
+    $alert->displayOnThisPage($smarty);
+}
+
+
+if (isset($_GET['newPassword'])) {
+    if ($_GET['newPassword'] == 1) {
+        $smarty->assign('successMessage', 'Ditt nye passord er nå registrert');
+    }
+}
 $smarty->assign('posts', $posts);
 
 //Metoden gjør postList.tpl templeten klar til å bli kjørt
