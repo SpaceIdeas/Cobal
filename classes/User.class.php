@@ -12,10 +12,12 @@ class User {
     private $username;       // Holds the users full name
     private $IPAddress;         // Holds the users login IP address
     private $UserAgent;         // Holds the users user agent (browser ID)
+    private $admin;       // Blir brukt for å finne ut om en bruker har administratorrettigheter
 
-    function __construct($email, $username) {
+    function __construct($email, $username, $admin) {
         $this->email = $email;
         $this->username = $username;
+        $this->isAdmin = $admin;
         $this->IPAddress = $_SERVER["REMOTE_ADDR"];
         $this->UserAgent = $_SERVER['HTTP_USER_AGENT'];
     }
@@ -28,6 +30,9 @@ class User {
     }
     public function getIPAddress() {
         return $this->IPAddress;
+    }
+    public function isAdmin(){
+        return $this->admin;
     }
 
     /**
@@ -76,7 +81,7 @@ class User {
      */
     public static function login(PDO $db, $email, $password) {
         try{
-            $stmt = $db->prepare("SELECT EMAIL, PWD_HASH, SALT, USERNAME FROM USER WHERE EMAIL = ?");
+            $stmt = $db->prepare("SELECT EMAIL, PWD_HASH, SALT, USERNAME, ADMIN FROM USER WHERE EMAIL = ?");
             $stmt->bindParam(1, $email);
             $stmt->execute();
             if ($row = $stmt->fetch() )
@@ -85,7 +90,7 @@ class User {
                 $salt = $row["SALT"];
                 if($hashpassord == sha1($password . $salt)){
                     $_SESSION['loggedin'] = true;
-                    $_SESSION['user'] = new User(htmlentities($email) , htmlentities($row["USERNAME"]));
+                    $_SESSION['user'] = new User(htmlentities($email) , htmlentities($row["USERNAME"]), ADMIN==1?true:false);
                     return true;
                 }
             }else {
@@ -96,6 +101,25 @@ class User {
         }
 
 
+    }
+
+    /**
+     * Gir en bruker administratorrettigheter ved å legge dette til i databasen
+     * @param PDO $db
+     * @param $email
+     * @return bool
+     */
+    public static function makeAdmin(PDO $db, $email){
+        try{
+            $stmt = $db->prepare("UPDATE USER SET ADMIN  = ? WHERE EMAIL = ?");
+            //Binder parametrene og utfører statmenten
+            $result = $stmt->execute(array(1, $email));
+            //Returnerer om UPDATE setningen var vellyket
+            return $result;
+
+        }catch(Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -114,8 +138,7 @@ class User {
             $salt = USER::generateSalt();
 
             $stmt = $db->prepare("INSERT INTO USER (EMAIL, PWD_HASH, SALT, USERNAME) VALUES (?, ?, ?, ?)");
-            //Binder parametrene og lager passord hashen
-            //$stmt->bindParam(array($email, sha1($password . $salt),$salt, $username);
+            //Binder parametrene og utfører statmenten
             $result = $stmt->execute(array($email, sha1($password . $salt), $salt, $username));
             //Returnerer om INSERT setningen var vellykket
             return $result;
