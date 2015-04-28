@@ -8,6 +8,7 @@
 require_once('config.php');
 require_once('libs/Smarty.class.php');
 require_once('db.php');
+session_start();
 $smarty = new Smarty();
 if (isset($_GET['lostPwdToken'])) {
     if (isset($_POST['btnNewPassword'])) {
