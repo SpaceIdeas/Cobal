@@ -10,6 +10,7 @@
 require_once('libs/Smarty.class.php');
 require_once('config.php');
 require_once('db.php');
+session_start();
 $smarty = new Smarty();
 
 //Blir kalt når bruker trykker på knapp for å logge inn
