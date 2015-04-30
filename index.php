@@ -28,11 +28,7 @@ if (isset($_GET['verToken'])) {
     }
 }
 
-if (isset($_GET['newPassword'])) {
-    if ($_GET['newPassword'] == 1) {
-        $smarty->assign('successMessage', 'Ditt nye passord er nå registrert');
-    }
-}
+
 
 $smarty->assign('posts', $posts);
 
