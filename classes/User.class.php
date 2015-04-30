@@ -28,6 +28,11 @@ class User {
     public function getUsername() {
         return $this->username;
     }
+
+    public function setUsername($newUsername){
+        $this->username = $newUsername;
+    }
+
     public function getIPAddress() {
         return $this->IPAddress;
     }
@@ -47,6 +52,23 @@ class User {
             return false;
     }
 
+    /**
+     * Setter brukernavnet til brukeren inn i databasen
+     * @param PDO $db
+     * @return bool
+     */
+    public function updateUsername(PDO $db){
+        try{
+            $stmt = $db->prepare("UPDATE USER SET USERNAME  = ? WHERE EMAIL = ?");
+            //Binder parametrene og utfører statmenten
+            $result = $stmt->execute(array($this->username, $this->email));
+            //Returnerer om UPDATE setningen var vellyket
+            return $result;
+
+        }catch(Exception $e) {
+            return false;
+        }
+    }
 
     /**
      * Henter username fra databasen gitt email

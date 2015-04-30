@@ -9,7 +9,7 @@
 <head>
     <div class="container">
     <div class="page-header">
-        <h1>Cobal<small>Ideas about space</small></h1>
+        <h1>Cobal<small> Ideas about space</small></h1>
     </div>
     <nav class="navbar navbar-default">
         <div class="container-fluid">

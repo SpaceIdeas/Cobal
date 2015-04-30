@@ -16,8 +16,8 @@ class Alert {
     /**
      * Konstruktor for Alert-klassen.
      *
-     * @param $type Typen advarsel, error eller succcess. Definert som konstanter i Alert-klassen.
-     * @param $message teksten til advarselen.
+     * @param $type int Typen advarsel, error eller succcess. Definert som konstanter i Alert-klassen.
+     * @param $message string teksten til advarselen.
      * @
      */
     function __construct($type, $message) {
