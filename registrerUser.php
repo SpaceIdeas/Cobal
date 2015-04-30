@@ -11,11 +11,11 @@ if (isset($_POST['btnRegisterUser'])) {
     if($_POST['inputPassword'] != $_POST['inputPasswordRepete']){
         //Metoden som blir kalt passordene ikke er like
         //Setter smartyvariablene som skal bli satt når passordene ikke er like
-        nonMatchingPasswords($smarty);
+        Validate::nonMatchingPasswords($smarty);
     //Tester om emailen allerede exsisterer i databasen
     }else if(User::getUsernameFromDB($db, $_POST['inputEmail']) != null){
         //Metoden setter smartyvariablene som skal bli satt når emailen allerede eksisterer
-        userAlreadyExists($smarty);
+        Validate::userAlreadyExists($smarty);
     //Prøver å registrere brukeren. Retirnerer sant vis det går bra
     }else if(User::registerUser($db, $_POST['inputEmail'], $_POST['inputPassword'], $_POST['inputUsername'])){
         //Setter suksess meldingen i smarty
@@ -30,37 +30,7 @@ if (isset($_POST['btnRegisterUser'])) {
 
 $smarty->display('registrerUser.tpl');
 
-
-/**
- * Metoden som blir kalt passordene ikke er like
- * Setter smartyvariablene som skal bli satt når passordene ikke er like
- * @param $smarty
- */
-function nonMatchingPasswords(Smarty $smarty){
-    //Varselbeskjeden til smarty når noe er galt
-    $smarty->assign("errorMessage", "Passordene er ikke like");
-    //Sender med ekstra css til passord input feltene, som passer til situasjonen
-    $smarty->assign("passwordCSS", "has-error");
-    //Sender brukernavn og email som brukeren har sendt inn, tilbake til smarty slik at de automatisk blir fylt inn for brukeren
-    $smarty->assign("inputUsername", $_POST['inputUsername']);
-    $smarty->assign("inputEmail", $_POST['inputEmail']);
-}
-
-/**
- * Metoden som blir kalt når brukeren allerede eksisterer
- * Setter smartyvariablene som passer til situasjonen
- * @param $smarty
- */
-function userAlreadyExists(Smarty $smarty){
-    //Varselbeskjeden til smarty når noe er galt
-    $smarty->assign("errorMessage", "Emailen er allerede tatt");
-    //Sender med ekstra css til email inputfeltene, som passer til situasjonen
-    $smarty->assign("emailCSS", "has-error");
-    //Sender brukernavn som brukeren har sendt inn, tilbake til smarty slik at den automatisk blir fylt inn for brukeren
-    $smarty->assign("inputUsername", $_POST['inputUsername']);
-
-}
-
+//TODO: oppdatere unknownError med alert objekt
 /**
  * Metoden som blir kalt når brukeren allerede eksisterer
  * Setter smartyvariablene som passer til situasjonen
@@ -72,4 +42,5 @@ function unknownError(Smarty $smarty){
     //Sender brukernavn og email som brukeren har sendt inn, tilbake til smarty slik at de automatisk blir fylt inn for brukeren
     $smarty->assign("inputUsername", $_POST['inputUsername']);
     $smarty->assign("inputEmail", $_POST['inputEmail']);
+
 }

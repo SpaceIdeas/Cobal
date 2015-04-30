@@ -27,7 +27,7 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 {if isset($smarty.session.loggedin)}
-                    <li><a>Velkommen {$smarty.session.user->getUsername()}</a></li>
+                    <li><a href="manageAccount.php">Velkommen {$smarty.session.user->getUsername()}</a></li>
                     <li><a href="logout.php?returnToPage="{$smarty.server.REQUEST_URI}>Logg ut</a></li>
                 {else}
                     <li><a href="registrerUser.php">Registrer ny bruker</a></li>
