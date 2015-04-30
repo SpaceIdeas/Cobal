@@ -6,7 +6,12 @@
             <a class="btn btn-primary btn-sm pull-right" role="button" href="editPost.php?id={$post->getId()}">Rediger</a>
             <a class="btn btn-danger btn-sm pull-right" role="button" href="deletePost.php?id={$post->getId()}">Slett</a>
         {/if}
-        <p class="blog-post-meta"><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)} <span class="label label-info">Treff: {$hits}</span></b></p>
+        <p class="blog-post-meta"><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)} </b>
+            {include file="span/hitSpan.tpl"}
+            {if isset($smarty.session.user) and $post->getAuthorEmail() eq $smarty.session.user->getEmail()}
+                {include file='span/youSpan.tpl'}
+            {/if}
+        </p>
 
         <p>{$post->getText()}</p>
     </div>

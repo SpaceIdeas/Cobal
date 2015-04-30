@@ -1,0 +1,1 @@
+<span class="label label-info">Treff: {$post->getHits()}</span>

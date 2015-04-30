@@ -7,7 +7,12 @@
         {/if}
     </div>
     <div class="panel-body">
-        <p>Oprettet {$post->getTimeCreated()} av {$post->getAuthorName($db)} <span class="label label-info">Treff: {$post->getHits()}</span></p>
+        <p>Opprettet {$post->getTimeCreated()} av {$post->getAuthorName($db)}
+            {include file="span/hitSpan.tpl"}
+            {if isset($smarty.session.user) and $post->getAuthorEmail() eq $smarty.session.user->getEmail()}
+                {include file='span/youSpan.tpl'}
+            {/if}
+        </p>
         <p>{$post->getShortText()}</p>
     </div>
     <div class="panel-footer">
