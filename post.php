@@ -16,13 +16,17 @@ if ($_GET ['id']) {
     if(!isset($_SESSION['lastHitPost'])){
         $_SESSION['lastHitPost'] = "-1";
     }
+    //Sant hvis det innlegget brukeren sist så på ikke er dette innlegget
     if($_SESSION['lastHitPost'] != $post->getID()){
+        //Øker hit telleren med en i databasen
         $post->iGotHit($db);
+        //Øker hit telleren med en i objektet
+        $post->setHits($post->getHits());
+        //Setter variabelen for innlegget brukeren sist så på til dette innlegget
         $_SESSION['lastHitPost'] = $post->getID();
-        $smarty->assign('hits', $post->getHits() + 1);
-    }else{
-        $smarty->assign('hits', $post->getHits());
     }
+    //Sender antallet treff dette innlegget har fått til smarty
+    $smarty->assign('hits', $post->getHits());
     if (isset($post)) {
         $smarty->assign('post', $post);
         $comments = $post->getComments($db, $post);

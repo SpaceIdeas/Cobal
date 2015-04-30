@@ -57,6 +57,9 @@ class Post {
         return $this->HITS;
     }
 
+    public function setHits($hits){
+        $this->HITS = $hits;
+    }
 
     public function getShortText() {
         return substr($this->TEXT, 0, 150) . '...';

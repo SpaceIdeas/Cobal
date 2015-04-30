@@ -3,7 +3,7 @@
         <h3 class="panel-title">{$post->getTitle()}</h3>
     </div>
     <div class="panel-body">
-        <p>Oprettet {$post->getTimeCreated()} av {$post->getAuthorName($db)}</p>
+        <p>Oprettet {$post->getTimeCreated()} av {$post->getAuthorName($db)} <span class="label label-info">Treff: {$post->getHits()}</span></p>
         <p>{$post->getShortText()}</p>
     </div>
     <div class="panel-footer">
