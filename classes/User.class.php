@@ -17,7 +17,7 @@ class User {
     function __construct($email, $username, $admin) {
         $this->email = $email;
         $this->username = $username;
-        $this->isAdmin = $admin;
+        $this->admin = $admin;
         $this->IPAddress = $_SERVER["REMOTE_ADDR"];
         $this->UserAgent = $_SERVER['HTTP_USER_AGENT'];
     }
@@ -112,7 +112,7 @@ class User {
                 $salt = $row["SALT"];
                 if($hashpassord == sha1($password . $salt)){
                     $_SESSION['loggedin'] = true;
-                    $_SESSION['user'] = new User(htmlentities($email) , htmlentities($row["USERNAME"]), ADMIN==1?true:false);
+                    $_SESSION['user'] = new User(htmlentities($email) , htmlentities($row["USERNAME"]), $row['ADMIN']==1?true:false);
                     return true;
                 }
             }else {

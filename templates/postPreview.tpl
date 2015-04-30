@@ -1,6 +1,10 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">{$post->getTitle()}</h3>
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title pull-left">{$post->getTitle()}</h3>
+        {if isset($smarty.session.user) and $smarty.session.user->isAdmin()}
+            <button class="btn btn-primary btn-sm pull-right" href="editPost.php?id={$post->getId()}">Rediger</button>
+            <button class="btn btn-danger btn-sm pull-right" href="deletePost.php?id={$post->getId()}">Slett</button>
+        {/if}
     </div>
     <div class="panel-body">
         <p>Oprettet {$post->getTimeCreated()} av {$post->getAuthorName($db)} <span class="label label-info">Treff: {$post->getHits()}</span></p>
