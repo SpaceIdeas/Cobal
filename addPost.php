@@ -20,4 +20,15 @@ if (isset($_POST['btnAddPost']))
     $post->setAuthorEmail($_SESSION['user']->getEmail());
     $post->addToDB($db);
 }
+
+if (isset($_POST['btnUploadFile'])) {
+    $userfile = $_FILES['userfile']['tmp_name'];
+    if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+        copy($userfile, "/tmp/");
+        echo 'hello';}
+    else {
+        echo "Possible file upload attack: filename '$userfile'."; }
+    /* ...or... */
+    move_uploaded_file($userfile, "/tmp/");
+}
 $smarty->display('addPost.tpl');
