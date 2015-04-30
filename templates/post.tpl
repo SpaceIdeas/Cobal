@@ -1,15 +1,20 @@
 {include file='header.tpl'}
-<div class="blog-main"> <!--blog   -->
+<div class="blog-main"> <!--blog-->
     <div class="blog-post">
         <h1 class="blog-post-title">{$post->getTitle($db)}</h1>
+        {if isset($smarty.session.user) and $smarty.session.user->isAdmin()}
+            <a class="btn btn-primary btn-sm pull-right" role="button" href="editPost.php?id={$post->getId()}">Rediger</a>
+            <a class="btn btn-danger btn-sm pull-right" role="button" href="deletePost.php?id={$post->getId()}">Slett</a>
+        {/if}
         <p class="blog-post-meta"><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)} <span class="label label-info">Treff: {$hits}</span></b></p>
+
         <p>{$post->getText()}</p>
     </div>
 </div>
 {if isset($smarty.session.user)}
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{$smarty.session.user->getUsername()} kommenterte:</h3>
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title pull-left">{$smarty.session.user->getUsername()} kommenterte:</h3>
         </div>
         <div class="panel-body">
             <form class="form-inline" role="form" method="POST">
