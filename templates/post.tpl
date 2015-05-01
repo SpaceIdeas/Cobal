@@ -14,9 +14,18 @@
         </p>
 
         <p>{$post->getText()}</p>
+        {if isset($attachment)}
+        <form class="form-inline" role="form" method="POST">
+                <div class="form-group">
+                    <button class="btn btn-default" role="button" aria-label="Left Align" name="btnShowAttachment"></button>
+                </div>
+                </form>
+            {/if}
+
     </div>
 </div>
 {if isset($smarty.session.user)}
+
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left">{$smarty.session.user->getUsername()} kommenterte:</h3>

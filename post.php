@@ -16,6 +16,7 @@ if ($_GET ['id']) {
     if(!isset($_SESSION['lastHitPost'])){
         $_SESSION['lastHitPost'] = "-1";
     }
+
     //Sant hvis det innlegget brukeren sist så på ikke er dette innlegget
     if($_SESSION['lastHitPost'] != $post->getID()){
         //Øker hit telleren med en i databasen
@@ -31,7 +32,8 @@ if ($_GET ['id']) {
         $smarty->assign('post', $post);
         $comments = $post->getComments($db, $post);
         $smarty->assign('comments', $post->getComments($db));
-        $smarty->display('post.tpl');
+        $attachment = $post->getAttachment($db);
+        $smarty->assign('attachment', $attachment);
 
         if (isset($_POST['btnComment']))
         {
@@ -40,8 +42,13 @@ if ($_GET ['id']) {
             $comment->setAuthorEmail($_SESSION['user']->getEmail());
             $comment->setPostID($post->getID());
             $comment->addToDB($db);
-            echo 'hello';
         }
+
+        if (isset($_POST['btnShowAttachment'])) {
+            header("Content-Type:" . $attachment->getMIMEType());
+            echo $attachment->getData();
+        }
+        $smarty->display('post.tpl');
     }
     else {
 
