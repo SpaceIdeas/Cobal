@@ -10,7 +10,7 @@ require_once('libs/Smarty.class.php');
 require_once('db.php');
 $smarty = new Smarty();
 session_start();
-if ($_GET ['id']) {
+if (isset($_GET ['id'])) {
     $smarty->assign('db', $db);
     $post = Post::getPost($db, ( int ) $_GET ['id']);
     if(!isset($_SESSION['lastHitPost'])){
@@ -53,4 +53,7 @@ if ($_GET ['id']) {
     else {
 
     }
+}else{
+    $alert = new Alert(Alert::ERROR, "Et innlegg er ikke valgt. Prøv igjen hvis du tørr.");
+    $alert->displayOnIndex();
 }
