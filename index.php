@@ -11,6 +11,7 @@ require_once('db.php');
 session_start();
 $smarty = new Smarty();
 Alert::displayAlertFromSession($smarty);
+
 if(isset($_GET['searchWord'])){
     $posts = Post::getPostsBySearch($db, $_GET['searchWord']);
 } else if(isset($_GET['year']) && isset($_GET['month'])) {

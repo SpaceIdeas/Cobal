@@ -12,14 +12,19 @@ class Comment {
     private $AUTHOR_EMAIL;
     private $TIME_CREATED;
     private $POST_ID;
+    private $DELETED;
 
 
     public function getID(){
-    $this->ID;
+        return $this->ID;
+    }
+
+    public function setID($id){
+        $this->ID = $id;
     }
 
     public function getText(){
-    return $this->TEXT;
+        return $this->TEXT;
     }
 
     public function setText($text) {
@@ -38,6 +43,10 @@ class Comment {
         return $this->TIME_CREATED;
     }
 
+    public function setTimeCreated($timeCreated){
+        $this->TIME_CREATED = $timeCreated;
+    }
+
     public function getPostID(){
         return $this->POST_ID;
     }
@@ -46,8 +55,27 @@ class Comment {
         $this->POST_ID = $postID;
     }
 
+    public function getDeleted(){
+        return $this->DELETED;
+    }
+
+    public function setDeleted($deleted) {
+        $this->DELETED = $deleted;
+    }
+
     public function getAuthorName(PDO $db) {
         return User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
+    }
+
+    public static function rowToComment($row){
+        $comment = new Comment();
+        $comment->setID($row['ID']);
+        $comment->setText($row['TEXT']);
+        $comment->setAuthorEmail($row['AUTHOR_EMAIL']);
+        $comment->setTimeCreated($row['TIME_CREATED']);
+        $comment->setPostID($row['POST_ID']);
+        $comment->setDeleted($row['DELETED']);
+        return $comment;
     }
 
     public function addToDB(PDO $db) {
@@ -60,13 +88,20 @@ class Comment {
         }
     }
 
+    /**
+     * Sletter en kommentar
+     * @param PDO $db
+     * @return bool
+     */
     public function deleteComment(PDO $db){
         try
         {
+            //Først blir kommentaren satt inn i loggen for slettede kommentarer
             $statement = $db->prepare("INSERT INTO COMMENT_DELETE_LOG (COMMENT_ID, TIME_DELETED, TEXT) VALUES (?, NOW(), ?)");
             $insertResult = $statement->execute(array($this->ID, $this->TEXT));
-            $statement = $db->prepare("UPDATE COMMENT SET TEXT = ? WHERE ID = ?");
-            $deleteResult = $statement->execute(array("Denne kommentaren ble slettet " . new DateTime, $this->ID));
+            //Deretter blir kommentaren satt som slettet i tabellen for kommentarer
+            $statement = $db->prepare("UPDATE COMMENT SET TEXT = 'Slettet', DELETED = 1  WHERE ID = ?");
+            $deleteResult = $statement->execute(array($this->ID));
             if($insertResult && $deleteResult){
                 return true;
             }
@@ -76,13 +111,31 @@ class Comment {
         }
     }
 
+    /**
+     * Henter en kommentar fra databasen basert på en kommentar id
+     * @param $db
+     * @param $id
+     * @return mixed
+     */
+    public static function getCommentByID(PDO $db, $id){
+        try{
+            $statement = $db->prepare("SELECT ID, TEXT, AUTHOR_EMAIL, TIME_CREATED, POST_ID, DELETED FROM COMMENT WHERE ID = ?");
+            $statement->execute(array($id));
+            $row = $statement->fetch();
+            $comment = Comment::rowToComment($row);
+            return $comment;
+        }catch(Exception $e) {
+            return null;
+        }
+    }
+
     public static function  getCommentsByPost(PDO $db, Post $post) {
-        $statement = $db->prepare("SELECT * FROM COMMENT WHERE POST_ID = ? ORDER BY TIME_CREATED DESC");
+        $statement = $db->prepare("SELECT ID, TEXT, AUTHOR_EMAIL, TIME_CREATED, POST_ID, DELETED FROM COMMENT WHERE POST_ID = ? ORDER BY TIME_CREATED DESC");
         $statement->bindParam(1, $post->getID());
         $statement->execute();
         $comments = [];
-        while ($comment = $statement->fetchObject('Comment')) {
-            $comments[] = $comment;
+        while ($row = $statement->fetch()) {
+            $comments[] = Comment::rowToComment($row);
         }
         return $comments;
     }
