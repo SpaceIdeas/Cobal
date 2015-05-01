@@ -54,7 +54,23 @@ class Comment {
         try
         {
             $statement = $db->prepare("INSERT INTO COMMENT (TEXT, AUTHOR_EMAIL, POST_ID, TIME_CREATED) VALUES (?, ?, ?, NOW())");
-            return $statement->execute(array($this->TEXT, $this->AUTHOR_EMAIL, $this->POST_ID));
+            return $statement->execute(array(htmlentities($this->TEXT), $this->AUTHOR_EMAIL, $this->POST_ID));
+        }catch(Exception $e) {
+            return false;
+        }
+    }
+
+    public function deleteComment(PDO $db){
+        try
+        {
+            $statement = $db->prepare("INSERT INTO COMMENT_DELETE_LOG (COMMENT_ID, TIME_DELETED, TEXT) VALUES (?, NOW(), ?)");
+            $insertResult = $statement->execute(array($this->ID, $this->TEXT));
+            $statement = $db->prepare("UPDATE COMMENT SET TEXT = ? WHERE ID = ?");
+            $deleteResult = $statement->execute(array("Denne kommentaren ble slettet " . new DateTime, $this->ID));
+            if($insertResult && $deleteResult){
+                return true;
+            }
+            return false;
         }catch(Exception $e) {
             return false;
         }
