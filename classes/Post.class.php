@@ -224,6 +224,8 @@ class Post {
         }
     }
 
-
+    public function getAttachment($db) {
+        return Attachment::getFromPostID($db, $this->ID);
+    }
 
 }
