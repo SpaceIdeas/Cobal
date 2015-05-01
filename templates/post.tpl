@@ -17,7 +17,7 @@
         {if isset($attachment)}
         <form class="form-inline" role="form" method="POST">
                 <div class="form-group">
-                    <button class="btn btn-default" role="button" aria-label="Left Align" name="btnShowAttachment"></button>
+                    <button class="btn btn-default" role="button" aria-label="Left Align" value="Vis vedlegg" name="btnShowAttachment"></button>
                 </div>
                 </form>
             {/if}

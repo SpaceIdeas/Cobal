@@ -9,8 +9,8 @@
 class Attachment {
     private $ID;
     private $DATA;
-    private $POST_ID;
     private $MIME_TYPE;
+    private $POST_ID;
 
     public function addToDB(PDO $db) {
         try
@@ -50,6 +50,11 @@ class Attachment {
         $statement = $db->prepare("SELECT * FROM ATTACHMENT WHERE POST_ID = ?");
         $statement->bindParam(1, $postID);
         $statement->execute();
-        return $statement->fetchObject('Attachment');
+        if ($statement->fetchObject('Attachment')) {
+            return $statement;
+        }
+        else {
+            return null;
+        }
     }
 }
