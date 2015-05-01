@@ -53,7 +53,7 @@ class Comment {
     public function addToDB(PDO $db) {
         try
         {
-            $statement = $db->prepare("INSERT INTO COMMENT (TEXT, AUTHOR_EMAIL, POST_ID) VALUES (?, ?, ?)");
+            $statement = $db->prepare("INSERT INTO COMMENT (TEXT, AUTHOR_EMAIL, POST_ID, TIME_CREATED) VALUES (?, ?, ?, NOW())");
             return $statement->execute(array($this->TEXT, $this->AUTHOR_EMAIL, $this->POST_ID));
         }catch(Exception $e) {
             return false;
