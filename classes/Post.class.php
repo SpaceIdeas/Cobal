@@ -68,8 +68,8 @@ class Post {
     public function addToDB(PDO $db) {
         try
         {
-            $statement = $db->prepare("INSERT INTO POST (TITLE, TEXT, AUTHOR_EMAIL, TIMECREATED) VALUES (?, ?, ?, NOW())");
-            return $statement->execute(array(htmlentities($this->TITLE), $this->TEXT, $this->AUTHOR_EMAIL));
+            $statement = $db->prepare("INSERT INTO POST (TITLE, TEXT, AUTHOR_EMAIL, TIME_CREATED) VALUES (?, ?, ?, NOW())");
+            return $statement->execute(array($this->TITLE, $this->TEXT, $this->AUTHOR_EMAIL));
         }catch(Exception $e) {
             return false;
         }
