@@ -61,7 +61,7 @@ class User {
         try{
             $stmt = $db->prepare("UPDATE USER SET USERNAME  = ? WHERE EMAIL = ?");
             //Binder parametrene og utfører statmenten
-            $result = $stmt->execute(array($this->username, $this->email));
+            $result = $stmt->execute(array(htmlentities($this->username), $this->email));
             //Returnerer om UPDATE setningen var vellyket
             return $result;
 
@@ -84,7 +84,7 @@ class User {
             $stmt->execute();
             if ($row = $stmt->fetch() )
             {
-               return htmlentities($row["USERNAME"]);
+               return $row["USERNAME"];
             }else {
                 return null;
             }
@@ -112,7 +112,7 @@ class User {
                 $salt = $row["SALT"];
                 if($hashpassord == sha1($password . $salt)){
                     $_SESSION['loggedin'] = true;
-                    $_SESSION['user'] = new User(htmlentities($email) , htmlentities($row["USERNAME"]), $row['ADMIN']==1?true:false);
+                    $_SESSION['user'] = new User($email , $row["USERNAME"], $row['ADMIN']==1?true:false);
                     return true;
                 }
             }else {
@@ -161,7 +161,7 @@ class User {
 
             $stmt = $db->prepare("INSERT INTO USER (EMAIL, PWD_HASH, SALT, USERNAME) VALUES (?, ?, ?, ?)");
             //Binder parametrene og utfører statmenten
-            $result = $stmt->execute(array($email, sha1($password . $salt), $salt, $username));
+            $result = $stmt->execute(array(htmlentities($email), sha1($password . $salt), $salt, htmlentities($username)));
             //Returnerer om INSERT setningen var vellykket
             return $result;
 
