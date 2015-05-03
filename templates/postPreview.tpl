@@ -2,7 +2,7 @@
     <div class="panel-heading clearfix">
         <h3 class="panel-title pull-left">{$post->getTitle()}</h3>
         {if isset($smarty.session.user) and $smarty.session.user->isAdmin()}
-            <a class="btn btn-danger btn-sm pull-right" role="button" href="deletePost.php?id={$post->getID()}" onclick="javascript:return confirm('Er du sikker på at du vil slette dette innlegget?')">Slett</a>
+            <a class="btn btn-danger btn-sm pull-right" role="button" href="deletePost.php?id={$post->getID()}&return={$smarty.server.PHP_SELF}" onclick="javascript:return confirm('Er du sikker på at du vil slette dette innlegget?')">Slett</a>
             <a class="btn btn-primary btn-sm pull-right" role="button" href="editPost.php?id={$post->getID()}">Rediger</a>
         {/if}
     </div>
@@ -13,7 +13,7 @@
                 {include file='span/youSpan.tpl'}
             {/if}
         </p>
-        <p>{$post->getShortText()}</p>
+        <p class="text-justify">{$post->getShortText()}</p>
     </div>
     <div class="panel-footer">
         <a href="post.php?id={$post->getID()}" class="btn btn-default" role="button" aria-label="Left Align">

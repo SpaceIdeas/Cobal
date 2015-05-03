@@ -13,7 +13,7 @@ session_start();
 $smarty = new Smarty();
 Verify::sessionAndAdminLoggedIn();
 //Sant hvis get har de variablene som er nødvendig
-if(isset($_GET['id']) && isset($_GET['return']) && isset($_SESSION['user'])) {
+if(isset($_GET['id']) && isset($_GET['return'])) {
     //Prøver å hente innlegget ut av databasen, basert på IDen gitt
     $post = Post::getPost($db, $_GET['id']);
     //Sant hvis innlegget ble funnet i databasen

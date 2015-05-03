@@ -11,6 +11,7 @@ require_once ('config.php');
 require_once('db.php');
 session_start();
 $smarty = new Smarty();
+Alert::displayAlertFromSession($smarty);
 //Sjekker at brukeren er logget inn og sessionen ikke er kapret. Metoden hånterer selv vis en av de to situasjonene oppstår
 Verify::sessionAndUserLoggedIn();
 

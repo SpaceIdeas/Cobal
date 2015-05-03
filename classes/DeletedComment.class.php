@@ -90,8 +90,29 @@ class DeletedComment {
         $this->POST_ID = $postID;
     }
 
+    /**
+     * Gjennoppretter en slettet kommentar
+     * @param PDO $db
+     * @return bool
+     */
+    public function restoreComment(PDO $db){
+        try
+        {
+            $statement = $db->prepare("UPDATE COMMENT SET TEXT = ?, DELETED = 0 WHERE ID = ?");
+            $updateResult = $statement->execute(array($this->TEXT, $this->ID));
+            $statement = $db->prepare("DELETE FROM COMMENT_DELETE_LOG WHERE COMMENT_ID = ?");
+            $deleteResult = $statement->execute(array($this->ID));
+            if($updateResult && $deleteResult){
+                return true;
+            }
+            return false;
+        }catch(Exception $e) {
+            return false;
+        }
+    }
+
     public static function rowToDeletedComment($row){
-        $deletedComment = new Comment();
+        $deletedComment = new DeletedComment();
         $deletedComment->setID($row['COMMENT_ID']);
         $deletedComment->setText($row['TEXT']);
         $deletedComment->setAuthorEmail($row['AUTHOR_EMAIL']);
@@ -124,39 +145,21 @@ class DeletedComment {
 
 
     /**
-     * Henter en kommentar fra databasen basert på en kommentar id
+     * Henter en slettet kommentar fra databasen basert på en kommentar id
      * @param $db
      * @param $id
      * @return mixed
-     *//*
-    public static function getCommentByID(PDO $db, $id){
+     */
+    public static function getDeletedCommentByID(PDO $db, $id){
         try{
-            $statement = $db->prepare("SELECT ID, TEXT, AUTHOR_EMAIL, TIME_CREATED, POST_ID, DELETED FROM COMMENT WHERE ID = ?");
+            $statement = $db->prepare("SELECT COMMENT_ID, TEXT, AUTHOR_EMAIL, AUTHOR_USERNAME, TIME_CREATED, TIME_DELETED, POST_ID FROM DELETED_COMMENT WHERE COMMENT_ID = ?");
             $statement->execute(array($id));
             $row = $statement->fetch();
-            $comment = Comment::rowToComment($row);
-            return $comment;
+            $deletedComment = DeletedComment::rowToDeletedComment($row);
+            return $deletedComment;
         }catch(Exception $e) {
             return null;
         }
     }
 
-    public static function  getCommentsByPost(PDO $db, Post $post) {
-        $statement = $db->prepare("SELECT ID, TEXT, AUTHOR_EMAIL, TIME_CREATED, POST_ID, DELETED FROM COMMENT WHERE POST_ID = ? ORDER BY TIME_CREATED DESC");
-        $statement->bindParam(1, $post->getID());
-        $statement->execute();
-        $comments = [];
-        while ($row = $statement->fetch()) {
-            $comments[] = Comment::rowToComment($row);
-        }
-        return $comments;
-    }
-
-    public static function  getCommentCount(PDO $db, Post $post) {
-        $statement = $db->prepare("SELECT COUNT(ID) FROM COMMENT WHERE POST_ID = ?");
-        $statement->bindParam(1, $post->getID());
-        $statement->execute();
-        return $statement->fetch()['COUNT(ID)'];
-    }
-    */
 }

@@ -3,7 +3,7 @@
     <div class="blog-post">
         <h1 class="blog-post-title">{$post->getTitle($db)}</h1>
         {if isset($smarty.session.user) and $smarty.session.user->isAdmin()}
-            <a class="btn btn-danger btn-sm pull-right" role="button" href="deletePost.php?id={$post->getID()}" onclick="javascript:return confirm('Er du sikker på at du vil slette dette innlegget?')">Slett</a>
+            <a class="btn btn-danger btn-sm pull-right" role="button" href="deletePost.php?id={$post->getID()}&return={$smarty.server.PHP_SELF}" onclick="javascript:return confirm('Er du sikker på at du vil slette dette innlegget?')">Slett</a>
             <a class="btn btn-primary btn-sm pull-right" role="button" href="editPost.php?id={$post->getID()}">Rediger</a>
         {/if}
         <p class="blog-post-meta"><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)} </b>
@@ -30,11 +30,11 @@
             <h3 class="panel-title pull-left">{$smarty.session.user->getUsername()} kommenterte:</h3>
         </div>
         <div class="panel-body">
-            <form class="form-inline" role="form" method="POST">
-            <div class="form-group">
+            <form class="form-group" role="form" method="POST">
+
                 <label for="comment">Din kommentar:</label>
                 <textarea class="form-control" rows="5" id="comment" name="txtComment"></textarea>
-            </div>
+
             <div class="panel-footer">
                 <button class="btn btn-default" role="button" aria-label="Left Align" name="btnComment">
                     <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>Kommenter

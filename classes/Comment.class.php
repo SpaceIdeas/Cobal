@@ -112,6 +112,8 @@ class Comment {
         }
     }
 
+
+
     /**
      * Henter en kommentar fra databasen basert på en kommentar id
      * @param $db
