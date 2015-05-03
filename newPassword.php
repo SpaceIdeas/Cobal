@@ -12,7 +12,6 @@
  * har glemt hva.
  */
 require_once('config.php');
-require_once('libs/Smarty.class.php');
 require_once('db.php');
 session_start();
 

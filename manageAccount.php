@@ -8,12 +8,12 @@
  */
 
 require_once ('config.php');
-require_once('libs/Smarty.class.php');
 require_once('db.php');
 session_start();
+$smarty = new Smarty();
 //Sjekker at brukeren er logget inn og sessionen ikke er kapret. Metoden hånterer selv vis en av de to situasjonene oppstår
 Verify::sessionAndUserLoggedIn();
-$smarty = new Smarty();
+
 //Sjekker om brukeren prøver å bytte brukernavn
 if (isset($_POST['btnNewUsername'])) {
     //Oppdatere brukerobjektet til brukeren sitt brukernavn
