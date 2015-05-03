@@ -76,4 +76,8 @@ class Alert {
             $alert->displayOnThisPage($smarty);
         }
     }
+
+    public function removeFromSession() {
+        unset($_SESSION['alert']);
+    }
 }

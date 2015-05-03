@@ -15,14 +15,14 @@
         });
     </script>
 {/literal}
-
-
-    <form method="POST" ENCTYPE="multipart/form-data" >
-        Tittle: <input name="txtTitle" class="form-control" placeholder="Inleggstittel" required autofocus >
+    <form method="POST" enctype="multipart/form-data" >
+        <label for="txtTitle">Tittel</label>
+        <input name="txtTitle" class="form-control" placeholder="Inleggstittel" required autofocus id="txtTitle">
         <textarea name="txtPost" style="width:100%"></textarea>
-        <INPUT TYPE="hidden" name="MAX_FILE_SIZE" value="100000000000000">
-        Send this file: <INPUT NAME="userfile" id="userfile" TYPE="file">
-        <input type="submit" class="btn btn-default" name="btnAddPost">
+        <input type="hidden" name="MAX_FILE_SIZE" value="100000000000000">
+        <label for="userfile">Vedlegg</label>
+        <input name="userfile" id="userfile" TYPE="file" >
+        <input type="submit" class="btn btn-default" value="Post innlegget" name="btnAddPost">
     </form>
 {/if}
 {include file='footer.tpl'}

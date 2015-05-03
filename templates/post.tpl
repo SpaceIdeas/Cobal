@@ -17,11 +17,10 @@
         {if isset($attachment)}
         <form class="form-inline" role="form" method="POST">
                 <div class="form-group">
-                    <button class="btn btn-default" role="button" aria-label="Left Align" value="Vis vedlegg" name="btnShowAttachment"></button>
+                    <button class="btn btn-default" aria-label="Left Align" name="btnShowAttachment">Vis vedlegg</button>
                 </div>
                 </form>
             {/if}
-
     </div>
 </div>
 {if isset($smarty.session.user)}
@@ -38,7 +37,7 @@
             </div>
             <div class="panel-footer">
                 <button class="btn btn-default" role="button" aria-label="Left Align" name="btnComment">
-                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>Kommenter
                 </button>
             </div>
                 </form>
@@ -61,7 +60,6 @@
         {else}
             <li class="next disabled"><a href="#"><span aria-hidden="true">&rarr;</span> Neste</a></li>
         {/if}
-
     </ul>
 </nav>
 {include file='footer.tpl'}
