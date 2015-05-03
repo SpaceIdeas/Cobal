@@ -3,12 +3,14 @@
 {if isset($successMessage)}
     <div class="alert alert-success alert-dismissible" role="alert">
         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        <button type="button" class="close" data-dismiss="alert">×</button>
         {$successMessage}
     </div>
 {/if}
 {if isset($errorMessage)}
     <div class="alert alert-danger alert-dismissible" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <button type="button" class="close" data-dismiss="alert">×</button>
         {$errorMessage}
     </div>
 {/if}

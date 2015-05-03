@@ -15,7 +15,7 @@ if(isset($_GET['searchWord'])){
     $posts = Post::getPostsBySearch($db, $_GET['searchWord']);
 } else if(isset($_GET['year']) && isset($_GET['month'])) {
     //Henter alle innleggene i fra den spesifike måneden og året.
-    //array_search($_GET['month'], YearPostList::$norwegianMonth) gjør en måned i norske bokstaver om til tallet til måneden
+    //array_search($_GET['month'], YearPostList::$norwegianMonth) gjør en måned i norske boks   taver om til tallet til måneden
     $posts = Post::getPostsByMonthYear($db, array_search($_GET['month'], YearPostList::$norwegianMonth), $_GET['year']);
 }else {
     $posts = Post::getAllPosts($db);
@@ -27,8 +27,6 @@ if (isset($_GET['verToken'])) {
         $smarty->assign('errorMessage', 'Din epost kunne ikke bekreftes.');
     }
 }
-
-
 
 $smarty->assign('posts', $posts);
 
