@@ -9,7 +9,7 @@ require_once('config.php');
 require_once('db.php');
 session_start();
 $smarty = new Smarty();
-Verify::userLoggedIn();
+Verify::sessionAndAdminLoggedIn();
 Alert::displayAlertFromSession($smarty);
 if (isset($_POST['btnAddPost'])) {
     // Legger til inlegg i database

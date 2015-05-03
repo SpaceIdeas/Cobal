@@ -6,10 +6,8 @@
  * Time: 17:40
  */
 require_once('config.php');
-require_once('libs/Smarty.class.php');
 require_once('db.php');
 session_start();
-$smarty = new Smarty();
 Alert::displayAlertFromSession($smarty);
 
 if(isset($_GET['searchWord'])){

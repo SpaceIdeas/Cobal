@@ -7,7 +7,7 @@
  * All Rights Reserved
  */
 
-class deletedComment {
+class DeletedComment {
     private $ID;
     private $TEXT;
     private $AUTHOR_EMAIL;
@@ -88,10 +88,6 @@ class deletedComment {
 
     public function setPostID($postID) {
         $this->POST_ID = $postID;
-    }
-
-    public function getAuthorName(PDO $db) {
-        return User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
     }
 
     public static function rowToDeletedComment($row){

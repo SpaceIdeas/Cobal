@@ -11,7 +11,7 @@ require_once ('config.php');
 require_once('libs/Smarty.class.php');
 require_once('db.php');
 session_start();
-$smarty = new Smarty();
+Verify::sessionAndAdminLoggedIn();
 //Sant hvis get har de variablene som er nødvendig
 if(isset($_GET['id']) && isset($_GET['return']) && isset($_SESSION['user'])) {
     //Prøver å hente innlegget ut av databasen, basert på IDen gitt

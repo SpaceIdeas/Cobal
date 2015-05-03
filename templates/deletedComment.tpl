@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
-        <h4 class="panel-title pull-left">Klokken {$deletedComment->getTimeCreated($db)} kommenterte {$deletedComment->getAuthorName($db)} ({$deletedComment->getAuthorEmail($db)}) Slettet: {$deletedComment->getTimeDeleted($db)}
+        <h4 class="panel-title pull-left">Klokken {$deletedComment->getTimeCreated()} kommenterte {$deletedComment->getAuthorUsername()} ({$deletedComment->getAuthorEmail()}) Slettet: {$deletedComment->getTimeDeleted()}
             {if isset($smarty.session.user) and $deletedComment->getAuthorEmail() eq $smarty.session.user->getEmail()}
                 {include file='span/youSpan.tpl'}
             {/if}
