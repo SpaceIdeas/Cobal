@@ -10,7 +10,6 @@
  * e-post med en link hvor man kan oprette et nytt passord hvis man har glemt det.
  */
 require_once ('config.php');
-require_once('libs/Smarty.class.php');
 require_once('db.php');
 session_start();
 $smarty = new Smarty();

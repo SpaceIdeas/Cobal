@@ -55,13 +55,14 @@ class Comment {
         $this->POST_ID = $postID;
     }
 
-    public function getDeleted(){
+    public function isDeleted(){
         return $this->DELETED;
     }
 
     public function setDeleted($deleted) {
         $this->DELETED = $deleted;
     }
+
 
     public function getAuthorName(PDO $db) {
         return User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
@@ -74,7 +75,7 @@ class Comment {
         $comment->setAuthorEmail($row['AUTHOR_EMAIL']);
         $comment->setTimeCreated($row['TIME_CREATED']);
         $comment->setPostID($row['POST_ID']);
-        $comment->setDeleted($row['DELETED']);
+        $comment->setDeleted($row['DELETED'] == 0?false:true);
         return $comment;
     }
 

@@ -8,12 +8,12 @@
  */
 
 require_once ('config.php');
-require_once('libs/Smarty.class.php');
 require_once('db.php');
 session_start();
 $smarty = new Smarty();
+Verify::sessionAndUserLoggedIn();
 //Sant hvis get har de variablene som er nødvendig
-if(isset($_GET['id']) && isset($_GET['return'])){
+if(isset($_GET['id']) && isset($_GET['return']) && isset($_SESSION['user'])){
     //Prøver å hente kommentaren ut av databasen, basert på IDen gitt
     $comment = Comment::getCommentByID($db, $_GET['id']);
     //Sant hvis kommentaren ble funnet i databasen
@@ -30,4 +30,7 @@ if(isset($_GET['id']) && isset($_GET['return'])){
         $alert = new Alert(Alert::ERROR, "Kommentaren ble ikke funnet i databasen. Du får ta til takke med denne kommentaren");
         $alert->displayOnOtherPage($_SERVER['HTTP_REFERER']);
     }
+}else{
+    header("Location: index.php");
+    die();
 }

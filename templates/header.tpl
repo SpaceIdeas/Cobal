@@ -21,7 +21,8 @@
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Hjem</a></li>
                 {if isset($smarty.session.user) && $smarty.session.user->isAdmin()}
-                <li><a href="addPost.php">Legg til innlegg</a></li>
+                    <li><a href="addPost.php">Legg til innlegg</a></li>
+                    <li><a href="manageComments.php">Administrer kommentarer</a></li>
                 {/if}
             </ul>
             <form class="navbar-form navbar-right" role="search" action="index.php" method="get">

@@ -79,7 +79,17 @@ class Post {
         return User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
     }
 
-    public static function  getPost(PDO $db, $id) {
+    public function deletePost(PDO $db){
+        try
+        {
+            $statement = $db->prepare("DELETE FROM POST WHERE ID = ?");
+            return $statement->execute(array($this->ID));
+        }catch(Exception $e) {
+            return false;
+        }
+    }
+
+    public static function getPost(PDO $db, $id) {
         $statement = $db->prepare("SELECT * FROM POST WHERE ID = ?");
         $statement->bindParam(1, $id);
         $statement->execute();
