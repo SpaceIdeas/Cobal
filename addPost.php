@@ -6,7 +6,6 @@
  * Time: 17:27
  */
 require_once('config.php');
-require_once('libs/Smarty.class.php');
 require_once('db.php');
 session_start();
 $smarty = new Smarty();
@@ -19,7 +18,7 @@ if (isset($_POST['btnAddPost'])) {
     $post->setTitle($_POST['txtTitle']);
     $post->setAuthorEmail($_SESSION['user']->getEmail());
 
-    // Inlegget ble lagt til i databasen
+    // Innlegget ble lagt til i databasen
     if ($post->addToDB($db)) {
         $postID = $db->lastInsertId();
         // Hvis en fil er valgt som vedlegg
