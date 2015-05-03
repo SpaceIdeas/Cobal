@@ -50,8 +50,8 @@ class Attachment {
         $statement = $db->prepare("SELECT * FROM ATTACHMENT WHERE POST_ID = ?");
         $statement->bindParam(1, $postID);
         $statement->execute();
-        if ($statement->fetchObject('Attachment')) {
-            return $statement;
+        if ($attachment = $statement->fetchObject('Attachment')) {
+            return $attachment;
         }
         else {
             return null;

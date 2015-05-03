@@ -12,6 +12,11 @@ spl_autoload_extensions('.class.php');
 function classLoader($class){
     $filename = $class . '.class.php';
     $file ='classes'. DIRECTORY_SEPARATOR . $filename;
+
+    // Smarty ligger i libs-mappa.
+    if ($class == 'Smarty') {
+        $file = 'libs' . DIRECTORY_SEPARATOR . $filename;
+    }
     if (!file_exists($file))
     {
         return false;
@@ -21,7 +26,3 @@ function classLoader($class){
 }
 
 spl_autoload_register('classLoader');
-/*
-function __autoload($class) {
-    include ('classes/' . $class . '.class.php');
-} */

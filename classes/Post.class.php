@@ -93,7 +93,13 @@ class Post {
         $statement = $db->prepare("SELECT * FROM POST WHERE ID = ?");
         $statement->bindParam(1, $id);
         $statement->execute();
-        return $statement->fetchObject('Post');
+        // Returnerern null hvis en feil oppstår
+        if ($post = $statement->fetchObject('Post')) {
+            return $post;
+        }
+        else {
+            return null;
+        }
     }
 
     public static function  getAllPosts(PDO $db) {
