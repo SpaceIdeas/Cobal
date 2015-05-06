@@ -47,7 +47,7 @@ elseif(isset($_POST['btnUpdatePicture'])) {
 
         // Hvis filen som er laste opp er den som skulle lastes opp
         if (is_uploaded_file($_FILES['profileImage']['tmp_name'])) {
-            $newProfileImage = new ProfileImage(file_get_contents($_FILES['profileImage']['tmp_name']), $_SESSION['user']->getEmail());
+            $newProfileImage = new ProfileImage(file_get_contents($_FILES['profileImage']['tmp_name']), $_FILES['profileImage']['type'], $_SESSION['user']->getEmail());
 
             // Oppdaterer profilbildet. Får true hvis vellykket.
             if ($newProfileImage->updateDB($db)) {

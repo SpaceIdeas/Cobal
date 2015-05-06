@@ -13,7 +13,7 @@ require_once('config.php');
         $post = POST::getPost($db, $_GET['postID']);
         $profileImage = ProfileImage::getProfileImage($db, $post->getAuthorEmail());
         if (isset($profileImage)) {
-            header("Content-Type:image/jpeg");
+            header("Content-Type:" . $profileImage->getMIMEType());
             echo($profileImage->getPicture());
         }
         else {
@@ -27,7 +27,7 @@ require_once('config.php');
             $profileImage = ProfileImage::getProfileImage($db, $comment->getAuthorEmail());
 
             if (isset($profileImage)) {
-                header("Content-Type:image/jpeg");
+                header("Content-Type:" . $profileImage->getMIMEType());
                 echo($profileImage->getPicture());
             }
             else {
