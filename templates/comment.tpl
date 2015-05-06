@@ -15,7 +15,7 @@
         {/if}
     </div>
     <div class="panel-body">
-        <img src="profileImage.php?commentID={$post->getID()}" class="personal-space">
+        <img src="profileImage.php?commentID={$comment->getID()}" class="personal-space">
         {$comment->getText()}
     </div>
 </div>
