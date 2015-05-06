@@ -23,6 +23,16 @@
                     <input class="btn btn-primary btn-block" type="submit" name="btnNewPassword" value="Bytt Passord" />
                 </form>
             </div>
+            <div class="panel panel-default">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="100000000000000">
+                        <label for="profileImage">Profilbilde:</label>
+                        <input name="profileImage" id="profileImage" TYPE="file" accept="image/*" >
+                    </div>
+                    <input class="btn btn-primary btn-block" type="submit" name="btnUpdatePicture" value="Oppdater profilbilde" />
+                </form>
+            </div>
         </div>
     </div>
 </p>
