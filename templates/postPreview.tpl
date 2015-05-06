@@ -26,7 +26,7 @@
                 <p class="text-justify">{$post->getShortText()}</p>
             </div>
             <div class="col-md-2">
-                <img src="img/DefaultProfilePic.jpg">
+                <img src="profileImage.php?postID={$post->getID()}">
             </div>
         </div>
     </div>
