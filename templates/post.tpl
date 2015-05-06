@@ -26,7 +26,7 @@
                 {/if}
              </div>
             <div class="col-md-2">
-                <img src="profileImage.php?postID={$post->getID()}" class="pull-right head-leg-space" >
+                <img src="profileImage.php?postID={$post->getID()}" height="100px" width="100px" class="pull-right head-leg-space">
             </div>
         </div>
     </div>
@@ -37,11 +37,12 @@
         <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left">{$smarty.session.user->getUsername()} kommenterte:</h3>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" id="commentBox">
             <form class="form-group" role="form" method="POST">
 
                 <label for="comment">Din kommentar:</label>
-                <textarea class="form-control" rows="5" id="comment" name="txtComment"></textarea>
+                <textarea class="form-control" rows="5" id="comment" name="txtComment">{if isset($replyTo)}>>{$replyTo}
+{/if}</textarea>
 
             <div class="panel-footer">
                 <button class="btn btn-default" role="button" aria-label="Left Align" name="btnComment">

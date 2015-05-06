@@ -44,6 +44,11 @@ if (isset($_GET ['id'])) {
 
         }
 
+        //'reply' er satt når brukeren skal svara på en kommentar, der verdien til 'reply' er id-en til kommmentaren
+        if(isset($_GET['reply'])){
+            $smarty->assign('replyTo', $_GET['reply']);
+        }
+
         $smarty->assign('post', $post);
         $comments = $post->getComments($db, $post);
         $smarty->assign('comments', $post->getComments($db));
