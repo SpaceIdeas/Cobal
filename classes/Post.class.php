@@ -117,13 +117,38 @@ class Post {
     }
 
     public static function  getAllPosts(PDO $db) {
-        $statement = $db->prepare("SELECT * FROM POST ORDER BY TIME_CREATED DESC");
-        $statement->execute();
-        $posts = [];
-        while ($post = $statement->fetchObject('Post')) {
-            $posts[] = $post;
+        try{
+            $statement = $db->prepare("SELECT * FROM POST ORDER BY TIME_CREATED DESC");
+            $statement->execute();
+            $posts = [];
+            while ($post = $statement->fetchObject('Post')) {
+                $posts[] = $post;
+            }
+            return $posts;
+        }catch(PDOException $e) {
+            return null;
         }
-        return $posts;
+    }
+
+    /**
+     * Ignorerer et antall innlegg og returnerer de neste 10, fra databasen
+     * @param PDO $db
+     * @param int $offset Antallet innlegg som skal ignoreres
+     * @return array|null
+     */
+    public static function getPostNextTenFrom(PDO $db, $offset){
+        try{
+            $statement = $db->prepare("SELECT ID, TITLE, TEXT, AUTHOR_EMAIL, TIME_CREATED, HITS FROM POST ORDER BY TIME_CREATED DESC LIMIT 10 OFFSET ?");
+            $statement->bindParam(1, $offset, PDO::PARAM_INT);
+            $statement->execute();
+            $posts = [];
+            while ($post = $statement->fetchObject('Post')) {
+                $posts[] = $post;
+            }
+            return $posts;
+        }catch(PDOException $e) {
+            return null;
+        }
     }
 
     public function getComments(PDO $db) {
@@ -193,7 +218,7 @@ class Post {
             }
             return $yearPostList;
 
-        }catch(Exception $e) {
+        }catch(PDOException $e) {
             return null;
         }
 
@@ -217,7 +242,7 @@ class Post {
                 $posts[] = $post;
             }
             return $posts;
-        }catch(Exception $e) {
+        }catch(PDOException $e) {
             return null;
         }
     }
@@ -233,7 +258,7 @@ class Post {
                 $posts[] = $post;
             }
             return $posts;
-        }catch(Exception $e) {
+        }catch(PDOException $e) {
             return null;
         }
     }
@@ -249,7 +274,7 @@ class Post {
         {
             $statement = $db->prepare("UPDATE POST SET HITS = HITS + 1 WHERE ID = ?");
             return $statement->execute(array($this->ID));
-        }catch(Exception $e) {
+        }catch(PDOException $e) {
             return false;
         }
     }

@@ -18,7 +18,7 @@ if(isset($_GET['searchWord'])){
     //array_search($_GET['month'], YearPostList::$norwegianMonth) gjør en måned i norske boks   taver om til tallet til måneden
     $posts = Post::getPostsByMonthYear($db, array_search($_GET['month'], YearPostList::$norwegianMonth), $_GET['year']);
 }else {
-    $posts = Post::getAllPosts($db);
+    $posts = Post::getPostNextTenFrom($db, 0);
 }
 if (isset($_GET['verToken'])) {
     if (User::verifyUserEmail($db, $_GET ['verToken']) == 1) {
