@@ -22,12 +22,13 @@
                         <button class="btn btn-default" aria-label="Left Align" name="btnShowAttachment">Vis vedlegg</button>
                     </div>
                 </form>
-            </div>
+
+                {/if}
+             </div>
             <div class="col-md-2">
-                <img src="img/DefaultProfilePic.jpg" class="pull-right head-leg-space" >
+                <img src="profileImage.php?postID={$post->getID()}" class="pull-right head-leg-space" >
             </div>
         </div>
-        {/if}
     </div>
 </div>
 {if isset($smarty.session.user)}
