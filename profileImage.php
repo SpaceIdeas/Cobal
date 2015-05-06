@@ -16,6 +16,8 @@ require_once('config.php');
             header("Content-Type:image/jpeg");
             echo($profileImage->getPicture());
         }
+    }
+
     elseif(isset($_GET['commentID'])) {
             $comment = Comment::getCommentByID($db, $_GET['commentID']);
             $profileImage = ProfileImage::getProfileImage($db, $comment->getAuthorEmail());
@@ -24,4 +26,3 @@ require_once('config.php');
                 echo($profileImage->getPicture());
             }
         }
-}
