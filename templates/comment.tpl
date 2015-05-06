@@ -15,6 +15,13 @@
         {/if}
     </div>
     <div class="panel-body">
-        <img src="img/DefaultProfilePic.jpg">{$comment->getText()}
+        <div class="row">
+            <div class="col-md-2">
+                <img src="img/DefaultProfilePic.jpg">
+            </div
+            <div class="col-md-10">
+                {$comment->getText()}
+            </div>
+        </div>
     </div>
 </div>

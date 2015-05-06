@@ -24,7 +24,7 @@
                 </form>
             </div>
             <div class="col-md-2">
-                <img src="img/DefaultProfilePic.jpg" class="pull-right" style="padding-top: 10px; padding-bottom: 10px;">
+                <img src="img/DefaultProfilePic.jpg" class="pull-right head-leg-space" >
             </div>
         </div>
         {/if}
