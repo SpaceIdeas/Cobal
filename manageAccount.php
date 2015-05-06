@@ -42,8 +42,34 @@ if(isset($_POST['btnNewPassword'])){
         $alert->displayOnThisPage($smarty);
     }
 }
+elseif(isset($_POST['btnUpdatePicture'])) {
+    if ($_FILES['profileImage']['error'] != UPLOAD_ERR_NO_FILE) {
 
+        // Hvis filen som er laste opp er den som skulle lastes opp
+        if (is_uploaded_file($_FILES['profileImage']['tmp_name'])) {
+            $newProfileImage = new ProfileImage(file_get_contents($_FILES['profileImage']['tmp_name']), $_SESSION['user']->getEmail());
 
-
+            // Oppdaterer profilbildet. Får true hvis vellykket.
+            if ($newProfileImage->updateDB($db)) {
+                $alert = new Alert(Alert::SUCCESS, 'Profilbildet ble oppdatert');
+                $alert->displayOnThisPage($smarty);
+            }
+            else {
+                $alert = new Alert(Alert::ERROR, 'En feil oppstod med databasen');
+                $alert->displayOnThisPage($smarty);
+            }
+        }
+        // Finner ikke riktig fil på serveren
+        else {
+            $alert = new Alert(Alert::ERROR, 'Filen som ble lastet opp er kanskje en del av et angrep.');
+            $alert->displayOnThisPage($smarty);
+        }
+    }
+    // Intet bilde er lastet opp
+    else {
+        $alert = new Alert(Alert::ERROR, 'Du har ikke lastet opp et bilde');
+        $alert->displayOnThisPage($smarty);
+    }
+}
 
 $smarty->display("manageAccount.tpl");
