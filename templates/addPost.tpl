@@ -12,6 +12,9 @@
                 "visualblocks",
                 "table paste code"
             ],
+            image_class_list: [
+                {title: 'Image Responsive', value: 'img-responsive'},
+            ],
             toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code"
         });
     </script>

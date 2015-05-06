@@ -125,6 +125,31 @@ class User {
 
     }
 
+    public static function getProfileImage(PDO $db, $email) {
+        try{
+            $stmt = $db->prepare("SELECT PROFILE_IMAGE FROM USER WHERE EMAIL = ?");
+            $stmt->bindParam(1, $email);
+            $stmt->execute();
+            if ($row = $stmt->fetch()) {
+                return $profileImage = $row["PROFILE_IMAGE"];
+                }
+            else{
+                return null;
+            }
+        }catch(Exception $e) {
+            return null;
+        }
+
+
+
+
+    }
+
+
+
+
+
+
     /**
      * Gir en bruker administratorrettigheter ved å legge dette til i databasen
      * @param PDO $db

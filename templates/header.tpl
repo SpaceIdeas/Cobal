@@ -5,11 +5,11 @@
     <link rel="icon" type="image/png" href="img/Spaceslug.png">
     <meta charset="utf-8">
     <meta name="author" content="Laget av Øystein Danielsen og Håvard Stien">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap-theme.css">
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="container">

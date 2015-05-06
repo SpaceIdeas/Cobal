@@ -60,14 +60,15 @@ class Post {
     }
 
     public function getShortText() {
-        return substr($this->TEXT, 0, 150) . '...';
+        return substr($this->TEXT, 0, 1000) . '...';
     }
 
     public function addToDB(PDO $db) {
+        $purefier = new HTMLPurifier(HTMLPurifier_Config::createDefault());
         try
         {
             $statement = $db->prepare("INSERT INTO POST (TITLE, TEXT, AUTHOR_EMAIL, TIME_CREATED) VALUES (?, ?, ?, NOW())");
-            return $statement->execute(array(htmlentities($this->TITLE), htmlentities($this->TEXT), $this->AUTHOR_EMAIL));
+            return $statement->execute(array(htmlentities($this->TITLE), $purefier->purify($this->TEXT), $this->AUTHOR_EMAIL));
         }catch(Exception $e) {
             return false;
         }

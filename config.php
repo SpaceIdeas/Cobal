@@ -5,7 +5,7 @@
  * Date: 23.04.2015
  * Time: 11:29
  */
-
+require_once ('libs'. DIRECTORY_SEPARATOR . 'htmlpurefier' . DIRECTORY_SEPARATOR . 'HTMLPurifier.auto.php');
 
 
 spl_autoload_extensions('.class.php');

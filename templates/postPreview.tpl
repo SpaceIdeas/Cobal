@@ -1,17 +1,18 @@
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
         <h3 class="panel-title pull-left">{$post->getTitle()}</h3>
+        Opprettet {$post->getTimeCreated()} av {$post->getAuthorName($db)}
+        {include file="span/hitSpan.tpl"}
+        {if isset($smarty.session.user) and $post->getAuthorEmail() eq $smarty.session.user->getEmail()}
+            {include file='span/youSpan.tpl'}
+        {/if}
         {if isset($smarty.session.user) and $smarty.session.user->isAdmin()}
             <a class="btn btn-danger btn-sm pull-right" role="button" href="deletePost.php?id={$post->getID()}&return={$smarty.server.PHP_SELF}" onclick="javascript:return confirm('Er du sikker på at du vil slette dette innlegget?')">Slett</a>
             <a class="btn btn-primary btn-sm pull-right" role="button" href="addPost.php?id={$post->getID()}">Rediger</a>
         {/if}
     </div>
     <div class="panel-body">
-        <p>Opprettet {$post->getTimeCreated()} av {$post->getAuthorName($db)}
-            {include file="span/hitSpan.tpl"}
-            {if isset($smarty.session.user) and $post->getAuthorEmail() eq $smarty.session.user->getEmail()}
-                {include file='span/youSpan.tpl'}
-            {/if}
+        <p>
         </p>
         <p class="text-justify">{$post->getShortText()}</p>
     </div>
