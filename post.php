@@ -28,14 +28,9 @@ if (isset($_GET ['id'])) {
             //Setter variabelen for innlegget brukeren sist så på til dette innlegget
             $_SESSION['lastHitPost'] = $post->getID();
         }
+
         //Sender antallet treff dette innlegget har fått til smarty
         $smarty->assign('hits', $post->getHits());
-
-        $smarty->assign('post', $post);
-        $comments = $post->getComments($db, $post);
-        $smarty->assign('comments', $post->getComments($db));
-        $attachment = $post->getAttachment($db);
-        $smarty->assign('attachment', $attachment);
 
         // Når beukeren trykker på kommenter
         if (isset($_POST['btnComment']))
@@ -46,7 +41,16 @@ if (isset($_GET ['id'])) {
             $comment->setAuthorEmail($_SESSION['user']->getEmail());
             $comment->setPostID($post->getID());
             $comment->addToDB($db);
+
         }
+
+        $smarty->assign('post', $post);
+        $comments = $post->getComments($db, $post);
+        $smarty->assign('comments', $post->getComments($db));
+        $attachment = $post->getAttachment($db);
+        $smarty->assign('attachment', $attachment);
+
+
 
         // Brukeren har valgt å vise vedlegg
         if (isset($_POST['btnShowAttachment'])) {
