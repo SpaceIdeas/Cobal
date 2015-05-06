@@ -12,8 +12,8 @@ require_once('config.php');
 
         $post = POST::getPost($db, $_GET['postID']);
         $profileImage = ProfileImage::getProfileImage($db, $post->getAuthorEmail());
-        if(isset($profileImage)) {
+        if (isset($profileImage)) {
             header("Content-Type:image/jpeg");
-            echo ($profileImage->getPicture());
+            echo($profileImage->getPicture());
         }
 }

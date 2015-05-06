@@ -16,7 +16,7 @@ class ProfileImage {
     }
 
     public function getPicture() {
-        $this->picture;
+        return $this->picture;
     }
 
     public function updateDB (PDO $db) {
