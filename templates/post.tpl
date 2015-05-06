@@ -6,21 +6,28 @@
             <a class="btn btn-danger btn-sm pull-right" role="button" href="deletePost.php?id={$post->getID()}&return={$smarty.server.PHP_SELF}" onclick="javascript:return confirm('Er du sikker på at du vil slette dette innlegget?')">Slett</a>
             <a class="btn btn-primary btn-sm pull-right" role="button" href="addPost.php?id={$post->getID()}">Rediger</a>
         {/if}
-        <p class="blog-post-meta"><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)} </b>
-            {include file="span/hitSpan.tpl"}
-            {if isset($smarty.session.user) and $post->getAuthorEmail() eq $smarty.session.user->getEmail()}
-                {include file='span/youSpan.tpl'}
-            {/if}
-        </p>
+        <div class="row">
+            <div class="col-md-10">
+                <p class="blog-post-meta"><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)} </b>
+                    {include file="span/hitSpan.tpl"}
+                    {if isset($smarty.session.user) and $post->getAuthorEmail() eq $smarty.session.user->getEmail()}
+                        {include file='span/youSpan.tpl'}
+                    {/if}
+                </p>
 
-        <p>{$post->getText()}</p>
-        {if isset($attachment)}
-        <form class="form-inline" role="form" method="POST">
-                <div class="form-group">
-                    <button class="btn btn-default" aria-label="Left Align" name="btnShowAttachment">Vis vedlegg</button>
-                </div>
+                <p>{$post->getText()}</p>
+                {if isset($attachment)}
+                <form class="form-inline" role="form" method="POST">
+                    <div class="form-group">
+                        <button class="btn btn-default" aria-label="Left Align" name="btnShowAttachment">Vis vedlegg</button>
+                    </div>
                 </form>
-            {/if}
+            </div>
+            <div class="col-md-2">
+                <img src="img/DefaultProfilePic.jpg" class="pull-right" style="padding-top: 10px; padding-bottom: 10px;">
+            </div>
+        </div>
+        {/if}
     </div>
 </div>
 {if isset($smarty.session.user)}
@@ -40,7 +47,7 @@
                     <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>Kommenter
                 </button>
             </div>
-                </form>
+            </form>
         </div>
     </div>
     {/if}

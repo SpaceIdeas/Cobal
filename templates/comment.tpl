@@ -12,13 +12,9 @@
             {if !$comment->isDeleted()}
                 <a class="btn btn-danger btn-sm pull-right" role="button" href="deleteComment.php?id={$comment->getID()}&return={$smarty.server.PHP_SELF}" onclick="javascript:return confirm('Er du sikker på at du vil slette denne kommentaren?')">Slett</a>
             {/if}
-            {if !$comment->isDeleted() and  $smarty.session.user->getEmail() eq $comment->getAuthorEmail()}
-                <a class="btn btn-primary btn-sm pull-right" role="button" href="editComment.php?id={$comment->getID()}">Rediger</a>
-            {/if}
-
         {/if}
     </div>
     <div class="panel-body">
-        {$comment->getText()}
+        <img src="img/DefaultProfilePic.jpg">{$comment->getText()}
     </div>
 </div>

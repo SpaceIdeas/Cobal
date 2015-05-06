@@ -1,3 +1,11 @@
+<style>/* Flow the inline-block .btn starting from the right. */
+    .ctm-container-right {
+        direction: rtl;
+
+    * {
+        direction: ltr;
+    }
+    }</style>
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
         <h3 class="panel-title pull-left">{$post->getTitle()}</h3>
@@ -13,6 +21,9 @@
                 {include file='span/youSpan.tpl'}
             {/if}
         </p>
+        <div class="ctm-container-right">
+            <img src="img/DefaultProfilePic.jpg">
+        </div>
         <p class="text-justify">{$post->getShortText()}</p>
     </div>
     <div class="panel-footer">
