@@ -5,7 +5,7 @@
       <paths name="Kark">
         <serverdata>
           <mappings>
-            <mapping deploy="webapplikasjoner/cobal" local="$PROJECT_DIR$" web="/~530241/webapplikasjoner/cobal" />
+            <mapping deploy="/PHP/Cobal" local="$PROJECT_DIR$" web="/~530241/PHP/Cobal" />
           </mappings>
         </serverdata>
       </paths>

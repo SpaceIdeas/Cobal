@@ -4,7 +4,7 @@
         <h1 class="blog-post-title">{$post->getTitle($db)}</h1>
         {if isset($smarty.session.user) and $smarty.session.user->isAdmin()}
             <a class="btn btn-danger btn-sm pull-right" role="button" href="deletePost.php?id={$post->getID()}&return={$smarty.server.PHP_SELF}" onclick="javascript:return confirm('Er du sikker på at du vil slette dette innlegget?')">Slett</a>
-            <a class="btn btn-primary btn-sm pull-right" role="button" href="editPost.php?id={$post->getID()}">Rediger</a>
+            <a class="btn btn-primary btn-sm pull-right" role="button" href="addPost.php?id={$post->getID()}">Rediger</a>
         {/if}
         <p class="blog-post-meta"><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)} </b>
             {include file="span/hitSpan.tpl"}

@@ -14,12 +14,10 @@ class Post {
     private $TIME_CREATED;
     private $HITS;
 
-    /*
-    public function __construct($title, $text, $authorEmail) {
-        $this->TITLE = $title;
-        $this->TEXT = $text;
-        $this->AUTHOR_EMAIL = $authorEmail;
-    } */
+
+    public function __construct() {
+
+    }
 
     public function getID() {
         return $this->ID;
@@ -84,6 +82,21 @@ class Post {
         {
             $statement = $db->prepare("DELETE FROM POST WHERE ID = ?");
             return $statement->execute(array($this->ID));
+        }catch(Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Oppdaterer databasen slik at innlegget får rett tekst og tittel
+     * @param PDO $db
+     * @return bool
+     */
+    public function updateDB(PDO $db){
+        try
+        {
+            $statement = $db->prepare("UPDATE POST SET TITLE = ?, TEXT = ? WHERE ID = ?");
+            return $statement->execute(array($this->TITLE, $this->TEXT, $this->ID));
         }catch(Exception $e) {
             return false;
         }
