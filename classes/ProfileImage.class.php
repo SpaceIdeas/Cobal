@@ -31,11 +31,17 @@ class ProfileImage {
 
     public static function getProfileImage(PDO $db, $userEmail) {
         try {
-            $statement = $db->prepare("SELECT PROFILE_IMAGE FROM USER WHERE EMAIL = ?");
+            $statement = $db->prepare("SELECT PROFILE_IMAGE FROM USER WHERE EMAIL = ? AND PROFILE_IMAGE IS NOT NULL");
 
             if ($statement->execute(array($userEmail))) {
                 $result = $statement->fetch();
-                return new ProfileImage($result[0], $userEmail);
+                if($statement->rowCount() > 0) {
+                    return new ProfileImage($result[0], $userEmail);
+                }
+                else{
+                    return null;
+                }
+
             }
             else {
                 return null;
