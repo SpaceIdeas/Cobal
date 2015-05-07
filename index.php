@@ -19,6 +19,7 @@ if(isset($_GET['searchWord'])){
     $posts = Post::getPostsByMonthYear($db, array_search($_GET['month'], YearPostList::$norwegianMonth), $_GET['year']);
 }else {
     $posts = Post::getPostNextTenFrom($db, 0);
+    $smarty->assign('showPager', true);
 }
 if (isset($_GET['verToken'])) {
     if (User::verifyUserEmail($db, $_GET ['verToken']) == 1) {
