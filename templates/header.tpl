@@ -9,6 +9,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap-theme.css">
     <!-- Latest compiled and minified JavaScript -->
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="bootstrap-3.3.4-dist/js/bootstrap.js"></script>
 </head>
 <body>
@@ -22,7 +23,14 @@
                 <li><a href="index.php">Hjem</a></li>
                 {if isset($smarty.session.user) && $smarty.session.user->isAdmin()}
                     <li><a href="addPost.php">Legg til innlegg</a></li>
-                    <li><a href="manageComments.php">Administrer kommentarer</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">Søppelboks <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="manageComments.php">Slettede kommentarer</a></li>
+                            <li><a href="deletedPosts.php">Slettede innlegg</a></li>
+                        </ul>
+                    </li>
+
                 {/if}
             </ul>
             <form class="navbar-form navbar-right" role="search" action="index.php" method="get">
