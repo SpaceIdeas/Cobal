@@ -17,28 +17,54 @@ class Attachment {
     private $MIME_TYPE;
     private $POST_ID;
 
+    /**
+     * Metoden legger et Attachment-objekt til i databasen.
+     *
+     * @param PDO $db Databsen som Sql-setningen skal gjøres mot.
+     * @return bool Om insettingen i databasen var vellykket eller ikke.
+     */
     public function addToDB(PDO $db) {
         try
         {
             $statement = $db->prepare("INSERT INTO ATTACHMENT (DATA, MIME_TYPE, POST_ID) VALUES (?, ?, ?)");
             return $statement->execute(array($this->DATA, $this->MIME_TYPE, $this->POST_ID));
-        }catch(Exception $e) {
+        }catch(PDOException $e) {
             return false;
         }
     }
 
+    /**
+     * Returnerer vedleggets data.
+     *
+     * @return blob Vedleggets data
+     */
     public function getData() {
         return $this->DATA;
     }
 
+    /**
+     * Returnerer ID-en til inleggget som vedlegget hører til.
+     *
+     * @return int ID-en til inleggget som vedlegget hører til.
+     */
     public function getPostID() {
         return $this->POST_ID;
     }
 
+    /**
+     * Returnerer MIME-typen til vedlegget.
+     *
+     * @return string MIME-typen
+     */
     public function getMIMEType() {
         return $this->MIME_TYPE;
     }
 
+    /**
+     * Setter dataen som et vedlegg skal inneholde. Eks: fra getFileContents()
+     *
+     * @param blob $data
+     */
     public function setData($data) {
         $this->DATA = $data;
     }

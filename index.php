@@ -23,9 +23,11 @@ if(isset($_GET['searchWord'])){
 }
 if (isset($_GET['verToken'])) {
     if (User::verifyUserEmail($db, $_GET ['verToken']) == 1) {
-        $smarty->assign('successMessage', 'Din epost er nå bekreftet. Takk.');
+        $alert = new Alert(Alert::SUCCESS, 'Din epost er nå bekreftet. Du kan nå logge inn');
+        $alert->displayOnOtherPage('login.php');
     } else {
-        $smarty->assign('errorMessage', 'Din epost kunne ikke bekreftes.');
+        $alert = new Alert(Alert::ERROR, 'Din epost kunne ikke bekreftes.');
+        $alert->displayOnThisPage($smarty);
     }
 }
 
