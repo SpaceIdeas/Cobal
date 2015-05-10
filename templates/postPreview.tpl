@@ -1,11 +1,3 @@
-<style>/* Flow the inline-block .btn starting from the right. */
-    .ctm-container-right {
-        direction: rtl;
-
-    * {
-        direction: ltr;
-    }
-    }</style>
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
         <h3 class="panel-title pull-left">{$post->getTitle()}</h3>
