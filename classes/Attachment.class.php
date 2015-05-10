@@ -88,7 +88,7 @@ class Attachment {
     }
 
     /**
-     * henter ut vedlegg ved hjelp av database og ID til innlegg.
+     * Henter ut vedlegg ved hjelp av database og ID til innlegg.
      *
      * @param PDO $db Databasen som det skal spørres mot.
      * @param int $postID ID-en til inlegget som man ønsker å hente ut vedlegget til.
