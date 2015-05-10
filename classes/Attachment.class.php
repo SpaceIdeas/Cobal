@@ -69,22 +69,45 @@ class Attachment {
         $this->DATA = $data;
     }
 
+    /**
+     * Setter ID-en til innlegget som attachmentet tilhører.
+     *
+     * @param int $postID ID-en til innlegget som attachmentet tilhører.
+     */
     public function setPostID($postID) {
         $this->POST_ID = $postID;
     }
 
+    /**
+     * Setter MIME-typen til vedlegget.
+     *
+     * @param string $mimeType MIME-typen til vedlegget.
+     */
     public function setMIMEType($mimeType) {
         $this->MIME_TYPE = $mimeType;
     }
 
+    /**
+     * henter ut vedlegg ved hjelp av database og ID til innlegg.
+     *
+     * @param PDO $db Databasen som det skal spørres mot.
+     * @param int $postID ID-en til inlegget som man ønsker å hente ut vedlegget til.
+     * @return Attachment|null Returnere vedlegget hvis det finnes. Hvis ikke eller feil returneres null.
+     */
     public static function getFromPostID(PDO $db, $postID) {
-        $statement = $db->prepare("SELECT * FROM ATTACHMENT WHERE POST_ID = ?");
-        $statement->bindParam(1, $postID);
-        $statement->execute();
-        if ($attachment = $statement->fetchObject('Attachment')) {
-            return $attachment;
+        try {
+            $statement = $db->prepare("SELECT * FROM ATTACHMENT WHERE POST_ID = ?");
+            $statement->bindParam(1, $postID);
+            $statement->execute();
+            if ($attachment = $statement->fetchObject('Attachment')) {
+                return $attachment;
+            }
+            // Det finnes ikke et vedlegg
+            else {
+                return null;
+            }
         }
-        else {
+        catch(PDOException $e) {
             return null;
         }
     }
