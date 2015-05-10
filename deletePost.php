@@ -21,14 +21,14 @@ if(isset($_GET['id']) && isset($_GET['return'])) {
         //Sletter innlegget og returnerer sant hvis innlegget ble vellykket slettet
         if ($post->deletePost($db)) {
             $alert = new Alert(Alert::SUCCESS, "Innlegget ble slettet.");
-            $alert->displayOnOtherPage($_SERVER['HTTP_REFERER']);
+            $alert->displayOnIndex();
         } else {
             $alert = new Alert(Alert::ERROR, "En feil skjedde under slettingen. Jeg... hmm. Du kan kansje... nei. ");
-            $alert->displayOnOtherPage($_SERVER['HTTP_REFERER']);
+            $alert->displayOnIndex();
         }
     } else {
         $alert = new Alert(Alert::ERROR, "Innlegget ble ikke funnet i databasen. Du får ta til takke med denne kommentaren");
-        $alert->displayOnOtherPage($_SERVER['HTTP_REFERER']);
+        $alert->displayOnIndex();
     }
 }else{
     header("Locaton: index.php");
