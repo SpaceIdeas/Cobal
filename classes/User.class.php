@@ -71,6 +71,27 @@ class User {
     }
 
     /**
+     * Tester som en bruker har vertifisert email sin enda
+     * @param PDO $db
+     * @return bool True hvis emailen er vertifisert. False ellers
+     */
+    public function isVerified(PDO $db){
+        try{
+            $stmt = $db->prepare("SELECT USERNAME FROM USER WHERE EMAIL = ? AND TIME_VERIFIED is not null");
+            $stmt->bindParam(1, $this->email);
+            $stmt->execute();
+            if ($stmt->rowCount() == 1) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }catch(Exception $e) {
+            return false;
+        }
+    }
+
+    /**
      * Henter username fra databasen gitt email
      * @param PDO $db
      * @param $email
@@ -94,12 +115,11 @@ class User {
     }
 
     /**
-     * Logger en bruker på siden
-     * @param $db
-     * @param $email
-     * @param $password
-     * @return bool
-     * @throws Exception
+     * Bruker email og passord til å se om brukeren finnes i databasen. Returnerer brukeren hvis den finnes
+     * @param PDO $db
+     * @param string $email
+     * @param string $password
+     * @return null|User
      */
     public static function login(PDO $db, $email, $password) {
         try{
@@ -111,15 +131,13 @@ class User {
                 $hashpassord = $row["PWD_HASH"];
                 $salt = $row["SALT"];
                 if($hashpassord == sha1($password . $salt)){
-                    $_SESSION['loggedin'] = true;
-                    $_SESSION['user'] = new User($email , $row["USERNAME"], $row['ADMIN']==1?true:false);
-                    return true;
+                    return new User($email , $row["USERNAME"], $row['ADMIN']==1?true:false);
                 }
             }else {
-                return false;
+                return null;
             }
         }catch(Exception $e) {
-            return false;
+            return null;
         }
 
 
@@ -140,15 +158,7 @@ class User {
             return null;
         }
 
-
-
-
     }
-
-
-
-
-
 
     /**
      * Gir en bruker administratorrettigheter ved å legge dette til i databasen

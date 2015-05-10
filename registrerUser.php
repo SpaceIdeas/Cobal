@@ -18,7 +18,7 @@ if (isset($_POST['btnRegisterUser'])) {
     //Prøver å registrere brukeren. Retirnerer sant vis det går bra
     }else if(User::registerUser($db, $_POST['inputEmail'], $_POST['inputPassword'], $_POST['inputUsername'])){
         //Setter suksess meldingen i smarty
-        $smarty->assign("successMessage", "Din bruker er nå opprettet");
+        $smarty->assign("successMessage", "Din bruker er nå opprettet. Du har blitt tilsendt en verifiserings email. Du MÅ verifisere email før du kan logge inn");
         User::sendVerificationEmail($db, $_POST['inputEmail']);
     }else{
         //Noe gikk gale så vi forteller smarty dette med unknownError metoden
