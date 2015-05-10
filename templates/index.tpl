@@ -7,7 +7,7 @@
         {if isset($showPager)}
         <nav>
             <ul class="pager">
-                {if isset($smarty.get.page)}
+                {if isset($smarty.get.page) and $smarty.get.page neq 0}
                     <li class="previous"><a href="index.php?page={$smarty.get.page - 1}"><span aria-hidden="true">&larr;</span> Nyere</a></li>
                 {/if}
                 {if count($posts) eq 10}

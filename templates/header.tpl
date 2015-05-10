@@ -40,7 +40,7 @@
                 <button type="submit" class="btn btn-default">Søk</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                {if isset($smarty.session.loggedin)}
+                {if isset($smarty.session.user)}
                     <li><a href="manageAccount.php">Velkommen {$smarty.session.user->getUsername()}</a></li>
                     <li><a href="logout.php?returnToPage="{$smarty.server.REQUEST_URI}>Logg ut</a></li>
                 {else}

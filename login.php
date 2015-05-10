@@ -15,11 +15,12 @@ Alert::displayAlertFromSession($smarty);
 
 //Blir kalt når bruker trykker på knapp for å logge inn
 if (isset($_POST['btnLogin'])) {
-
+    //True hvis brukeren er i databasenl. Legger brukeren til variabalen $user
     if (($user = User::login($db, $_POST['inputEmail'], $_POST['inputPassword'])) != null) {
         if($user->isVerified($db)){
+            //Legger brukeren til sessionen. Det gjør at siden oppfatter brukeren som loggen inn
+            $_SESSION['user'] = $user;
             $alert = new Alert(Alert::SUCCESS, 'Du er nå logget inn. God fornøyelse!');
-            // Bruker er innlogget
             //  Send brukeren til forespurt side dersom det ligger en slik lagret i session
             if (isset($_SESSION['returnPage'])) {
                 $returnpage = $_SESSION['returnPage'];

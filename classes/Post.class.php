@@ -283,4 +283,23 @@ class Post {
         return Attachment::getFromPostID($db, $this->ID);
     }
 
+    /**
+     * Returnerer de fem innlegene med mest treff
+     *
+     * @param $db
+     * @return array|null
+     */
+    public static function getTopFivePosts($db){
+        try{
+            $statement = $db->prepare("SELECT ID, TITLE, TEXT, AUTHOR_EMAIL, TIME_CREATED, HITS FROM POST ORDER BY HITS DESC LIMIT 5");
+            $statement->execute();
+            $posts = [];
+            while ($post = $statement->fetchObject('Post')) {
+                $posts[] = $post;
+            }
+            return $posts;
+        }catch(PDOException $e) {
+            return null;
+        }
+    }
 }
