@@ -10,6 +10,7 @@
  * Class ProfileImage er en klasse som håndterer profilbilder til en bruker.
  *
  * Klassen inneholder e-postadressen til brukeren. Profilbilde-dataen samt mimetypen til bildet.
+ * Metoder for å hente ut bildet fra databasen og for å legge til et bilde i databasen.
  */
 class ProfileImage {
     private $picture;

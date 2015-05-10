@@ -6,6 +6,11 @@
  * Time: 19:49
  */
 
+/**
+ * Class Attachment Inneholder dataen, mimetypen, samt ID-en til Post-en som vedlegget hører til.
+ *
+ * klassen inneholder metoder for å legge til et vedlegg i databasen samt og hente ut et vedlegg fra databasen.
+ */
 class Attachment {
     private $ID;
     private $DATA;
