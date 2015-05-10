@@ -161,5 +161,4 @@ class DeletedComment {
             return null;
         }
     }
-
 }

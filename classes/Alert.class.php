@@ -6,6 +6,18 @@
  * Time: 09:48
  */
 
+/**
+ * Class Alert er en klasse laget for å gi feilmeldinger og suksessmeldinger til brukeren.
+ *
+ * Klassen gir utviklere en mer objektsorienter måte å vise meldinger til brukeren.
+ * Klassen benytter seg av både smarty og sesjoner for å fungere. Hver side på bloggen inneholder en felles header.tpl.
+ * Inne i denne header.tpl inkluderes alert.tpl som viser et bootstrap-alert hvis en smarty-variabel er satt.
+ * Dermed trenger en utvikler kun å benytte seg av metodene i denne klassen for å vise feilmeldinger på nåværende
+ * eller andre sider. Sesjonsvariabler benyttes for å vise feilmeldinger på andre sider enn nåværende. Alert tar seg
+ * ogsåav å sende brukeren til den andre siden hvor meldingen skal vises. Klassen tar seg også håndteringen med
+ * å sette og fjerne sesjonsvariabler.
+ *
+ */
 class Alert {
      const ERROR = 0; // Feilmelding - rød
      const SUCCESS = 1; // Suksess - grønn
@@ -77,6 +89,9 @@ class Alert {
         }
     }
 
+    /**
+     * Metoden fjerner Alert-objektet fra sesjonen, slik at man ikke får et alert to ganger.
+     */
     public function removeFromSession() {
         unset($_SESSION['alert']);
     }
