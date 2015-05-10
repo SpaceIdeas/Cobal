@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('config.php');
 unset($_SESSION['loggedin']);
 unset($_SESSION['user']);
 if(isset($_GET['returnToPage'])){

@@ -6,84 +6,165 @@
  * Time: 13:07
  */
 
+/**
+ * Class Post er en klasse for bloginnlegg. Inneholder metoder for å få tak i og manipulere disse.
+ *
+ *
+ */
 class Post {
     private $ID;
     private $TITLE;
     private $TEXT;
-    private $AUTHOR_EMAIL;
+    private $AUTHOR_EMAIL; // E-postadressen til forfattern av inlegget.
     private $TIME_CREATED;
-    private $HITS;
-
+    private $HITS; // Antall ganger inlegget har blitt vist
 
     public function __construct() {
 
     }
 
+    /**
+     * Returnerer ID-en til innlegget
+     *
+     * @return int ID-en til innlegget
+     */
     public function getID() {
         return $this->ID;
     }
 
+    /**
+     * Returnerer Tittelen til inlegget.
+     *
+     * @return string Tittlen til inlegget
+     */
     public function getTitle() {
         return $this->TITLE;
     }
 
+    /**
+     * Setter tittlen til innlegget
+     *
+     * @param string $title Tittelen til innlegget
+     */
     public function setTitle($title) {
         $this->TITLE = $title;
     }
 
+    /**
+     * Returnerer teksten til innlegget
+     *
+     * @return string Teksten til inlegget
+     */
     public function getText() {
         return $this->TEXT;
     }
 
+    /**
+     * Setter teksten til innlegget
+     *
+     * @param string $text teksten til innlegget
+     */
     public function setText($text) {
         $this->TEXT = $text;
     }
 
+    /**
+     * Returnerer e-postadressen til forfatteren av innlegget.
+     *
+     * @return string E-postadressen til forfatteren av innlegget
+     */
     public function getAuthorEmail() {
         return $this->AUTHOR_EMAIL;
     }
 
+    /**
+     * Setter e-postadressen til forfatteren av innlegget
+     *
+     * @param string $authorEmail E-postadressen til forfaatteren av innlegget
+     */
     public function setAuthorEmail($authorEmail) {
         $this->AUTHOR_EMAIL = $authorEmail;
     }
 
+    /**
+     * Returnerer tidspunktet innlegget ble opprettet.
+     *
+     * @return string
+     */
     public function getTimeCreated() {
         return $this->TIME_CREATED;
     }
 
+    /**
+     * Returnerer antall ganger innlegget har blitt vist
+     *
+     * @return mixed
+     */
     public function getHits(){
         return $this->HITS;
     }
 
+    /**
+     * Setter hvor mange ganger innlegget har blit vist
+     *
+     * @param $hits
+     */
     public function setHits($hits){
         $this->HITS = $hits;
     }
 
+    /**
+     * Returnerer de 1000 første tegnene av innleggsteksten og ...
+     *
+     * @return string
+     */
     public function getShortText() {
         return substr($this->TEXT, 0, 1000) . '...';
     }
 
+    /**
+     * metoden legger til en post i databasen.
+     *
+     * @param PDO $db Databasen som SQL skal kjøres mot.
+     * @return bool Om innsettingen i databasen var vellykket eller ikke.
+     */
     public function addToDB(PDO $db) {
+        // HTMLPrurefier er et objekt som rensker farlige HTML-tags, sjekker om en img-tag faktisk er et bilde osv.
+        // Denne benyttes slik at et innlegg kan ha undertitler og bilder.
+        // Default konfigurasjon benyttes.
         $purefier = new HTMLPurifier(HTMLPurifier_Config::createDefault());
         try
         {
             $statement = $db->prepare("INSERT INTO POST (TITLE, TEXT, AUTHOR_EMAIL, TIME_CREATED) VALUES (?, ?, ?, NOW())");
             return $statement->execute(array(htmlentities($this->TITLE), $purefier->purify($this->TEXT), $this->AUTHOR_EMAIL));
-        }catch(Exception $e) {
+        }catch(PDOException $e) {
             return false;
         }
     }
 
+    /**
+     * Returnerer brukernavnet til forfatteren av innlegget.
+     *
+     * @param PDO $db Databasen som SQL-spørringer skal kjøres mot
+     * @return String
+     */
     public function getAuthorName(PDO $db) {
+        // Bruker metode i User for å få tak i brukernavnet fra e-postadressen
         return User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
     }
 
+    /**
+     * Sletter posten fra databasen. Dette logges ved hjelp av triggere i databasen.
+     *
+     * @param PDO $db Databasen som SQL skal kjøre mot.
+     * @return bool
+     */
     public function deletePost(PDO $db){
         try
         {
             $statement = $db->prepare("DELETE FROM POST WHERE ID = ?");
             return $statement->execute(array($this->ID));
-        }catch(Exception $e) {
+        }catch(PDOException $e) {
             return false;
         }
     }
@@ -103,19 +184,140 @@ class Post {
         }
     }
 
-    public static function getPost(PDO $db, $id) {
-        $statement = $db->prepare("SELECT * FROM POST WHERE ID = ?");
-        $statement->bindParam(1, $id);
+    /**
+     * Metode som returnerer et array med kommentarene til innlegget.
+     *
+     * @param PDO $db Databasen spørringen skal utføres mot.
+     * @return array Array med kommentarene til innlegget
+     */
+    public function getComments(PDO $db) {
+        return Comment::getCommentsByPost($db, $this);
+    }
+
+    /**
+     * Returnerer antall kommentarer som hører til innlegget
+     *
+     * @param PDO $db Databasen som spørringer skal utføres mot.
+     * @return int Antallet kommentarer til innlegget.
+     */
+    public function getCommentCount(PDO $db) {
+        return Comment::getCommentCount($db, $this);
+    }
+
+    /**
+     * @param PDO $db Databasen som det skal utføres spørringer mot.
+     * @return string Antall kommentarer som string.
+     */
+    public function getCommentCountAsString(PDO $db) {
+        return NumberConverter::convert(Comment::getCommentCount($db, $this));
+    }
+
+    /**
+     * Returnerer ID-en til den neste innlegg som finnes
+     *
+     * @param PDO $db Databasen det skal utføres spørringer mot
+     * @return int IDen til neste innlegg
+     */
+    public function getNextPostID(PDO $db) {
+        $statement = $db->prepare("SELECT MIN(ID) AS NEXT_ID FROM POST WHERE ID > ?");
+        $statement->bindParam(1, $this->ID);
         $statement->execute();
-        // Returnerern null hvis en feil oppstår
-        if ($post = $statement->fetchObject('Post')) {
-            return $post;
-        }
-        else {
-            return null;
+        return $statement->fetch()['NEXT_ID'];
+    }
+
+    /**
+     * Returnerer ID-en til den forrige innlegg som finnes
+     *
+     * @param PDO $db Databasen det skal utføres spørringer mot
+     * @return int IDen til forrige innlegg
+     */
+    public function getPreviousPostID(PDO $db) {
+        $statement = $db->prepare("SELECT MAX(ID) AS PREVIOUS_ID FROM POST WHERE ID < ?");
+        $statement->bindParam(1, $this->ID);
+        $statement->execute();
+        return $statement->fetch()['PREVIOUS_ID'];
+    }
+
+    /**
+     * Returnerer om det finnes et innlegg med en større ID enn denne.
+     *
+     * @param PDO $db Databasen det skal utføres spørringer mot
+     * @return bool Om det finnes et innlegg med ID større enn dette.
+     */
+    public function hasNextPostID(PDO $db) {
+        $nextID = $this->getNextPostID($db);
+        return isset($nextID);
+    }
+
+    /**
+     * Returnerer om det finnes et innlegg med en mindre ID enn denne.
+     *
+     * @param PDO $db Databasen det skal utføres spørringer mot
+     * @return bool Om det finnes et innlegg med ID mindre enn dette.
+     */
+    public function hasPreviousPostID(PDO $db) {
+        $previousID = $this->getPreviousPostID($db);
+        return isset($previousID);
+    }
+
+    /**
+     * Legger til en i antallet hits på det aktuelle innlegget
+     *
+     * @param PDO $db Databasen SQL skal utføres mot
+     * @return bool Om oppdateringen mot databasen var vellykket
+     */
+    public function iGotHit(PDO $db){
+        try
+        {
+            $statement = $db->prepare("UPDATE POST SET HITS = HITS + 1 WHERE ID = ?");
+            return $statement->execute(array($this->ID));
+        }catch(PDOException $e) {
+            return false;
         }
     }
 
+    /**
+     * Returnerer innleggets vedlegg hvis det finnes
+     *
+     * @param PDO $db Databasen SQL skal utføres mot
+     * @return Attachment|null Innleggets vedlegg eller null dersom vedlegg ikke finnes
+     */
+    public function getAttachment(PDO $db) {
+        return Attachment::getFromPostID($db, $this->ID);
+    }
+
+    /**
+     * Returner en Post med den spesifiserte ID-en.
+     *
+     * @param PDO $db Databsen det skal spørres mot
+     * @param int $id ID-en til det innlegget man øsnker å hente ut
+     * @return Post|null Innlegget (post) eller null dersom det ikke finnes
+     */
+    public static function getPost(PDO $db, $id) {
+        try {
+            $statement = $db->prepare("SELECT * FROM POST WHERE ID = ?");
+            $statement->bindParam(1, $id);
+            $statement->execute();
+            // Returnerern null hvis en feil oppstår
+            if ($post = $statement->fetchObject('Post')) {
+                return $post;
+            }
+            else {
+                return null;
+            }
+        }
+        catch(PDOException $e) {
+            return null;
+        }
+
+    }
+
+    /**
+     * Metoden returnerer alle poter/innlegg i et array, sortert med de nyeste først.
+     *
+     * @param PDO $db Databasen spørringen skal utføres mot
+     * @return array|null Array med innleggene eller null hvis ingen finnes
+     */
     public static function  getAllPosts(PDO $db) {
         try{
             $statement = $db->prepare("SELECT * FROM POST ORDER BY TIME_CREATED DESC");
@@ -134,7 +336,7 @@ class Post {
      * Ignorerer et antall innlegg og returnerer de neste 10, fra databasen
      * @param PDO $db
      * @param int $offset Antallet innlegg som skal ignoreres
-     * @return array|null
+     * @return array|null Array med innlegg/poster
      */
     public static function getPostNextTenFrom(PDO $db, $offset){
         try{
@@ -149,42 +351,6 @@ class Post {
         }catch(PDOException $e) {
             return null;
         }
-    }
-
-    public function getComments(PDO $db) {
-        return Comment::getCommentsByPost($db, $this);
-    }
-
-    public function getCommentCount(PDO $db) {
-        return Comment::getCommentCount($db, $this);
-    }
-
-    public function getCommentCountAsString(PDO $db) {
-        return NumberConverter::convert(Comment::getCommentCount($db, $this));
-    }
-
-    public function getNextPostID(PDO $db) {
-        $statement = $db->prepare("SELECT MIN(ID) AS NEXT_ID FROM POST WHERE ID > ?");
-        $statement->bindParam(1, $this->ID);
-        $statement->execute();
-        return $statement->fetch()['NEXT_ID'];
-    }
-
-    public function getPreviousPostID(PDO $db) {
-        $statement = $db->prepare("SELECT MAX(ID) AS PREVIOUS_ID FROM POST WHERE ID < ?");
-        $statement->bindParam(1, $this->ID);
-        $statement->execute();
-        return $statement->fetch()['PREVIOUS_ID'];
-    }
-
-    public function hasNextPostID(PDO $db) {
-        $nextID = $this->getNextPostID($db);
-        return isset($nextID);
-    }
-
-    public function hasPreviousPostID(PDO $db) {
-        $previousID = $this->getPreviousPostID($db);
-        return isset($previousID);
     }
 
     /**
@@ -246,7 +412,6 @@ class Post {
             return null;
         }
     }
-
 
     public static function getPostsByMonthYear(PDO $db, $month, $year){
         try
