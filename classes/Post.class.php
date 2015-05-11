@@ -8,8 +8,6 @@
 
 /**
  * Class Post er en klasse for bloginnlegg. Inneholder metoder for å få tak i og manipulere disse.
- *
- *
  */
 class Post {
     private $ID;
@@ -426,26 +424,6 @@ class Post {
         }catch(PDOException $e) {
             return null;
         }
-    }
-
-
-    /**
-     * Legger til en i antallet hits på det aktuelle innlegget
-     * @param PDO $db
-     * @return bool
-     */
-    public function iGotHit(PDO $db){
-        try
-        {
-            $statement = $db->prepare("UPDATE POST SET HITS = HITS + 1 WHERE ID = ?");
-            return $statement->execute(array($this->ID));
-        }catch(PDOException $e) {
-            return false;
-        }
-    }
-
-    public function getAttachment($db) {
-        return Attachment::getFromPostID($db, $this->ID);
     }
 
     /**
