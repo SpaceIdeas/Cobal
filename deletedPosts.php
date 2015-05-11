@@ -16,12 +16,9 @@ Verify::sessionAndAdminLoggedIn();
 if(isset($_GET['page'])){
     //Henter de neste 10 innleggede fra databasen
     $posts = DeletedPost::getPostNextTenFrom($db, $_GET['page']*10);
-    //Gjøre sidevalgeknappene synelige
-    $smarty->assign('showPager', true);
 }else{
-    //Gjøre sidevalgeknappene synelige
+    //Henter de første 10 innleggede fra databasen
     $posts = DeletedPost::getPostNextTenFrom($db, 0);
-    $smarty->assign('showPager', true);
 }
 $smarty->assign('deletedPosts', $posts);
 $smarty->display('deletedPosts.tpl');

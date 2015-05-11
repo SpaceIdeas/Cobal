@@ -23,6 +23,7 @@
                 <li><a href="index.php">Hjem</a></li>
                 {if isset($smarty.session.user) && $smarty.session.user->isAdmin()}
                     <li><a href="addPost.php">Legg til innlegg</a></li>
+                    <li><a href="manageAccounts.php">Administrer brukere</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">Søppelboks <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -45,7 +46,7 @@
                     <li><a href="logout.php?returnToPage={$smarty.server.REQUEST_URI}">Logg ut</a></li>
                 {else}
                     <li><a href="registrerUser.php">Registrer ny bruker</a></li>
-                    <li><a href="login.php">Logg inn</a></li>
+                    <li><a href="login.php?returnToPage={$smarty.server.REQUEST_URI}">Logg inn</a></li>
                 {/if}
             </ul>
         </div>

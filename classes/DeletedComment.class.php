@@ -126,26 +126,26 @@ class DeletedComment {
     }
 
     /**
-     * Henter alle slettede kommentarer ved å bruke view-en DELETED_COMMENT
+     * Ignorerer et antall kommentarer og returnerer de neste 10, fra databasen
      *
      * @param PDO $db Databasen SQL skal kjøres mot
-     * @return array|null
+     * @param int $offset Antallet kommentarer som skal ignoreres
+     * @return array|null Et array av kommentarene som ble hentet
      */
-    public static function getAllDeletedComments(PDO $db){
+    public static function getDeletedCommentsNextTenFrom(PDO $db, $offset){
         try{
-            $statement = $db->prepare("SELECT COMMENT_ID, TEXT, AUTHOR_EMAIL, AUTHOR_USERNAME, TIME_CREATED, TIME_DELETED, POST_ID FROM DELETED_COMMENT");
+            $statement = $db->prepare("SELECT COMMENT_ID, TEXT, AUTHOR_EMAIL, AUTHOR_USERNAME, TIME_CREATED, TIME_DELETED, POST_ID FROM DELETED_COMMENT LIMIT 10 OFFSET ?");
+            $statement->bindParam(1, $offset, PDO::PARAM_INT);
             $statement->execute();
             $deletedComments = [];
             while ($row = $statement->fetch()){
                 $deletedComments[] = DeletedComment::rowToDeletedComment($row);
             }
             return $deletedComments;
-        }catch(Exception $e) {
+        }catch(PDOException $e) {
             return null;
         }
     }
-
-
 
     /**
      * Henter en slettet kommentar fra databasen basert på en kommentar id

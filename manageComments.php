@@ -14,7 +14,15 @@ Alert::displayAlertFromSession($smarty);
 //Passer på sessionen ikke er kapret og at en admin er logget på
 Verify::sessionAndAdminLoggedIn();
 //Henter de kommentarene som er slettet fra databasen
-$deletedComments = DeletedComment::getAllDeletedComments($db);
+if(isset($_GET['page'])){
+    //Henter de neste 10 slettede kommentarene fra databasen
+    $deletedComments = DeletedComment::getDeletedCommentsNextTenFrom($db, $_GET['page']*10);
+    //Gjøre sidevalgeknappene synelige
+    $smarty->assign('showPager', true);
+}else{
+    //Henter de 10 første slettede kommentarene fra databasen
+    $deletedComments = DeletedComment::getDeletedCommentsNextTenFrom($db, 0);
+}
 //Passer på at det ihvertfall er en kommentar
 if($deletedComments != null){
     $smarty->assign('deletedComments', $deletedComments);

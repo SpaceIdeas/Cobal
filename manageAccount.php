@@ -21,13 +21,14 @@ if (isset($_POST['btnNewUsername'])) {
     $_SESSION['user']->setUsername($_POST['inputUsername']);
     //Oppdaterer brukernavnet i databasen
     $_SESSION['user']->updateUsername($db);
-}
-if(isset($_POST['btnNewPassword'])){
+
+//True hvis bruker trykket på knapp for å bytte passord
+}else if(isset($_POST['btnNewPassword'])){
     //Sant hvis passordene ikke er like
     if($_POST['inputPassword'] != $_POST['inputPasswordRepete']) {
         //Metoden som blir kalt passordene ikke er like
         //Setter smartyvariablene som skal bli satt når passordene ikke er like
-        Validate::nonMatchingPasswords($smarty);
+        Alert::nonMatchingPasswords($smarty);
 
     }else{
         //Oppdaterer brukerens passord i databasen. Sant hvis oppdateringen var vellykket

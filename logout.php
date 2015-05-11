@@ -1,13 +1,15 @@
 <?php
 require_once('config.php');
 session_start();
+//Logger brukeren ut
 unset($_SESSION['user']);
-//Hvis deet
+//Hvis det er satt en returadresse vil bruker bli sendt ditt
 if(isset($_GET['returnToPage'])){
 	if($_GET['returnToPage'] == ""){
         $alert = new Alert(Alert::SUCCESS, 'Du er nå logget ut. Du trenger ikke å uroe deg for NSA lengere');
         $alert->displayOnIndex();
 	}else{
-		header("Location: " . $_GET['returnToPage']);
+        $alert = new Alert(Alert::SUCCESS, 'Du er nå logget ut. Du trenger ikke å uroe deg for NSA lengere');
+        $alert->displayOnOtherPage($_GET['returnToPage']);
 	}
 }

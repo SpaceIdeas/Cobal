@@ -31,6 +31,6 @@ if(isset($_GET['id']) && isset($_GET['return'])){
         $alert->displayOnOtherPage($_SERVER['HTTP_REFERER']);
     }
 }else{
-    header("Location: index.php");
-    die();
+    $alert = new Alert(Alert::ERROR, "Hva gjorde du der borte? Du skal ikke være der.");
+    $alert->displayOnIndex();
 }

@@ -13,7 +13,9 @@
                 <a class="btn btn-danger btn-sm pull-right" role="button" href="deleteComment.php?id={$comment->getID()}&return={$smarty.server.PHP_SELF}" onclick="javascript:return confirm('Er du sikker på at du vil slette denne kommentaren?')">Slett</a>
             {/if}
         {/if}
-        <a class="btn btn-primary btn-sm pull-right" role="button" href="post.php?id={$comment->getPostID()}&reply={$comment->getID()}#commentBox">Svar</a>
+        {if isset($smarty.session.user)}
+            <a class="btn btn-primary btn-sm pull-right" role="button" href="post.php?id={$comment->getPostID()}&reply={$comment->getID()}#commentBox">Svar</a>
+        {/if}
         <p class="pull-right elbow-room">#{$comment->getID()} </p>
     </div>
     <div class="panel-body">

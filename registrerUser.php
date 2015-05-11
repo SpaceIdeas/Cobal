@@ -10,11 +10,11 @@ if (isset($_POST['btnRegisterUser'])) {
     if($_POST['inputPassword'] != $_POST['inputPasswordRepete']){
         //Metoden som blir kalt passordene ikke er like
         //Setter smartyvariablene som skal bli satt når passordene ikke er like
-        Validate::nonMatchingPasswords($smarty);
+        Alert::nonMatchingPasswords($smarty);
     //Tester om emailen allerede exsisterer i databasen
     }else if(User::getUsernameFromDB($db, $_POST['inputEmail']) != null){
         //Metoden setter smartyvariablene som skal bli satt når emailen allerede eksisterer
-        Validate::userAlreadyExists($smarty);
+        Alert::userAlreadyExists($smarty);
     //Prøver å registrere brukeren. Retirnerer sant vis det går bra
     }else if(User::registerUser($db, $_POST['inputEmail'], $_POST['inputPassword'], $_POST['inputUsername'])){
         //Setter suksess meldingen i smarty
@@ -29,17 +29,18 @@ if (isset($_POST['btnRegisterUser'])) {
 
 $smarty->display('registrerUser.tpl');
 
-//TODO: oppdatere unknownError med alert objekt
 /**
  * Metoden som blir kalt når brukeren allerede eksisterer
  * Setter smartyvariablene som passer til situasjonen
- * @param $smarty
+ *
+ * @param Smarty $smarty
  */
 function unknownError(Smarty $smarty){
-    //Varselbeskjeden til smarty når noe er galt
-    $smarty->assign("errorMessage", "Noe gikk galt og brukeren ble ikke dannet");
     //Sender brukernavn og email som brukeren har sendt inn, tilbake til smarty slik at de automatisk blir fylt inn for brukeren
     $smarty->assign("inputUsername", $_POST['inputUsername']);
     $smarty->assign("inputEmail", $_POST['inputEmail']);
+    //Varselbeskjeden til smarty når noe er galt
+    $alert = new Alert(Alert::ERROR, "Noe gikk galt og brukeren ble ikke dannet");
+    $alert->displayOnThisPage($smarty);
 
 }

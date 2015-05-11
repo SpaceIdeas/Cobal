@@ -26,7 +26,9 @@ if (isset($_POST['btnLogin'])) {
                 $returnpage = $_SESSION['returnPage'];
                 unset($_SESSION['returnPage']);
                 $alert->displayOnOtherPage($returnpage);
-            } else {
+            } else if(isset($_GET['returnToPage'])){
+                $alert->displayOnOtherPage($_GET['returnToPage']);
+            }else{
                 $alert->displayOnIndex();
             }
         //Brukeren har ikke verifisert emailen enda og kan dermed ikke logge inn
