@@ -26,7 +26,7 @@
             <div class="panel panel-default">
                 <form method="POST" enctype="multipart/form-data">
                     <div class="form-group">
-                        <input type="hidden" name="MAX_FILE_SIZE" value="100000000000000">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="100000">
                         <label for="profileImage">Profilbilde:</label>
                         <input name="profileImage" id="profileImage" TYPE="file" accept="image/*" >
                     </div>
