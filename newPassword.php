@@ -24,7 +24,7 @@ if (isset($_GET['lostPwdToken'])) {
         if ($_POST['inputPassword'] == $_POST['inputPasswordRepeat']) {
 
             // Oppdater brukerens passord ved å kjøre metoden under. Denne returner tru hvis alt er OK.
-            if (User::updatePasswordFromToken($db, $_GET['verToken'], $_POST['inputPassword'])) {
+            if (User::updatePasswordFromToken($db, $_GET['lostPwdToken'], $_POST['inputPassword'])) {
                 // Sender brukern til Login slik at han kan logge på med sitt nye passord. Viser Alert også.
                 $alert = new Alert(Alert::SUCCESS, "Ditt nye passord er nå lagret. Du kan nå logge inn.");
                 $alert->displayOnOtherPage('login.php');
