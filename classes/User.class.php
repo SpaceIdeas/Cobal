@@ -22,6 +22,56 @@ class User {
         $this->UserAgent = $_SERVER['HTTP_USER_AGENT'];
     }
 
+    /**
+     * Returner et array med brukere som ikke er administratorer
+     *
+     * @param PDO $db Databasen det skal spørres mot
+     * @return array|null Et array med normale brukere eller null ved feil
+     */
+    public static function getNonAdmins(PDO $db) {
+        try {
+            $statement = $db->prepare('SELECT EMAIL, USERNAME FROM USER WHERE ADMIN = 0');
+            if ($statement->execute()) {
+                $nonAdmins = [];
+                while ($row = $statement->fetch()) {
+                    $nonAdmins[] = new User($row['EMAIL'], $row['USERNAME'], 0 );
+                }
+                return $nonAdmins;
+            }
+            else {
+                return null;
+            }
+        }
+        catch(PDOException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Returner et array med brukere som er administratorer
+     *
+     * @param PDO $db Databasen det skal spørres mot
+     * @return array|null Et array med normale brukere eller null ved feil
+     */
+    public static function getAdmins(PDO $db) {
+        try {
+            $statement = $db->prepare('SELECT EMAIL, USERNAME FROM USER WHERE ADMIN = 1');
+            if ($statement->execute()) {
+                $admins = [];
+                while ($row = $statement->fetch()) {
+                    $admins[] = new User($row['EMAIL'], $row['USERNAME'], 1);
+                }
+                return $admins;
+            }
+            else {
+                return null;
+            }
+        }
+        catch(PDOException $e) {
+            return null;
+        }
+    }
+
     public function getEmail() {
         return $this->email;
     }
@@ -174,7 +224,20 @@ class User {
             //Returnerer om UPDATE setningen var vellyket
             return $result;
 
-        }catch(Exception $e) {
+        }catch(PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function makeNotAdmin(PDO $db, $email){
+        try{
+            $stmt = $db->prepare("UPDATE USER SET ADMIN  = 0 WHERE EMAIL = ?");
+            //Binder parametrene og utfører statmenten
+            $result = $stmt->execute(array($email));
+            //Returnerer om UPDATE setningen var vellyket
+            return $result;
+
+        }catch(PDOException $e) {
             return false;
         }
     }
@@ -206,12 +269,18 @@ class User {
 
     }
 
+    /**
+     * Metoden sender en epost til bruker slik at han kan vertifisere epostadressen sin og gjør nødvendiger i databasen.
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @param $userEmail E-postadressen til brukeren
+     */
     public static function sendVerificationEmail (PDO $db, $userEmail) {
         $verificationToken = User::generateSalt();
         $statement = $db->prepare("UPDATE USER SET VERIFICATION_TOKEN  = ? WHERE EMAIL = ?");
         $statement->execute(array($verificationToken, $userEmail ));
         $verificationURL = "Token: " . $verificationToken;
-        mail($userEmail, "Godkjenn din bruker på bloggen", $verificationURL, "From:danielsen.oeystein@gmail.com\r\n");
+        new Email( $db, Email::VERIFY_EMAIL, $userEmail, $verificationToken);
     }
 
 
