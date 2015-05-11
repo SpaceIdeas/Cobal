@@ -301,7 +301,6 @@ class User {
         $verificationToken = User::generateSalt();
         $statement = $db->prepare("UPDATE USER SET VERIFICATION_TOKEN  = ? WHERE EMAIL = ?");
         $statement->execute(array($verificationToken, $userEmail ));
-        $verificationURL = "Token: " . $verificationToken;
         Email::send( $db, Email::VERIFY_EMAIL, $userEmail, $verificationToken);
     }
 
@@ -321,8 +320,6 @@ class User {
         $lostPwdToken = User::generateSalt();
         $statement = $db->prepare("UPDATE USER SET LOST_PWD_TOKEN  = ? WHERE EMAIL = ?");
         if ($statement->execute(array($lostPwdToken, $userEmail ))) {
-            $lostPwdnURL = "Token: " . $lostPwdToken;
-            //mail($userEmail, "Få et nytt passord", $lostPwdnURL, "From:danielsen.oeystein@gmail.com\r\n");
             Email::send($db, Email::NEW_PASSWORD, $userEmail, $lostPwdToken);
             return true;
         }

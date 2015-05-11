@@ -53,7 +53,7 @@ class Email {
                             </tr>
                           </table>
                             <p>For å være sikker på at deg er deg øsnker vi at du trykker på linken under for å vertifisere din epostadresse</p>
-                            <a href=\"kark.hin.no/~530241/webapplikasjoner/cobal/index.php?verToken=$token\">kark.hin.no/~530241/webapplikasjoner/cobal/index.php?verToken=$token</a>
+                            <a href=\"http://kark.hin.no/~53077/php/cobal/index.php?verToken=$token\">http://kark.hin.no/~53077/php/cobal/index.php?verToken=$token</a>
                         </body>
                         </html>";
                 mail($recipient, 'Vertifiser din e-post på Cobal-bloggen', $message, $headers);
@@ -75,7 +75,7 @@ class Email {
                             </tr>
                           </table>
                             <p>Trykk på linken under for å opprette et nytt passord</p>
-                            <a href=\"kark.hin.no/~530241/webapplikasjoner/cobal/newPassword.php?lostPwdToken=$token\">kark.hin.no/~530241/webapplikasjoner/cobal/newPassword.php?lostPwdToken=$token</a>
+                            <a href=\"http://kark.hin.no/~53077/php/cobal/newPassword.php?lostPwdToken=$token\">http://kark.hin.no/~53077/php/cobal/newPassword.php?lostPwdToken=$token</a>
                         </body>
                         </html>";
                 mail($recipient, 'Nytt passord på Cobal-bloggen', $message, $headers);
