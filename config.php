@@ -5,6 +5,11 @@
  * Date: 23.04.2015
  * Time: 11:29
  */
+/**
+ * Denne filen inneholder autoladeren slik at vi slipper å laste inn klassene manuelt.
+ */
+
+// Autoloader for HTMLPurefier
 require_once ('libs'. DIRECTORY_SEPARATOR . 'htmlpurefier' . DIRECTORY_SEPARATOR . 'HTMLPurifier.auto.php');
 
 
@@ -24,5 +29,4 @@ function classLoader($class){
 
     include $file;
 }
-
 spl_autoload_register('classLoader');

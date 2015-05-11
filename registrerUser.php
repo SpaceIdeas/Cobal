@@ -1,4 +1,10 @@
 <?php
+/**
+ * Dette skriptet viser brukeren en side hvor han kan opprette en bruker.
+ * Dette skriptet tar seg av ting slik som å sjekke at begge passordene
+ * er like, at brukernavnet ikke er tatt eller at e-postadressen ikke er registrert fra før av. Scriptet sender også
+ *brukeren en e-post med link til å vertifisere e-posten sin.
+ */
 require_once ('config.php');
 require_once('db.php');
 session_start();
