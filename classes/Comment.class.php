@@ -7,6 +7,14 @@
  */
 
 class Comment {
+    /**
+     * @var int $ID                     Den unike IDen til kommentaren
+     * @var string $TEXT                Teksten til kommentaren
+     * @var string $AUTHOR_EMAIL        Email til forfatteren av kommentaren
+     * @var DateTime $TIME_CREATED      Tidspunktet kommentaren ble laget
+     * @var int $POST_ID                Den unike IDen til innlegget kommentaren ble skrevet til
+     * @var bool $DELETED               Angir om kommentaren er slettet
+     */
     private $ID;
     private $TEXT;
     private $AUTHOR_EMAIL;

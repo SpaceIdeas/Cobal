@@ -10,12 +10,20 @@
  * Class Post er en klasse for bloginnlegg. Inneholder metoder for å få tak i og manipulere disse.
  */
 class Post {
+    /**
+     * @var int $ID                     Den unike IDen til innlegget
+     * @var string $TITLE               Titelen til innlegget
+     * @var string $TEXT                Teksten til innlegget
+     * @var string $AUTHOR_EMAIL        Email til forfatteren av innlegget
+     * @var DateTime $TIME_CREATED      Tidspunktet innlegget ble laget
+     * @var int $HITS                   Antallet treff på innlegget
+     */
     private $ID;
     private $TITLE;
     private $TEXT;
-    private $AUTHOR_EMAIL; // E-postadressen til forfattern av inlegget.
+    private $AUTHOR_EMAIL;
     private $TIME_CREATED;
-    private $HITS; // Antall ganger inlegget har blitt vist
+    private $HITS;
 
     public function __construct() {
 
@@ -332,6 +340,7 @@ class Post {
 
     /**
      * Ignorerer et antall innlegg og returnerer de neste 10, fra databasen
+     *
      * @param PDO $db
      * @param int $offset Antallet innlegg som skal ignoreres
      * @return array|null Array med innlegg/poster
@@ -424,26 +433,6 @@ class Post {
         }catch(PDOException $e) {
             return null;
         }
-    }
-
-
-    /**
-     * Legger til en i antallet hits på det aktuelle innlegget
-     * @param PDO $db
-     * @return bool
-     */
-    public function iGotHit(PDO $db){
-        try
-        {
-            $statement = $db->prepare("UPDATE POST SET HITS = HITS + 1 WHERE ID = ?");
-            return $statement->execute(array($this->ID));
-        }catch(PDOException $e) {
-            return false;
-        }
-    }
-
-    public function getAttachment($db) {
-        return Attachment::getFromPostID($db, $this->ID);
     }
 
     /**

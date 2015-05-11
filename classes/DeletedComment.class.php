@@ -8,6 +8,15 @@
  */
 
 class DeletedComment {
+    /**
+     * @var int $ID                     Den unike IDen til kommentaren
+     * @var string $TEXT                Teksten til kommentaren
+     * @var string $AUTHOR_EMAIL        Email til forfatteren av kommentaren
+     * @var string $AUTHOR_USERNAME     Brukernavnet til forfatteren av kommentaren
+     * @var DateTime $TIME_CREATED      Tidspunktet kommentaren ble laget
+     * @var DateTime $TIME_DELETED      Tidspunktet kommentaren ble slettet
+     * @var int $POST_ID                Den unike IDen til innlegget kommentaren ble skrevet til
+     */
     private $ID;
     private $TEXT;
     private $AUTHOR_EMAIL;
@@ -40,23 +49,15 @@ class DeletedComment {
         $this->AUTHOR_EMAIL = $authorEmail;
     }
 
-    /**
-     * @return mixed
-     */
     public function getAuthorUsername()
     {
         return $this->AUTHOR_USERNAME;
     }
 
-    /**
-     * @param mixed $AUTHOR_USERNAME
-     */
     public function setAuthorUsername($AUTHOR_USERNAME)
     {
         $this->AUTHOR_USERNAME = $AUTHOR_USERNAME;
     }
-
-
 
     public function getTimeCreated(){
         return $this->TIME_CREATED;
@@ -66,17 +67,11 @@ class DeletedComment {
         $this->TIME_CREATED = $timeCreated;
     }
 
-    /**
-     * @return mixed
-     */
     public function getTimeDeleted()
     {
         return $this->TIME_DELETED;
     }
 
-    /**
-     * @param mixed $TIME_DELETED
-     */
     public function setTimeDeleted($TIME_DELETED)
     {
         $this->TIME_DELETED = $TIME_DELETED;
@@ -92,8 +87,9 @@ class DeletedComment {
 
     /**
      * Gjennoppretter en slettet kommentar
-     * @param PDO $db
-     * @return bool
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @return bool True hvis kommentaren ble gjenopprettet
      */
     public function restoreComment(PDO $db){
         try
@@ -111,6 +107,12 @@ class DeletedComment {
         }
     }
 
+    /**
+     * Gjør en PDO rad om til et DeletedComment objekt
+     *
+     * @param array $row Raden hentet ut en PDO spørring
+     * @return DeletedComment Objektet laget ut fra verdiene i raden
+     */
     public static function rowToDeletedComment($row){
         $deletedComment = new DeletedComment();
         $deletedComment->setID($row['COMMENT_ID']);
@@ -125,7 +127,8 @@ class DeletedComment {
 
     /**
      * Henter alle slettede kommentarer ved å bruke view-en DELETED_COMMENT
-     * @param PDO $db
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
      * @return array|null
      */
     public static function getAllDeletedComments(PDO $db){
@@ -146,9 +149,10 @@ class DeletedComment {
 
     /**
      * Henter en slettet kommentar fra databasen basert på en kommentar id
-     * @param $db
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
      * @param $id
-     * @return mixed
+     * @return DeletedComment
      */
     public static function getDeletedCommentByID(PDO $db, $id){
         try{

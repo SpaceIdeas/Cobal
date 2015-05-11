@@ -8,6 +8,16 @@
  */
 
 class DeletedPost {
+    /**
+     * @var int $POST_ID                Den unike IDen til innlegget
+     * @var string $TITLE               Titelen til innlegget
+     * @var string $TEXT                Teksten til innlegget
+     * @var string $AUTHOR_EMAIL        Email til forfatteren av innlegget
+     * @var string $AUTHOR_USERNAME     Brukernavnet til forfatteren av innlegget
+     * @var DateTime $TIME_CREATED      Tidspunktet innlegget ble laget
+     * @var DateTime $TIME_DELETED      Tidspunktet innlegget ble slettet
+     * @var int $HITS                   Antallet treff på innlegget
+     */
     private $POST_ID;
     private $TITLE;
     private $TEXT;
@@ -16,6 +26,7 @@ class DeletedPost {
     private $TIME_CREATED;
     private $TIME_DELETED;
     private $HITS;
+
 
     public function getPostID(){
         return $this->POST_ID;
@@ -85,32 +96,12 @@ class DeletedPost {
         $this->HITS = $hits;
     }
 
-
-    /**
-     * Henter alle innleggene i log over slettede innlegg
-     *
-     * @param PDO $db
-     * @return array|null
-     */
-    public static function getAllDeletedPosts(PDO $db){
-        try{
-            $statement = $db->prepare("SELECT POST_ID, TITLE, TEXT, AUTHOR_EMAIL, USERNAME as AUTHOR_USERNAME, POST_DELETE_LOG.TIME_CREATED, TIME_DELETED, HITS FROM POST_DELETE_LOG JOIN USER ON AUTHOR_EMAIL = EMAIL ORDER BY TIME_DELETED DESC");
-            $statement->execute();
-            $deletedPosts = [];
-            while ($deletedPost = $statement->fetchObject('DeletedPost')){
-                $deletedPosts[] = $deletedPost;
-            }
-            return $deletedPosts;
-        }catch(Exception $e) {
-            return null;
-        }
-    }
-
     /**
      * Ignorerer et antall innlegg og returnerer de neste 10, fra databasen
-     * @param PDO $db
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
      * @param int $offset Antallet innlegg som skal ignoreres
-     * @return array|null
+     * @return array|null Et array av innleggene som ble hentet
      */
     public static function getPostNextTenFrom(PDO $db, $offset){
         try{

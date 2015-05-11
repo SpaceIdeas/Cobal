@@ -41,8 +41,7 @@ if(isset($_POST['btnNewPassword'])){
         //Viser meldingen
         $alert->displayOnThisPage($smarty);
     }
-}
-elseif(isset($_POST['btnUpdatePicture'])) {
+}else if(isset($_POST['btnUpdatePicture'])) {
     if ($_FILES['profileImage']['error'] != UPLOAD_ERR_NO_FILE) {
 
         // Hvis filen som er laste opp er den som skulle lastes opp
