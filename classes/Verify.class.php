@@ -7,6 +7,11 @@
  * All Rights Reserved
  */
 
+/**
+ * Class Verify Klassen består av statiske metoder som vertifiserer diverse ting angående brukeren.
+ * f.eks at sessionen er bevart eller at bruker er logget inn.
+ * Hvis kravene ikke er oppfylt vil en Alert bli kjørt
+ */
 class Verify {
 
     /**
@@ -14,11 +19,11 @@ class Verify {
      */
     public static function session()
     {
-        if (isset($_SESSION['user'])) {   //Sjekker om en bruker er logget in
-            if(!$_SESSION['user']->verifyUser()){ //Hvis verifyUser() returnerer falskt er sessionene kapret
-                unset($_SESSION['loggedin']);
+        //Sjekker om en bruker er logget in
+        if (isset($_SESSION['user'])) {
+            //Hvis verifyUser() returnerer falskt er sessionene kapret
+            if(!$_SESSION['user']->verifyUser()){
                 unset($_SESSION['user']);
-                //TODO: Set inn en alert som gir beskjed om situasjonen
                 $alert = new Alert(Alert::ERROR, "Sessionen er kapret og du har blitt logget ut. Husk å bruke beskyttelse");
                 $alert->displayOnIndex();
             }
@@ -30,7 +35,8 @@ class Verify {
      */
     public static function userLoggedIn()
     {
-        if (!isset($_SESSION['user'])) {   //Hvis en bruker ikke er logget inn, vil han bli sent til login.php
+        //Hvis en bruker ikke er logget inn, vil han bli sent til login.php
+        if (!isset($_SESSION['user'])) {
             //Lagrer siden brukeren er på nå slik at han kan bli redirigert hit etter han har logget inn
             $_SESSION['returnPage'] = $_SERVER['REQUEST_URI'];
             $alert = new Alert(Alert::ERROR, "Du er nøtt til å være logget inn for å se den siden. Ikke prøv deg på noe.");
@@ -43,9 +49,9 @@ class Verify {
      * Redirigerer bruker til index.php hvis bruker ikke er admin
      */
     public static function adminLoggedIn(){
-        if (!isset($_SESSION['user']) ||  !$_SESSION['user']->isAdmin()) {   //Hvis en bruker ikke er logget inn eller han ikke er admin, vil han bli sent til login.php
+        //Hvis en bruker ikke er logget inn eller han ikke er admin, vil han bli sent til login.php
+        if (!isset($_SESSION['user']) ||  !$_SESSION['user']->isAdmin()) {
             //Lagrer siden brukeren er på nå slik at han kan bli redirigert hit etter han har logget inn
-            //TODO: Set inn en alert som gir beskjed om situasjonen
             $alert = new Alert(Alert::ERROR, "Du er nødt til å være administrator for å se den siden. Du er ikke administrator.");
             $alert->displayOnIndex();
 

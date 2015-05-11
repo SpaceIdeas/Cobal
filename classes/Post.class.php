@@ -367,7 +367,7 @@ class Post {
             //Blir et array med YearPostList items der YearPostList inneholder året og et
             // assosiativt array med navn på måned som key og antall innlegg denne måneden som value
             $yearPostList = array();
-            //Kjører igjennom til alle radene er tatt ut og lagt til i en YearPostList som igjenn havner i $yearPostList
+            //Kjører igjennom til alle radene er tatt ut og lagt til i en YearPostList som igjen havner i $yearPostList
             while(!empty($rows)){
                 //Tar ut den første raden i $rows
                 $row = array_shift($rows);
