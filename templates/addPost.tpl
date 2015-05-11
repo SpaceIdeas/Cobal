@@ -5,6 +5,7 @@
     <script type="text/javascript">
         tinymce.init({
             selector: "textarea",
+            content_css: "bootstrap-3.3.4-dist/css/bootstrap.css",
             menubar:false,
             statusbar: false,
             plugins: [

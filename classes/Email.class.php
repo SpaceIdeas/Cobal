@@ -75,7 +75,7 @@ class Email {
                             </tr>
                           </table>
                             <p>Trykk på linken under for å opprette et nytt passord</p>
-                            <a href=\"kark.hin.no/~530241/webapplikasjoner/cobal/newPassword.php?token=$token\">Gjenopprett ditt passord</a>
+                            <a href=\"kark.hin.no/~530241/webapplikasjoner/cobal/newPassword.php?lostPwdToken=$token\">kark.hin.no/~530241/webapplikasjoner/cobal/newPassword.php?lostPwdToken=$token</a>
                         </body>
                         </html>";
                 mail($recipient, 'Nytt passord på Cobal-bloggen', $message, $headers);
