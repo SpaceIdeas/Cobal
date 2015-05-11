@@ -12,7 +12,7 @@ require_once('db.php');
 session_start();
 $smarty = new Smarty();
 Alert::displayAlertFromSession($smarty);
-//Sjekker at brukeren er logget inn og sessionen ikke er kapret. Metoden hånterer selv vis en av de to situasjonene oppstår
+//Sjekker at brukeren er logget inn og sessionen ikke er kapret. Metoden hånterer selv hvis en av de to situasjonene oppstår
 Verify::sessionAndUserLoggedIn();
 
 //Sjekker om brukeren prøver å bytte brukernavn
@@ -44,23 +44,48 @@ if(isset($_POST['btnNewPassword'])){
 }else if(isset($_POST['btnUpdatePicture'])) {
     if ($_FILES['profileImage']['error'] != UPLOAD_ERR_NO_FILE) {
 
-        // Hvis filen som er laste opp er den som skulle lastes opp
+        // Hvis filen som er lastet opp er den som skulle lastes opp
         if (is_uploaded_file($_FILES['profileImage']['tmp_name'])) {
-            $newProfileImage = new ProfileImage(file_get_contents($_FILES['profileImage']['tmp_name']), $_FILES['profileImage']['type'], $_SESSION['user']->getEmail());
+            $mimeType = $_FILES['profileImage']['type'];
 
-            // Oppdaterer profilbildet. Får true hvis vellykket.
-            if ($newProfileImage->updateDB($db)) {
-                $alert = new Alert(Alert::SUCCESS, 'Profilbildet ble oppdatert');
+            // Sjekker at filtypen faktisk er et bilde
+            if($mimeType != "image/jpg" && $mimeType != "image/png" && $mimeType != "image/jpeg"
+                && $mimeType != "image/gif" ) {
+                $alert = new Alert(Alert::ERROR, 'Kun bilder tillatt');
                 $alert->displayOnThisPage($smarty);
             }
             else {
-                $alert = new Alert(Alert::ERROR, 'En feil oppstod med databasen');
-                $alert->displayOnThisPage($smarty);
+                // Sjekker at støørelsen er under 100 kb
+                if($_FILES["profileImage"]["size"] > 100000) {
+                    $alert = new Alert(Alert::ERROR, 'Bildet må være under 100kb');
+                    $alert->displayOnThisPage($smarty);
+                }
+                else {
+                    // Sjekker at bildet ikke er en lurefil
+                    if (getimagesize($_FILES["profileImage"]["tmp_name"]) <= 0) {
+                        $alert = new Alert(Alert::ERROR, 'Bildet er en lurefil');
+                        $alert->displayOnThisPage($smarty);
+                    }
+                    // Alt er i orden. Prøver å laste opp til databasen
+                    else {
+                        $newProfileImage = new ProfileImage(file_get_contents($_FILES['profileImage']['tmp_name']), $mimeType, $_SESSION['user']->getEmail());
+
+                        // Oppdaterer profilbildet. Får true hvis vellykket.
+                        if ($newProfileImage->updateDB($db)) {
+                            $alert = new Alert(Alert::SUCCESS, 'Profilbildet ble oppdatert');
+                            $alert->displayOnThisPage($smarty);
+                        }
+                        else {
+                            $alert = new Alert(Alert::ERROR, 'En feil oppstod med databasen');
+                            $alert->displayOnThisPage($smarty);
+                        }
+                    }
+                }
             }
         }
         // Finner ikke riktig fil på serveren
         else {
-            $alert = new Alert(Alert::ERROR, 'Filen som ble lastet opp er kanskje en del av et angrep.');
+            $alert = new Alert(Alert::ERROR, 'Filen som ble lastet opp er kanskje en del av et angrep. eller den var over 100 kb');
             $alert->displayOnThisPage($smarty);
         }
     }
@@ -70,5 +95,4 @@ if(isset($_POST['btnNewPassword'])){
         $alert->displayOnThisPage($smarty);
     }
 }
-
 $smarty->display("manageAccount.tpl");
