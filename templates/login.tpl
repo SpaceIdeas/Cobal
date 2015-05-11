@@ -3,7 +3,7 @@
 <br/>
 
 <div class="row">
-    <div class="col-sm-3 col-md-6 col-lg-4">
+    <div class="col-sm-12 col-md-6 col-lg-4">
         <form class="form-signin" method="post">
             <div class="form-group">
                 <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required autofocus >

@@ -8,7 +8,7 @@
             <div class="form-group">
                 <input type="password" name="inputPasswordRepeat"  class="form-control" placeholder="Gjenta passord" pattern=".{literal}{5,45}{/literal}" required>
             </div>
-            <input class="btn btn-lg btn-primary btn-block" type="submit" name="btnNewPassword" value="Oprett nytt passord" />
+            <input class="btn btn-lg btn-primary btn-block" type="submit" name="btnNewPassword" value="Opprett nytt passord" />
         </form>
     </div>
 </div>

@@ -29,7 +29,7 @@ class Email {
      */
     public static function send(PDO $db, $type, $recipient, $token) {
         $headers  = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
         $headers .= 'From:noreply@kark.hin.no\r\n';
 
         $recipientUsername = User::getUsernameFromDB($db, $recipient);
@@ -53,7 +53,7 @@ class Email {
                             </tr>
                           </table>
                             <p>For å være sikker på at deg er deg øsnker vi at du trykker på linken under for å vertifisere din epostadresse</p>
-                            <a href=\"kark.hin.no/~530241/webapplikasjoner/cobal/index.php?verToken=$token\">Vertifiser e-postadressen din</a>
+                            <a href=\"kark.hin.no/~530241/webapplikasjoner/cobal/index.php?verToken=$token\">kark.hin.no/~530241/webapplikasjoner/cobal/index.php?verToken=$token</a>
                         </body>
                         </html>";
                 mail($recipient, 'Vertifiser din e-post på Cobal-bloggen', $message, $headers);
