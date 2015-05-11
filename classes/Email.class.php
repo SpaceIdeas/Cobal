@@ -37,7 +37,7 @@ class Email {
         switch($type) {
             case Email::VERIFY_EMAIL:
                 $message =
-                    '<html>
+                    "<html>
                     <head>
                           <title>Vertifiser din e-post på Cobal-bloggen</title>
                         </head>
@@ -49,18 +49,18 @@ class Email {
                               <th>Epostadresse</th><th>Brukernavn</th>
                             </tr>
                             <tr>
-                              <td>{$recipient}</td><td>{$recipientUsername}</td>
+                              <td>$recipient</td><td>$recipientUsername</td>
                             </tr>
                           </table>
                             <p>For å være sikker på at deg er deg øsnker vi at du trykker på linken under for å vertifisere din epostadresse</p>
-                            <a href="kark.hin.no/~530241/webapplikasjoner/cobal/index.php?verToken={$token}">Vertifiser e-postadressen din</a>
+                            <a href=\"kark.hin.no/~530241/webapplikasjoner/cobal/index.php?verToken=$token\">Vertifiser e-postadressen din</a>
                         </body>
-                        </html>';
+                        </html>";
                 mail($recipient, 'Vertifiser din e-post på Cobal-bloggen', $message, $headers);
                 break;
             case Email::NEW_PASSWORD:
                 $message =
-                    '<html>
+                    "<html>
                     <head>
                           <title>Nytt passord på Cobal-bloggen</title>
                         </head>
@@ -71,13 +71,13 @@ class Email {
                               <th>Epostadresse</th><th>Brukernavn</th>
                             </tr>
                             <tr>
-                              <td>{$recipient}</td><td>{$recipientUsername}</td>
+                              <td>$recipient</td><td>$recipientUsername</td>
                             </tr>
                           </table>
                             <p>Trykk på linken under for å opprette et nytt passord</p>
-                            <a href="kark.hin.no/~530241/webapplikasjoner/cobal/newPassword.php?token={$token}">Gjenopprett ditt passord</a>
+                            <a href=\"kark.hin.no/~530241/webapplikasjoner/cobal/newPassword.php?token=$token\">Gjenopprett ditt passord</a>
                         </body>
-                        </html>';
+                        </html>";
                 mail($recipient, 'Nytt passord på Cobal-bloggen', $message, $headers);
                 break;
         }
