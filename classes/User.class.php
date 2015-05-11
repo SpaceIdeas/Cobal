@@ -6,6 +6,10 @@
  * Time: 10:54
  */
 
+/**
+ * Class User Håndterer alt som har med en brukerkonto å gjøre. Instansen av objektet inneholder relevant informasjone om brukeren.
+ * Den har metoder for å hente mer. Klassen inneholder også statiske metoder som f.eks login og registrering
+ */
 class User {
 
     private $email;          // Holds the users username
@@ -20,6 +24,148 @@ class User {
         $this->admin = $admin;
         $this->IPAddress = $_SERVER["REMOTE_ADDR"];
         $this->UserAgent = $_SERVER['HTTP_USER_AGENT'];
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+    public function getUsername() {
+        return $this->username;
+    }
+
+    public function setUsername($newUsername){
+        $this->username = $newUsername;
+    }
+
+    public function getIPAddress() {
+        return $this->IPAddress;
+    }
+    public function isAdmin(){
+        return $this->admin;
+    }
+
+    /**
+     * Sjekker om brukerens session har blit stjålet
+     *
+     * @return bool True hvis sessionen ikke er kapret
+     */
+    public function verifyUser() {
+        if(($this->IPAddress == $_SERVER["REMOTE_ADDR"]) && ($this->UserAgent == $_SERVER['HTTP_USER_AGENT'] )){
+            return true;
+        }
+        else
+            return false;
+    }
+
+    /**
+     * Setter brukernavnet til brukeren inn i databasen
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @return bool True hvis brukeren ble oppdatert
+     */
+    public function updateUsername(PDO $db){
+        try{
+            $stmt = $db->prepare("UPDATE USER SET USERNAME  = ? WHERE EMAIL = ?");
+            //Binder parametrene og utfører statmenten
+            $result = $stmt->execute(array(htmlentities($this->username), $this->email));
+            //Returnerer om UPDATE setningen var vellyket
+            return $result;
+
+        }catch(Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Tester som en bruker har vertifisert email sin enda
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @return bool True hvis emailen er vertifisert. False ellers
+     */
+    public function isVerified(PDO $db){
+        try{
+            $stmt = $db->prepare("SELECT USERNAME FROM USER WHERE EMAIL = ? AND TIME_VERIFIED is not null");
+            $stmt->bindParam(1, $this->email);
+            $stmt->execute();
+            if ($stmt->rowCount() == 1) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }catch(Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Henter username fra databasen gitt email
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @param String $email
+     * @return null|String Returnerer brukernavnet. Null hvis noe gikk galt
+     */
+    public static function getUsernameFromDB(PDO $db, $email){
+        try{
+            $stmt = $db->prepare("SELECT USERNAME FROM USER WHERE EMAIL = ?");
+            $stmt->bindParam(1, $email);
+            $stmt->execute();
+            if ($row = $stmt->fetch() )
+            {
+               return $row["USERNAME"];
+            }else {
+                return null;
+            }
+        }catch(PDOException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Bruker email og passord til å se om brukeren finnes i databasen. Returnerer brukeren hvis den finnes.
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @param String $email
+     * @param String $password
+     * @return null|User Brukeren hvis login var vellyket
+     */
+    public static function login(PDO $db, $email, $password) {
+        try{
+            $stmt = $db->prepare("SELECT EMAIL, PWD_HASH, SALT, USERNAME, ADMIN FROM USER WHERE EMAIL = ?");
+            $stmt->bindParam(1, $email);
+            $stmt->execute();
+            if ($row = $stmt->fetch() )
+            {
+                $hashpassord = $row["PWD_HASH"];
+                $salt = $row["SALT"];
+                if($hashpassord == sha1($password . $salt)){
+                    return new User($email , $row["USERNAME"], $row['ADMIN']==1?true:false);
+                }
+            }else {
+                return null;
+            }
+        }catch(Exception $e) {
+            return null;
+        }
+
+
+    }
+
+    public static function getProfileImage(PDO $db, $email) {
+        try{
+            $stmt = $db->prepare("SELECT PROFILE_IMAGE FROM USER WHERE EMAIL = ?");
+            $stmt->bindParam(1, $email);
+            $stmt->execute();
+            if ($row = $stmt->fetch()) {
+                return $profileImage = $row["PROFILE_IMAGE"];
+                }
+            else{
+                return null;
+            }
+        }catch(Exception $e) {
+            return null;
+        }
+
     }
 
     /**
@@ -72,147 +218,10 @@ class User {
         }
     }
 
-    public function getEmail() {
-        return $this->email;
-    }
-    public function getUsername() {
-        return $this->username;
-    }
-
-    public function setUsername($newUsername){
-        $this->username = $newUsername;
-    }
-
-    public function getIPAddress() {
-        return $this->IPAddress;
-    }
-    public function isAdmin(){
-        return $this->admin;
-    }
-
-    /**
-     * Sjekker om brukerens session har blit stjålet
-     * @return bool
-     */
-    public function verifyUser() {
-        if(($this->IPAddress == $_SERVER["REMOTE_ADDR"]) && ($this->UserAgent == $_SERVER['HTTP_USER_AGENT'] )){
-            return true;
-        }
-        else
-            return false;
-    }
-
-    /**
-     * Setter brukernavnet til brukeren inn i databasen
-     * @param PDO $db
-     * @return bool
-     */
-    public function updateUsername(PDO $db){
-        try{
-            $stmt = $db->prepare("UPDATE USER SET USERNAME  = ? WHERE EMAIL = ?");
-            //Binder parametrene og utfører statmenten
-            $result = $stmt->execute(array(htmlentities($this->username), $this->email));
-            //Returnerer om UPDATE setningen var vellyket
-            return $result;
-
-        }catch(Exception $e) {
-            return false;
-        }
-    }
-
-    /**
-     * Tester som en bruker har vertifisert email sin enda
-     * @param PDO $db
-     * @return bool True hvis emailen er vertifisert. False ellers
-     */
-    public function isVerified(PDO $db){
-        try{
-            $stmt = $db->prepare("SELECT USERNAME FROM USER WHERE EMAIL = ? AND TIME_VERIFIED is not null");
-            $stmt->bindParam(1, $this->email);
-            $stmt->execute();
-            if ($stmt->rowCount() == 1) {
-                return true;
-            }
-            else{
-                return false;
-            }
-        }catch(Exception $e) {
-            return false;
-        }
-    }
-
-    /**
-     * Henter username fra databasen gitt email
-     * @param PDO $db
-     * @param $email
-     * @return String username
-     * @throws Exception
-     */
-    public static function getUsernameFromDB(PDO $db, $email){
-        try{
-            $stmt = $db->prepare("SELECT USERNAME FROM USER WHERE EMAIL = ?");
-            $stmt->bindParam(1, $email);
-            $stmt->execute();
-            if ($row = $stmt->fetch() )
-            {
-               return $row["USERNAME"];
-            }else {
-                return null;
-            }
-        }catch(Exception $e) {
-            throw ($e);
-        }
-    }
-
-    /**
-     * Bruker email og passord til å se om brukeren finnes i databasen. Returnerer brukeren hvis den finnes
-     * @param PDO $db
-     * @param string $email
-     * @param string $password
-     * @return null|User
-     */
-    public static function login(PDO $db, $email, $password) {
-        try{
-            $stmt = $db->prepare("SELECT EMAIL, PWD_HASH, SALT, USERNAME, ADMIN FROM USER WHERE EMAIL = ?");
-            $stmt->bindParam(1, $email);
-            $stmt->execute();
-            if ($row = $stmt->fetch() )
-            {
-                $hashpassord = $row["PWD_HASH"];
-                $salt = $row["SALT"];
-                if($hashpassord == sha1($password . $salt)){
-                    return new User($email , $row["USERNAME"], $row['ADMIN']==1?true:false);
-                }
-            }else {
-                return null;
-            }
-        }catch(Exception $e) {
-            return null;
-        }
-
-
-    }
-
-    public static function getProfileImage(PDO $db, $email) {
-        try{
-            $stmt = $db->prepare("SELECT PROFILE_IMAGE FROM USER WHERE EMAIL = ?");
-            $stmt->bindParam(1, $email);
-            $stmt->execute();
-            if ($row = $stmt->fetch()) {
-                return $profileImage = $row["PROFILE_IMAGE"];
-                }
-            else{
-                return null;
-            }
-        }catch(Exception $e) {
-            return null;
-        }
-
-    }
-
     /**
      * Gir en bruker administratorrettigheter ved å legge dette til i databasen
-     * @param PDO $db
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
      * @param $email
      * @return bool
      */
@@ -231,7 +240,7 @@ class User {
 
     public static function makeNotAdmin(PDO $db, $email){
         try{
-            $stmt = $db->prepare("UPDATE USER SET ADMIN  = 0 WHERE EMAIL = ?");
+            $stmt = $db->prepare("UPDATE USER SET ADMIN = 0 WHERE EMAIL = ?");
             //Binder parametrene og utfører statmenten
             $result = $stmt->execute(array($email));
             //Returnerer om UPDATE setningen var vellyket
@@ -244,12 +253,12 @@ class User {
 
     /**
      * Legger en bruker til i databasen
-     * @param $db
-     * @param $email
-     * @param $password
-     * @param $username
-     * @return bool
-     * @throws Exception
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @param String $email
+     * @param String $password
+     * @param String $username
+     * @return bool True hvis registreringen var vellykket
      */
     public static function registerUser(PDO $db, $email, $password, $username) {
         try{
@@ -308,10 +317,23 @@ class User {
         }
     }
 
+    /**
+     * Oppdaterer passordet til brukeren i databasen
+     *
+     * @param PDO $db
+     * @param String $userEmail
+     * @param String $password
+     * @return bool True hvis oppdateringen var vellykket
+     */
     public static function updatePassword(PDO $db, $userEmail, $password) {
-        $salt = USER::generateSalt();
-        $statement = $db->prepare("UPDATE USER SET PWD_HASH = ?, SALT = ?, LOST_PWD_TOKEN = NULL WHERE EMAIL = ?");
-        return $statement->execute(array(sha1($password . $salt), $salt, $userEmail));
+        try{
+            $salt = USER::generateSalt();
+            $statement = $db->prepare("UPDATE USER SET PWD_HASH = ?, SALT = ?, LOST_PWD_TOKEN = NULL WHERE EMAIL = ?");
+            return $statement->execute(array(sha1($password . $salt), $salt, $userEmail));
+        }catch(Exception $e) {
+            return false;
+        }
+
     }
 
     public static function updatePasswordFromToken(PDO $db, $token, $password) {
@@ -329,7 +351,8 @@ class User {
 
     /**
      * Genererer et salt på 15 karakterer
-     * @return string
+     *
+     * @return string Salt på 15 karakterer
      */
      private static function generateSalt() {
         //Lengden på saltet
