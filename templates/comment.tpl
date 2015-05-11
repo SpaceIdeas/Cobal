@@ -17,7 +17,12 @@
         <p class="pull-right elbow-room">#{$comment->getID()} </p>
     </div>
     <div class="panel-body">
-        <img src="profileImage.php?commentID={$comment->getID()}" width="100px" height="100px" class="personal-space">
-        {$comment->getText()}
+        <div class="row">
+            <div class="col-sm-1 cuddle-pile">
+                <img src="profileImage.php?commentID={$comment->getID()}" width="100px" height="100px">
+            </div>
+            <div class="col-sm-11 text-wrap">{$comment->getText()}</div>
+        </div>
+
     </div>
 </div>

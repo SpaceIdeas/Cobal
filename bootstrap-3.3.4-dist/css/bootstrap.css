@@ -6626,3 +6626,15 @@ img {
 .personal-space{
     padding: 10px;
 }
+
+.text-wrap {
+    white-space: pre;
+    text-wrap: normal;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.cuddle-pile{
+    padding: 0;
+}
+
