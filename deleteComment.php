@@ -11,11 +11,10 @@ require_once ('config.php');
 require_once('db.php');
 session_start();
 $smarty = new Smarty();
-//TODO: Passe på at en bruker uten tillatlse til det ikke kan slette en post
-Verify::sessionAndUserLoggedIn();
+//Tester sessionen og at bruker er admin
+Verify::sessionAndAdminLoggedIn();
 //Sant hvis get har de variablene som er nødvendig
 if(isset($_GET['id']) && isset($_GET['return'])){
-
     //Prøver å hente kommentaren ut av databasen, basert på IDen gitt
     $comment = Comment::getCommentByID($db, $_GET['id']);
     //Sant hvis kommentaren ble funnet i databasen
