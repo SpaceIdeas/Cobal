@@ -233,9 +233,9 @@ class User {
      */
     public static function makeAdmin(PDO $db, $email){
         try{
-            $stmt = $db->prepare("UPDATE USER SET ADMIN  = ? WHERE EMAIL = ?");
+            $stmt = $db->prepare("UPDATE USER SET ADMIN  = 1 WHERE EMAIL = ?");
             //Binder parametrene og utfører statmenten
-            $result = $stmt->execute(array(1, $email));
+            $result = $stmt->execute(array($email));
             //Returnerer om UPDATE setningen var vellyket
             return $result;
 
@@ -244,6 +244,13 @@ class User {
         }
     }
 
+    /**
+     *
+     *
+     * @param PDO $db
+     * @param $email
+     * @return bool
+     */
     public static function makeNotAdmin(PDO $db, $email){
         try{
             $stmt = $db->prepare("UPDATE USER SET ADMIN = 0 WHERE EMAIL = ?");
