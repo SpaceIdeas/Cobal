@@ -12,11 +12,11 @@ require_once('db.php');
 session_start();
 $smarty = new Smarty();
 Alert::displayAlertFromSession($smarty);
-
 //Blir kalt når bruker trykker på knapp for å logge inn
 if (isset($_POST['btnLogin'])) {
-    //True hvis brukeren er i databasenl. Legger brukeren til variabalen $user
+    //True hvis brukeren er i databasen.
     if (($user = User::login($db, $_POST['inputEmail'], $_POST['inputPassword'])) != null) {
+        //True hvis eposten til brukeren er verifisert
         if($user->isVerified($db)){
             //Legger brukeren til sessionen. Det gjør at siden oppfatter brukeren som loggen inn
             $_SESSION['user'] = $user;

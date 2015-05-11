@@ -42,7 +42,7 @@
             <ul class="nav navbar-nav navbar-right">
                 {if isset($smarty.session.user)}
                     <li><a href="manageAccount.php">Velkommen {$smarty.session.user->getUsername()}</a></li>
-                    <li><a href="logout.php?returnToPage="{$smarty.server.REQUEST_URI}>Logg ut</a></li>
+                    <li><a href="logout.php?returnToPage={$smarty.server.REQUEST_URI}">Logg ut</a></li>
                 {else}
                     <li><a href="registrerUser.php">Registrer ny bruker</a></li>
                     <li><a href="login.php">Logg inn</a></li>
