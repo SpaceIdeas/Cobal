@@ -8,7 +8,7 @@
  */
 
 /**
- * Class YearPostList
+ * Class YearPostList Blir brukt for å holde dataen som blir vist i postList.tpl
  */
 class YearPostList
 {
@@ -28,17 +28,11 @@ class YearPostList
         $this->months = $monthsIn;
     }
 
-    /**
-     * @return mixed
-     */
     public function getMonths()
     {
         return $this->months;
     }
 
-    /**
-     * @return mixed
-     */
     public function getYear()
     {
         return $this->year;
