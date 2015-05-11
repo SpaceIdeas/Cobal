@@ -317,17 +317,26 @@ class User {
      *
      * @param PDO $db Databasen SQL skal kjøres mot
      * @param $userEmail E-postadressen til brukeren
+     * @return bool Om alt gikk greit
      */
     public static function sendVerificationEmail (PDO $db, $userEmail) {
-        $verificationToken = User::generateSalt();
-        $statement = $db->prepare("UPDATE USER SET VERIFICATION_TOKEN  = ? WHERE EMAIL = ?");
-        $statement->execute(array($verificationToken, $userEmail ));
-        // Bruker selvlagt e-postklasse for sending av e-post om vertifisering av e-postadresse
-        Email::send( $db, Email::VERIFY_EMAIL, $userEmail, $verificationToken);
+        try {
+            $verificationToken = User::generateSalt();
+            $statement = $db->prepare("UPDATE USER SET VERIFICATION_TOKEN  = ? WHERE EMAIL = ?");
+            $statement->execute(array($verificationToken, $userEmail ));
+            // Bruker selvlagt e-postklasse for sending av e-post om vertifisering av e-postadresse
+            Email::send( $db, Email::VERIFY_EMAIL, $userEmail, $verificationToken);
+            return true;
+        }
+        catch(PDOException $e) {
+            return false;
+        }
+
     }
 
     /**
-     * Sjekker om tokenet som er gitt samsvarer med et vertifiseringstoken i en databasen
+     * Sjekker om tokenet som er gitt samsvarer med et vertifiseringstoken i databasen. Dersom treff i databasen
+     * settes brukeren med treff som en vertifisert bruker.
      *
      * @param PDO $db Databasen som oppdateringen skal utføres på
      * @param string $verificationToken Tokenet som brukeren har gitt og forhåpentligvis fått på e-post
@@ -344,24 +353,29 @@ class User {
     }
 
     /**
-     * @param PDO $db Databasen som
-     * @param $userEmail
-     * @return bool
+     * @param PDO $db Databasen som oppdateringen skal utføres mot
+     * @param $userEmail E-postadressen til brukeren som har glemt passordet sitt
+     * @return bool Om brukeren ble funnet i databasen og om oppdatering er vellykket
      */
     public static function sendNewPasswordEmail (PDO $db, $userEmail) {
-        $lostPwdToken = User::generateSalt();
-        $statement = $db->prepare("UPDATE USER SET LOST_PWD_TOKEN  = ? WHERE EMAIL = ?");
-        if ($statement->execute(array($lostPwdToken, $userEmail ))) {
-            Email::send($db, Email::NEW_PASSWORD, $userEmail, $lostPwdToken);
-            return true;
+        try {
+            $lostPwdToken = User::generateSalt();
+            $statement = $db->prepare("UPDATE USER SET LOST_PWD_TOKEN  = ? WHERE EMAIL = ?");
+            if ($statement->execute(array($lostPwdToken, $userEmail ))) {
+                Email::send($db, Email::NEW_PASSWORD, $userEmail, $lostPwdToken);
+                return true;
+            }
+            else {
+                return false;
+            }
         }
-        else {
+        catch(PDOException $e) {
             return false;
         }
     }
 
     /**
-     * Oppdaterer passordet til brukeren i databasen
+     * Oppdaterer passordet til brukeren i databasen ved hjelp av e-postadressen hans
      *
      * @param PDO $db
      * @param String $userEmail
@@ -373,21 +387,34 @@ class User {
             $salt = USER::generateSalt();
             $statement = $db->prepare("UPDATE USER SET PWD_HASH = ?, SALT = ?, LOST_PWD_TOKEN = NULL WHERE EMAIL = ?");
             return $statement->execute(array(sha1($password . $salt), $salt, $userEmail));
-        }catch(Exception $e) {
+        }catch(PDOException $e) {
             return false;
         }
 
     }
 
+    /**
+     * Oppdaterer databasen med brukererens nye passord ved hjelp av tokenet han fikk på e-post
+     *
+     * @param PDO $db Databasen oppdateringe skal kjøres mot
+     * @param string $token Tokenet for gjnnoppreting av passord som ble sendt til brukeren
+     * @param string $password Det nye passordet brukeren har valgt
+     * @return bool Om en bruker med et samsvarende token ble funnet og om oppdateringen var vellykket
+     */
     public static function updatePasswordFromToken(PDO $db, $token, $password) {
-        $statement = $db->prepare("SELECT EMAIL FROM USER WHERE LOST_PWD_TOKEN = ?");
-        $statement->bindParam(1, $token);
-        $statement->execute();
-        $row = $statement->fetch();
-        if ($row != null) {
-            return User::updatePassword($db, $row['EMAIL'], $password );
+        try {
+            $statement = $db->prepare("SELECT EMAIL FROM USER WHERE LOST_PWD_TOKEN = ?");
+            $statement->bindParam(1, $token);
+            $statement->execute();
+            $row = $statement->fetch();
+            if ($row != null) {
+                return User::updatePassword($db, $row['EMAIL'], $password );
+            }
+            else {
+                return false;
+            }
         }
-        else {
+        catch(PDOException $e) {
             return false;
         }
     }
