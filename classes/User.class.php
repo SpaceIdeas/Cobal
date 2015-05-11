@@ -32,17 +32,38 @@ class User {
         $this->UserAgent = $_SERVER['HTTP_USER_AGENT'];
     }
 
+    /**
+     * returnerer brukerens e-postadresse
+     *
+     * @return string Brukerens e-postadresse
+     */
     public function getEmail() {
         return $this->email;
     }
+
+    /**
+     * Returnerer brukerens brukernavn
+     *
+     * @return string Brukernavn
+     */
     public function getUsername() {
         return $this->username;
     }
 
+    /**
+     * Setter brukernavn (oppdater ikke databasen)
+     *
+     * @param string $newUsername Det nye brukernavnet
+     */
     public function setUsername($newUsername){
         $this->username = $newUsername;
     }
 
+    /**
+     * Returnerer brukerens IP-adresse.
+     *
+     * @return string Brukerens IP-adresse
+     */
     public function getIPAddress() {
         return $this->IPAddress;
     }
@@ -83,7 +104,7 @@ class User {
     }
 
     /**
-     * Tester som en bruker har vertifisert email sin enda
+     * Tester om en bruker har vertifisert email sin enda
      *
      * @param PDO $db Databasen SQL skal kjøres mot
      * @return bool True hvis emailen er vertifisert. False ellers
@@ -247,9 +268,9 @@ class User {
     /**
      *
      *
-     * @param PDO $db
-     * @param $email
-     * @return bool
+     * @param PDO $db Databasen det skal utføres oppdateringer mot
+     * @param string $email Brukerens e-postadresse
+     * @return bool Om oppdateringen i databasen gikk bra
      */
     public static function makeNotAdmin(PDO $db, $email){
         try{
@@ -268,9 +289,9 @@ class User {
      * Legger en bruker til i databasen
      *
      * @param PDO $db Databasen SQL skal kjøres mot
-     * @param String $email
-     * @param String $password
-     * @param String $username
+     * @param String $email Brukerens e-postadresse
+     * @param String $password Brukereens valgte passord
+     * @param String $username Brukerens valgte brukernavn
      * @return bool True hvis registreringen var vellykket
      */
     public static function registerUser(PDO $db, $email, $password, $username) {
@@ -301,11 +322,17 @@ class User {
         $verificationToken = User::generateSalt();
         $statement = $db->prepare("UPDATE USER SET VERIFICATION_TOKEN  = ? WHERE EMAIL = ?");
         $statement->execute(array($verificationToken, $userEmail ));
+        // Bruker selvlagt e-postklasse for sending av e-post om vertifisering av e-postadresse
         Email::send( $db, Email::VERIFY_EMAIL, $userEmail, $verificationToken);
     }
 
-
-
+    /**
+     * Sjekker om tokenet som er gitt samsvarer med et vertifiseringstoken i en databasen
+     *
+     * @param PDO $db Databasen som oppdateringen skal utføres på
+     * @param string $verificationToken Tokenet som brukeren har gitt og forhåpentligvis fått på e-post
+     * @return int Antallet rader som ble påvirket av oppdateringen i databasen. Skal være 1, -1 ved feil
+     */
     public static function verifyUserEmail(PDO $db, $verificationToken) {
         $statement = $db->prepare("UPDATE USER SET TIME_VERIFIED  = CURRENT_TIMESTAMP WHERE VERIFICATION_TOKEN = ? AND TIME_VERIFIED IS NULL");
         if ($statement->execute(array($verificationToken))) {
@@ -316,6 +343,11 @@ class User {
         }
     }
 
+    /**
+     * @param PDO $db Databasen som
+     * @param $userEmail
+     * @return bool
+     */
     public static function sendNewPasswordEmail (PDO $db, $userEmail) {
         $lostPwdToken = User::generateSalt();
         $statement = $db->prepare("UPDATE USER SET LOST_PWD_TOKEN  = ? WHERE EMAIL = ?");
