@@ -11,12 +11,18 @@
  * Den har metoder for å hente mer. Klassen inneholder også statiske metoder som f.eks login og registrering
  */
 class User {
-
-    private $email;          // Holds the users username
-    private $username;       // Holds the users full name
-    private $IPAddress;         // Holds the users login IP address
-    private $UserAgent;         // Holds the users user agent (browser ID)
-    private $admin;       // Blir brukt for å finne ut om en bruker har administratorrettigheter
+    /**
+     * @var string $email       // Holds the users username
+     * @var string $username    // Holds the users full name
+     * @var string $IPAddress   // Holds the users login IP address
+     * @var string $UserAgent   // Holds the users user agent (browser ID)
+     * @var bool $admin         // Blir brukt for å finne ut om en bruker har administratorrettigheter
+     */
+    private $email;
+    private $username;
+    private $IPAddress;
+    private $UserAgent;
+    private $admin;
 
     function __construct($email, $username, $admin) {
         $this->email = $email;
