@@ -6,6 +6,9 @@
  * Tid: 13:56
  * All Rights Reserved
  */
+/**
+ * Dette scriptet viser slettede kommentarer til en administrator slik hat han kan gjenopprette de om ønskelig.
+ */
 require_once ('config.php');
 require_once('db.php');
 session_start();
@@ -29,9 +32,3 @@ if($deletedComments != null){
 }
 
 $smarty->display('manageComments.tpl');
-
-
-/*
-$smarty->assign('deletedComment', $deletedComments[0]);
-$smarty->display('deletedComment.tpl');
-*/

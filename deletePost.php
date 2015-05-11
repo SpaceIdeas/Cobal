@@ -6,7 +6,11 @@
  * Tid: 13:58
  * All Rights Reserved
  */
-
+/**
+ * Dette skriptet tar inn en ID til et blogginnlegg samt adressen til hvor brukeren skal returneres etter sletting av
+ * innlegget. Innlegget slettes hvis det finnes og brukeren sendes dit han skal med suksessmelding eller eventuell
+ * feilmelding.
+ */
 require_once ('config.php');
 require_once('db.php');
 session_start();

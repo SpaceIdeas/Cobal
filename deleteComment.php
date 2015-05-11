@@ -6,7 +6,10 @@
  * Tid: 11:59
  * All Rights Reserved
  */
-
+/**
+ * Dette skriptet tar inn iden til en kommentar og hvor brukeren skal returneres til og sletter kommentaren eller gir
+ * brukeren feilmelding.
+ */
 require_once ('config.php');
 require_once('db.php');
 session_start();

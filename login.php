@@ -6,7 +6,10 @@
  * Tid: 16:43
  * All Rights Reserved
  */
-
+/**
+ * Dette scriptet tar seg av å logge en bruker inn og sender brukeren dit han skal etter innlogging. Det tar seg også
+ * av feilmeldinger.
+ */
 require_once('config.php');
 require_once('db.php');
 session_start();

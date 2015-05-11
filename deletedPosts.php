@@ -6,6 +6,9 @@
  * Tid: 19:43
  * All Rights Reserved
  */
+/**
+ * Dette skriptet viser de slettede blogginnleggene.
+ */
 require_once('config.php');
 require_once('db.php');
 session_start();

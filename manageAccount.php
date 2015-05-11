@@ -6,7 +6,9 @@
  * Tid: 09:40
  * All Rights Reserved
  */
-
+/**
+ * Dette skripter viser brukeren en side hvor han kan oppdatere passordet, brukernavnet og profilbildet sitt.
+ */
 require_once ('config.php');
 require_once('db.php');
 session_start();

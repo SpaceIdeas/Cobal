@@ -1,4 +1,7 @@
 <?php
+/**
+ * Dette scriptet tar seg av å logge ut brukeren og sender han tilbake der han kom fra.
+ */
 require_once('config.php');
 session_start();
 //Logger brukeren ut

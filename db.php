@@ -5,6 +5,9 @@
  * Date: 23.04.2015
  * Time: 12:44
  */
+/**
+ * Dette er filen som oppretter et nytt databaseobjekt og inneholder brukernavn og passord til databasen.
+ */
 
     $host = "kark.hin.no";
     $dbname = "stud_v15_stien";
