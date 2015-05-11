@@ -24,9 +24,9 @@
         <label for="txtTitle">Tittel</label>
         <input name="txtTitle" class="form-control" placeholder="Innleggstittel" value="{$post->getTitle()}" required autofocus id="txtTitle">
         <textarea name="txtPost" style="width:100%" rows="20" >{$post->getText()}</textarea>
-        <input type="hidden" name="MAX_FILE_SIZE" value="100000000000000">
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000">
         <label for="userfile">Vedlegg</label>
-        <input name="userfile" id="userfile" TYPE="file" >
+        <input name="userfile" id="userfile" type="file" >
         <input type="submit" class="btn btn-default" value="Post innlegget" name="btnAddPost">
     </form>
     {if $post->getText() != null}

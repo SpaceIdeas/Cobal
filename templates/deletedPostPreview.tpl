@@ -11,10 +11,10 @@
                         {include file='span/youSpan.tpl'}
                     {/if}
                 </p>
-                <p class="text-justify">{$post->getText()}</p>
+                {$post->getText()}
             </div>
             <div class="col-xs-2">
-                <img src="profileImage.php?postID={$post->getPostID()}" height="100px" width="100px">
+                <img src="profileImage.php?postID={$post->getPostID()}" alt="Profilbilde her" height="100" width="100">
             </div>
         </div>
     </div>

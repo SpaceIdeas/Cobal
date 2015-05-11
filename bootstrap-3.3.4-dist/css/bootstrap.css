@@ -6629,7 +6629,6 @@ img {
 
 .text-wrap {
     white-space: pre;
-    text-wrap: normal;
     word-break: break-all;
     word-wrap: break-word;
 }
