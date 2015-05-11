@@ -12,9 +12,9 @@
 require_once('config.php');
 require_once('db.php');
 session_start();
-Verify::adminLoggedIn();
+Verify::sessionAndAdminLoggedIn();
 
-if ($_GET['email'] && $_GET['makeAdmin']) {
+if (isset($_GET['email']) && isset($_GET['makeAdmin'])) {
     // Hvis 1 så skal brukeren gjøres til administrator.
     if ($_GET['makeAdmin'] == 1 ) {
         // Metoden returnerer true hvis vellykket
@@ -29,7 +29,7 @@ if ($_GET['email'] && $_GET['makeAdmin']) {
         }
     }
     // Hvis 0 så skal brukeren gjøres til en normal bruker.
-    elseif($_GET['makeAdmin'] == 0) {
+    else if($_GET['makeAdmin'] == 0) {
         // Metoden returnerer true hvis vellykket
         if (User::makeNotAdmin($db, $_GET['email'])) {
             $alert = new Alert(Alert::SUCCESS, 'Brukeren er nå en normal bruker');
