@@ -1,14 +1,14 @@
 {include file='header.tpl'}
-<div class="blog-main"> <!--blog-->
-    <div class="blog-post">
-        <h1 class="blog-post-title">{$post->getTitle($db)}</h1>
+<div> <!--blog-->
+    <div >
+        <h1>{$post->getTitle($db)}</h1>
         {if isset($smarty.session.user) and $smarty.session.user->isAdmin()}
             <a class="btn btn-danger btn-sm pull-right" role="button" href="deletePost.php?id={$post->getID()}&amp;return={$smarty.server.PHP_SELF}" onclick="javascript:return confirm('Er du sikker på at du vil slette dette innlegget?')">Slett</a>
             <a class="btn btn-primary btn-sm pull-right" role="button" href="addPost.php?id={$post->getID()}">Rediger</a>
         {/if}
         <div class="row">
             <div class="col-md-10">
-                <p class="blog-post-meta"><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)} </b>
+                <p><b>Opprettet {$post->getTimeCreated($db)} av {$post->getAuthorName($db)} </b>
                     {include file="span/hitSpan.tpl"}
                     {if isset($smarty.session.user) and $post->getAuthorEmail() eq $smarty.session.user->getEmail()}
                         {include file='span/youSpan.tpl'}

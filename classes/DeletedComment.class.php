@@ -29,6 +29,11 @@ class DeletedComment {
         return $this->ID;
     }
 
+    /**
+     * Setter den unike IDen til kommentaren
+     *
+     * @param int $id
+     */
     public function setID($id){
         $this->ID = $id;
     }
@@ -37,6 +42,11 @@ class DeletedComment {
         return $this->TEXT;
     }
 
+    /**
+     * Setter
+     *
+     * @param $text
+     */
     public function setText($text) {
         $this->TEXT = $text;
     }
@@ -45,6 +55,11 @@ class DeletedComment {
         return $this->AUTHOR_EMAIL;
     }
 
+    /**
+     * Setter
+     *
+     * @param $authorEmail
+     */
     public function setAuthorEmail($authorEmail) {
         $this->AUTHOR_EMAIL = $authorEmail;
     }
@@ -54,6 +69,11 @@ class DeletedComment {
         return $this->AUTHOR_USERNAME;
     }
 
+    /**
+     * Setter
+     *
+     * @param $AUTHOR_USERNAME
+     */
     public function setAuthorUsername($AUTHOR_USERNAME)
     {
         $this->AUTHOR_USERNAME = $AUTHOR_USERNAME;
@@ -63,6 +83,11 @@ class DeletedComment {
         return $this->TIME_CREATED;
     }
 
+    /**
+     * Setter
+     *
+     * @param $timeCreated
+     */
     public function setTimeCreated($timeCreated){
         $this->TIME_CREATED = $timeCreated;
     }
@@ -72,15 +97,25 @@ class DeletedComment {
         return $this->TIME_DELETED;
     }
 
-    public function setTimeDeleted($TIME_DELETED)
+    /**
+     * Setter
+     *
+     * @param $timeDeleted
+     */
+    public function setTimeDeleted($timeDeleted)
     {
-        $this->TIME_DELETED = $TIME_DELETED;
+        $this->TIME_DELETED = $timeDeleted;
     }
 
     public function getPostID(){
         return $this->POST_ID;
     }
 
+    /**
+     * Setter
+     *
+     * @param $postID
+     */
     public function setPostID($postID) {
         $this->POST_ID = $postID;
     }

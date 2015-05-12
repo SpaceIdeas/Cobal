@@ -15,6 +15,7 @@ class Email {
     const NEW_PASSWORD = 1;
 
     /**
+     * @todo Lage ikke statiske lenker
      * Sender en e-post med tekst som passer til typen e-post
      *
      * Metoden sender en html-formatert e-post med rett tekst som passer til typen e-post som skal sendes

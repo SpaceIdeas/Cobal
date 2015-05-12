@@ -27,6 +27,11 @@ class Comment {
         return $this->ID;
     }
 
+    /**
+     * Setter den unike Iden til kommentaren
+     *
+     * @param int $id
+     */
     public function setID($id){
         $this->ID = $id;
     }
@@ -35,6 +40,11 @@ class Comment {
         return $this->TEXT;
     }
 
+    /**
+     * Setter teksten til kommentaren
+     *
+     * @param string $text
+     */
     public function setText($text) {
         $this->TEXT = $text;
     }
@@ -43,6 +53,11 @@ class Comment {
         return $this->AUTHOR_EMAIL;
     }
 
+    /**
+     * Setter emailen til forfatteren av kommentaren
+     *
+     * @param string $authorEmail
+     */
     public function setAuthorEmail($authorEmail) {
         $this->AUTHOR_EMAIL = $authorEmail;
     }
@@ -51,6 +66,11 @@ class Comment {
         return $this->TIME_CREATED;
     }
 
+    /**
+     * Setter tidspunktet kommentaren ble laget
+     *
+     * @param DateTime $timeCreated
+     */
     public function setTimeCreated($timeCreated){
         $this->TIME_CREATED = $timeCreated;
     }
@@ -59,6 +79,11 @@ class Comment {
         return $this->POST_ID;
     }
 
+    /**
+     * Setter den unike IDen til innlegget kommentaren ble skrevet til
+     *
+     * @param int $postID
+     */
     public function setPostID($postID) {
         $this->POST_ID = $postID;
     }
@@ -67,15 +92,31 @@ class Comment {
         return $this->DELETED;
     }
 
+    /**
+     * Setter en bool som angir om kommentaren er slettet
+     *
+     * @param bool $deleted
+     */
     public function setDeleted($deleted) {
         $this->DELETED = $deleted;
     }
 
-
+    /**
+     * Henter brukernavnet til forfatteren fra databasen
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @return null|String Brukernavnet til forfatteren. Null hvis noe går feil
+     */
     public function getAuthorName(PDO $db) {
         return User::getUsernameFromDB($db, $this->AUTHOR_EMAIL);
     }
 
+    /**
+     * Gjør en rad fra en sql spørring om til et Comment objekt
+     *
+     * @param array $row
+     * @return Comment
+     */
     public static function rowToComment($row){
         $comment = new Comment();
         $comment->setID($row['ID']);
@@ -87,6 +128,12 @@ class Comment {
         return $comment;
     }
 
+    /**
+     * Legger kommentaren til i databasen
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @return bool True hvis kommentaren ble lagt til
+     */
     public function addToDB(PDO $db) {
         try
         {
@@ -99,7 +146,8 @@ class Comment {
 
     /**
      * Sletter en kommentar
-     * @param PDO $db
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
      * @return bool
      */
     public function deleteComment(PDO $db){
@@ -124,7 +172,8 @@ class Comment {
 
     /**
      * Henter en kommentar fra databasen basert på en kommentar id
-     * @param $db
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
      * @param $id
      * @return mixed
      */
@@ -140,6 +189,13 @@ class Comment {
         }
     }
 
+    /**
+     * Henter alle kommenratene til et innlegg fra databasen
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @param Post $post Den unike IDen til innlegget kommentarene skal hentes fra.
+     * @return array
+     */
     public static function  getCommentsByPost(PDO $db, Post $post) {
         $statement = $db->prepare("SELECT ID, TEXT, AUTHOR_EMAIL, TIME_CREATED, POST_ID, DELETED FROM COMMENT WHERE POST_ID = ? ORDER BY TIME_CREATED DESC");
         $statement->bindParam(1, $post->getID());
@@ -151,6 +207,13 @@ class Comment {
         return $comments;
     }
 
+    /**
+     * Henter antallet kommentarer i et innlegg
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @param Post $post Den unike IDen til innlegget informasjonen skal hentes fra.
+     * @return int Antallet kommentarer i innlegget
+     */
     public static function  getCommentCount(PDO $db, Post $post) {
         $statement = $db->prepare("SELECT COUNT(ID) FROM COMMENT WHERE POST_ID = ?");
         $statement->bindParam(1, $post->getID());
