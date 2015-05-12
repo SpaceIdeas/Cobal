@@ -32,6 +32,16 @@ if (isset($_POST['btnRegisterUser'])) {
     }
 
 }
+//Blir kjørt når bruker har trykket på link for å vertifisere eposten sin
+if (isset($_GET['verToken'])) {
+    if (User::verifyUserEmail($db, $_GET ['verToken']) == 1) {
+        $alert = new Alert(Alert::SUCCESS, 'Din epost er nå bekreftet. Du kan nå logge inn');
+        $alert->displayOnOtherPage('login.php');
+    } else {
+        $alert = new Alert(Alert::ERROR, 'Din epost kunne ikke bekreftes.');
+        $alert->displayOnThisPage($smarty);
+    }
+}
 
 $smarty->display('registrerUser.tpl');
 

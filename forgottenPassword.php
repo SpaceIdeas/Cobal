@@ -38,4 +38,10 @@ if (isset($_POST['btnNewPassword']) && isset($_POST['inputEmail'])) {
         $smarty->assign('errorMessage', 'Ingen bruker med din e-postadresse er registrert');
     }
 }
+//Kalt når bruker trykker på link for å få nytt passord
+if (isset($_GET['lostPwdToken'])) {
+    $alert = new Alert(Alert::SUCCESS, "Sktiv inn ditt nye passord");
+    $alert->displayOnOtherPage("newPassword.php?lostPwdToken=".$_GET['lostPwdToken']);
+}
+
 $smarty->display('forgottenPassword.tpl');

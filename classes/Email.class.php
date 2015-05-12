@@ -15,7 +15,6 @@ class Email {
     const NEW_PASSWORD = 1;
 
     /**
-     * @todo Lage ikke statiske lenker
      * Sender en e-post med tekst som passer til typen e-post
      *
      * Metoden sender en html-formatert e-post med rett tekst som passer til typen e-post som skal sendes
@@ -32,7 +31,7 @@ class Email {
     public static function send(PDO $db, $type, $recipient, $token) {
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-        $headers .= 'From:noreply@kark.hin.no\r\n';
+        $headers .= 'From:noreply@kark.hin.no';
 
         $recipientUsername = User::getUsernameFromDB($db, $recipient);
 
@@ -55,7 +54,7 @@ class Email {
                             </tr>
                           </table>
                             <p>For å være sikker på at deg er deg øsnker vi at du trykker på linken under for å vertifisere din epostadresse</p>
-                            <a href=\"http://kark.hin.no/~530477/php/cobal/index.php?verToken=$token\">http://kark.hin.no/~530477/php/cobal/index.php?verToken=$token</a>
+                            <a href=\"".$_SERVER['HTTP_REFERER']."?verToken=$token\">".$_SERVER['HTTP_REFERER']."?verToken=$token</a>
                         </body>
                         </html>";
                 mail($recipient, 'Vertifiser din e-post på Cobal-bloggen', $message, $headers);
@@ -77,7 +76,7 @@ class Email {
                             </tr>
                           </table>
                             <p>Trykk på linken under for å opprette et nytt passord</p>
-                            <a href=\"http://kark.hin.no/~530477/php/cobal/newPassword.php?lostPwdToken=$token\">http://kark.hin.no/~530477/php/cobal/newPassword.php?lostPwdToken=$token</a>
+                            <a href=\"".$_SERVER['HTTP_REFERER']."?lostPwdToken=$token\">".$_SERVER['HTTP_REFERER']."?lostPwdToken=$token</a>
                         </body>
                         </html>";
                 mail($recipient, 'Nytt passord på Cobal-bloggen', $message, $headers);
