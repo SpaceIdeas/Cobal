@@ -19,9 +19,13 @@
  *
  */
 class Alert {
-     const ERROR = 0; // Feilmelding - rød
-     const SUCCESS = 1; // Suksess - grønn
 
+    /**
+     * @var int $type       Typen beskjed som skal bli vist, basert på constantene i denne klassen
+     * @var string $message Beskjeden som skal bli vist
+     */
+    const ERROR = 0; // Feilmelding - rød
+    const SUCCESS = 1; // Suksess - grønn
     private $type;
     private $message;
 

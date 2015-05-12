@@ -43,9 +43,9 @@ class DeletedComment {
     }
 
     /**
-     * Setter
+     * Setter teksten til kommentaren
      *
-     * @param $text
+     * @param string $text
      */
     public function setText($text) {
         $this->TEXT = $text;
@@ -56,9 +56,9 @@ class DeletedComment {
     }
 
     /**
-     * Setter
+     * Setter email til forfatteren av kommentaren
      *
-     * @param $authorEmail
+     * @param string $authorEmail
      */
     public function setAuthorEmail($authorEmail) {
         $this->AUTHOR_EMAIL = $authorEmail;
@@ -70,9 +70,9 @@ class DeletedComment {
     }
 
     /**
-     * Setter
+     * Setter brukernavnet til forfatteren av kommentaren
      *
-     * @param $AUTHOR_USERNAME
+     * @param string $AUTHOR_USERNAME
      */
     public function setAuthorUsername($AUTHOR_USERNAME)
     {
@@ -84,9 +84,9 @@ class DeletedComment {
     }
 
     /**
-     * Setter
+     * Setter tidspunktet kommentaren ble laget
      *
-     * @param $timeCreated
+     * @param DateTime $timeCreated
      */
     public function setTimeCreated($timeCreated){
         $this->TIME_CREATED = $timeCreated;
@@ -98,9 +98,9 @@ class DeletedComment {
     }
 
     /**
-     * Setter
+     * Setter tidspunktet kommentaren ble slettet
      *
-     * @param $timeDeleted
+     * @param DateTime $timeDeleted
      */
     public function setTimeDeleted($timeDeleted)
     {
@@ -112,9 +112,9 @@ class DeletedComment {
     }
 
     /**
-     * Setter
+     * Setter den unike IDen til innlegget kommentaren ble skrevet til
      *
-     * @param $postID
+     * @param int $postID
      */
     public function setPostID($postID) {
         $this->POST_ID = $postID;
