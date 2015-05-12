@@ -10,7 +10,7 @@
 class DeletedPost {
     /**
      * @var int $POST_ID                Den unike IDen til innlegget
-     * @var string $TITLE               Titelen til innlegget
+     * @var string $TITLE               Tittelen til innlegget
      * @var string $TEXT                Teksten til innlegget
      * @var string $AUTHOR_EMAIL        Email til forfatteren av innlegget
      * @var string $AUTHOR_USERNAME     Brukernavnet til forfatteren av innlegget
@@ -32,6 +32,11 @@ class DeletedPost {
         return $this->POST_ID;
     }
 
+    /**
+     * Setter den unike IDen til innlegget
+     *
+     * @param int $postID
+     */
     public function setPostID($postID){
         $this->POST_ID = $postID;
     }
@@ -39,7 +44,11 @@ class DeletedPost {
     public function getTitle(){
         return $this->TITLE;
     }
-
+    /**
+     * Setter tittelen til innlegget
+     *
+     * @param string $title
+     */
     public function setTitle($title) {
         $this->TITLE = $title;
     }
@@ -47,7 +56,11 @@ class DeletedPost {
     public function getText(){
         return $this->TEXT;
     }
-
+    /**
+     * Setter teksten til innlegget
+     *
+     * @param string $text
+     */
     public function setText($text) {
         $this->TEXT = $text;
     }
@@ -55,7 +68,11 @@ class DeletedPost {
     public function getAuthorEmail(){
         return $this->AUTHOR_EMAIL;
     }
-
+    /**
+     * Setter email til forfatteren av innlegget
+     *
+     * @param string $authorEmail
+     */
     public function setAuthorEmail($authorEmail) {
         $this->AUTHOR_EMAIL = $authorEmail;
     }
@@ -64,16 +81,24 @@ class DeletedPost {
     {
         return $this->AUTHOR_USERNAME;
     }
-
-    public function setAuthorUsername($AUTHOR_USERNAME)
+    /**
+     * Setter brukernavnet til forfatteren av innlegget
+     *
+     * @param string $authorUsername
+     */
+    public function setAuthorUsername($authorUsername)
     {
-        $this->AUTHOR_USERNAME = $AUTHOR_USERNAME;
+        $this->AUTHOR_USERNAME = $authorUsername;
     }
 
     public function getTimeCreated(){
         return $this->TIME_CREATED;
     }
-
+    /**
+     * Setter tidspunktet innlegget ble laget
+     *
+     * @param DateTime $timeCreated
+     */
     public function setTimeCreated($timeCreated){
         $this->TIME_CREATED = $timeCreated;
     }
@@ -82,16 +107,24 @@ class DeletedPost {
     {
         return $this->TIME_DELETED;
     }
-
-    public function setTimeDeleted($TIME_DELETED)
+    /**
+     * Setter tidspunktet innlegget ble slettet
+     *
+     * @param DateTime $timeDeleted
+     */
+    public function setTimeDeleted($timeDeleted)
     {
-        $this->TIME_DELETED = $TIME_DELETED;
+        $this->TIME_DELETED = $timeDeleted;
     }
 
     public function getHits(){
         return $this->HITS;
     }
-
+    /**
+     * Setter antallet treff på innlegget
+     *
+     * @param int $hits
+     */
     public function setHits($hits) {
         $this->HITS = $hits;
     }

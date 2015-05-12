@@ -13,6 +13,11 @@
  * Metoder for å hente ut bildet fra databasen og for å legge til et bilde i databasen.
  */
 class ProfileImage {
+    /**
+     * @var blob $picture       Bildetdataen
+     * @var string $userEmail   E-postadressen til brukeren som bildet tilhører
+     * @var string $mimeType    Mime-typen til bildet
+     */
     private $picture;
     private $userEmail;
     private $mimeType;

@@ -9,14 +9,15 @@
 /**
  * Class User Håndterer alt som har med en brukerkonto å gjøre. Instansen av objektet inneholder relevant informasjone om brukeren.
  * Den har metoder for å hente mer. Klassen inneholder også statiske metoder som f.eks login og registrering
+ * @todo Lage færre oppdate setninger
  */
 class User {
     /**
-     * @var string $email       // Holds the users username
-     * @var string $username    // Holds the users full name
-     * @var string $IPAddress   // Holds the users login IP address
-     * @var string $UserAgent   // Holds the users user agent (browser ID)
-     * @var bool $admin         // Blir brukt for å finne ut om en bruker har administratorrettigheter
+     * @var string $email       Emailen til brukeren som også er den unike IDen
+     * @var string $username    Brukernavnet til brukeren
+     * @var string $IPAddress   Login IPadressen til brukeren
+     * @var string $UserAgent   Login user agent (browser ID) til brukeren
+     * @var bool $admin         Blir brukt for å finne ut om en bruker har administratorrettigheter, eller ikke
      */
     private $email;
     private $username;
@@ -24,6 +25,13 @@ class User {
     private $UserAgent;
     private $admin;
 
+    /**
+     * Konstruktøren til User
+     *
+     * @param string $email
+     * @param string $username
+     * @param bool $admin
+     */
     function __construct($email, $username, $admin) {
         $this->email = $email;
         $this->username = $username;
@@ -67,6 +75,12 @@ class User {
     public function getIPAddress() {
         return $this->IPAddress;
     }
+
+    /**
+     * Returnerer om brukeren er admin
+     *
+     * @return bool
+     */
     public function isAdmin(){
         return $this->admin;
     }
@@ -178,6 +192,13 @@ class User {
 
     }
 
+    /**
+     * Henter profilbilde til en bruker fra databasen
+     *
+     * @param PDO $db Databasen SQL skal kjøres mot
+     * @param $email
+     * @return null|blob Bildet
+     */
     public static function getProfileImage(PDO $db, $email) {
         try{
             $stmt = $db->prepare("SELECT PROFILE_IMAGE FROM USER WHERE EMAIL = ?");
@@ -316,7 +337,7 @@ class User {
      * Metoden sender en epost til bruker slik at han kan vertifisere epostadressen sin og gjør nødvendiger i databasen.
      *
      * @param PDO $db Databasen SQL skal kjøres mot
-     * @param $userEmail E-postadressen til brukeren
+     * @param string $userEmail E-postadressen til brukeren
      * @return bool Om alt gikk greit
      */
     public static function sendVerificationEmail (PDO $db, $userEmail) {
@@ -354,7 +375,7 @@ class User {
 
     /**
      * @param PDO $db Databasen som oppdateringen skal utføres mot
-     * @param $userEmail E-postadressen til brukeren som har glemt passordet sitt
+     * @param string $userEmail E-postadressen til brukeren som har glemt passordet sitt
      * @return bool Om brukeren ble funnet i databasen og om oppdatering er vellykket
      */
     public static function sendNewPasswordEmail (PDO $db, $userEmail) {
@@ -428,7 +449,7 @@ class User {
         //Lengden på saltet
         $max = 15;
         //De forskjellige karakterene saltet kan bestå av
-        $characterList = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*?";
+        $characterList = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%*?";
         $i = 0;
         $salt = "";
         while ($i < $max) {

@@ -24,6 +24,7 @@ class Email {
      * eller vertifisering av e-post. Hele poenget med html-formateringen er at brukeren skal kunne
      * trykke på en link med et paramater for å gjennopprette et passord eller vertifisere en e-postadresse.
      *
+     * @param PDO $db Databasen spørringen skal utføres mot
      * @param int $type Konstant fra Email-klassen med typen e-post.
      * @param string $recipient Mottakerens e-postadresse
      * @param string $token Tokenet som skal sendes mesd e-posten

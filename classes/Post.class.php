@@ -25,10 +25,6 @@ class Post {
     private $TIME_CREATED;
     private $HITS;
 
-    public function __construct() {
-
-    }
-
     /**
      * Returnerer ID-en til innlegget
      *
@@ -177,7 +173,7 @@ class Post {
 
     /**
      * Oppdaterer databasen slik at innlegget får rett tekst og tittel
-     * @param PDO $db
+     * @param PDO $db Databasen spørringen skal utføres mot
      * @return bool
      */
     public function updateDB(PDO $db){
@@ -341,7 +337,7 @@ class Post {
     /**
      * Ignorerer et antall innlegg og returnerer de neste 10, fra databasen
      *
-     * @param PDO $db
+     * @param PDO $db Databasen spørringen skal utføres mot
      * @param int $offset Antallet innlegg som skal ignoreres
      * @return array|null Array med innlegg/poster
      */
@@ -361,9 +357,11 @@ class Post {
     }
 
     /**
-     * Returnerer en array av YearPostList objekter som blir brukt til å generere en liste over hvor mange innlegg det er i hver måned i hvert år
-     * @param $db
-     * @return array|null
+     * Returnerer en array av YearPostList objekter som blir brukt til å generere en liste
+     * over hvor mange innlegg det er i hver måned i hvert år
+     *
+     * @param PDO $db Databasen spørringen skal utføres mot
+     * @return array|null Array av YearPostList objektene
      */
     public static function getYearMonthCountFromPosts($db){
         try
@@ -400,9 +398,9 @@ class Post {
 
     /**
      * Returnerer alle blog innleggene hvor tittel eller tekst inneholder $searchWord
-     * @param PDO $db
+     * @param PDO $db Databasen spørringen skal utføres mot
      * @param $searchWord
-     * @return array
+     * @return array|null Array av Post objektene
      */
     public static function  getPostsBySearch(PDO $db, $searchWord) {
         try
@@ -420,6 +418,14 @@ class Post {
         }
     }
 
+    /**
+     * Henter alle innleggene som ble laget i en måned i et år. Fra databasen
+     *
+     * @param PDO $db Databasen spørringen skal utføres mot
+     * @param int $month Måneden innleggene skal ha blir laget i
+     * @param int $year Året innleggene skal ha blir laget i
+     * @return array|null Array av Post objektene
+     */
     public static function getPostsByMonthYear(PDO $db, $month, $year){
         try
         {
@@ -438,8 +444,8 @@ class Post {
     /**
      * Returnerer de fem innlegene med mest treff
      *
-     * @param $db
-     * @return array|null
+     * @param PDO $db Databasen spørringen skal utføres mot
+     * @return array|null Array av Post objektene
      */
     public static function getTopFivePosts($db){
         try{
