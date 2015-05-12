@@ -10,13 +10,12 @@
  * i databasen til forfatteren av posten eller kommentaren.
 
  */
-require_once('db.php');
 require_once('config.php');
+require_once('db.php');
 
     // Profilbildet til forfatteren av en post skal hentes ut.
     if (isset($_GET['postID'])) {
-
-        $post = POST::getPost($db, $_GET['postID']);
+        $post = Post::getPost($db, $_GET['postID']);
         // Denne metoden returener et ProfileImage som samsvarer med forfatteren.
         $profileImage = ProfileImage::getProfileImage($db, $post->getAuthorEmail());
         // ProfileImage er kun ikke null, hvis brukeren har et profilbilde.
