@@ -105,16 +105,8 @@ class User {
      * @return bool True hvis brukeren ble oppdatert
      */
     public function updateUsername(PDO $db){
-        try{
-            $stmt = $db->prepare("UPDATE USER SET USERNAME  = ? WHERE EMAIL = ?");
-            //Binder parametrene og utfører statmenten
-            $result = $stmt->execute(array(htmlentities($this->username), $this->email));
-            //Returnerer om UPDATE setningen var vellyket
-            return $result;
-
-        }catch(Exception $e) {
-            return false;
-        }
+        //Lager ferdig sql setningen, utfører den og returnerer resultatet
+        return User::updateUserDynamic($db, "USERNAME = ?", array($this->username), $this->email);
     }
 
     /**
@@ -274,16 +266,8 @@ class User {
      * @return bool
      */
     public static function makeAdmin(PDO $db, $email){
-        try{
-            $stmt = $db->prepare("UPDATE USER SET ADMIN  = 1 WHERE EMAIL = ?");
-            //Binder parametrene og utfører statmenten
-            $result = $stmt->execute(array($email));
-            //Returnerer om UPDATE setningen var vellyket
-            return $result;
-
-        }catch(PDOException $e) {
-            return false;
-        }
+        //Lager ferdig sql setningen, utfører den og returnerer resultatet
+        return User::updateUserDynamic($db, "ADMIN = ?", array(1), $email);
     }
 
     /**
@@ -294,16 +278,8 @@ class User {
      * @return bool Om oppdateringen i databasen gikk bra
      */
     public static function makeNotAdmin(PDO $db, $email){
-        try{
-            $stmt = $db->prepare("UPDATE USER SET ADMIN = 0 WHERE EMAIL = ?");
-            //Binder parametrene og utfører statmenten
-            $result = $stmt->execute(array($email));
-            //Returnerer om UPDATE setningen var vellyket
-            return $result;
-
-        }catch(PDOException $e) {
-            return false;
-        }
+        //Lager ferdig sql setningen, utfører den og returnerer resultatet
+        return User::updateUserDynamic($db, "ADMIN = ?", array(0), $email);
     }
 
     /**
@@ -319,8 +295,7 @@ class User {
         try{
 
             //Generere saltet
-            $salt = USER::generateSalt();
-
+            $salt = User::generateSalt();
             $stmt = $db->prepare("INSERT INTO USER (EMAIL, PWD_HASH, SALT, USERNAME) VALUES (?, ?, ?, ?)");
             //Binder parametrene og utfører statmenten
             $result = $stmt->execute(array(htmlentities($email), sha1($password . $salt), $salt, htmlentities($username)));
@@ -341,18 +316,12 @@ class User {
      * @return bool Om alt gikk greit
      */
     public static function sendVerificationEmail (PDO $db, $userEmail) {
-        try {
-            $verificationToken = User::generateSalt();
-            $statement = $db->prepare("UPDATE USER SET VERIFICATION_TOKEN  = ? WHERE EMAIL = ?");
-            $statement->execute(array($verificationToken, $userEmail ));
-            // Bruker selvlagt e-postklasse for sending av e-post om vertifisering av e-postadresse
-            Email::send($db, Email::VERIFY_EMAIL, $userEmail, $verificationToken);
-            return true;
-        }
-        catch(PDOException $e) {
-            return false;
-        }
-
+        $verificationToken = User::generateSalt();
+        //Lager ferdig sql setningen, utfører den og returnerer resultatet. Returnerer metoden, med falsk hvis noe gikk galt
+        if(!User::updateUserDynamic($db, "VERIFICATION_TOKEN = ?", array($verificationToken), $userEmail)) return false;
+        // Bruker selvlagt e-postklasse for sending av e-post om vertifisering av e-postadresse
+        Email::send($db, Email::VERIFY_EMAIL, $userEmail, $verificationToken);
+        return true;
     }
 
     /**
@@ -361,36 +330,39 @@ class User {
      *
      * @param PDO $db Databasen som oppdateringen skal utføres på
      * @param string $verificationToken Tokenet som brukeren har gitt og forhåpentligvis fått på e-post
-     * @return int Antallet rader som ble påvirket av oppdateringen i databasen. Skal være 1, -1 ved feil
+     * @return bool True hvis oppdateringen var vellykket
      */
     public static function verifyUserEmail(PDO $db, $verificationToken) {
-        $statement = $db->prepare("UPDATE USER SET TIME_VERIFIED  = CURRENT_TIMESTAMP WHERE VERIFICATION_TOKEN = ? AND TIME_VERIFIED IS NULL");
-        if ($statement->execute(array($verificationToken))) {
-            return $statement->rowCount();
-        }
-        else {
-            return -1;
-        }
-    }
-
-    /**
-     * @param PDO $db Databasen som oppdateringen skal utføres mot
-     * @param string $userEmail E-postadressen til brukeren som har glemt passordet sitt
-     * @return bool Om brukeren ble funnet i databasen og om oppdatering er vellykket
-     */
-    public static function sendNewPasswordEmail (PDO $db, $userEmail) {
         try {
-            $lostPwdToken = User::generateSalt();
-            $statement = $db->prepare("UPDATE USER SET LOST_PWD_TOKEN  = ? WHERE EMAIL = ?");
-            if ($statement->execute(array($lostPwdToken, $userEmail ))) {
-                Email::send($db, Email::NEW_PASSWORD, $userEmail, $lostPwdToken);
-                return true;
+            $statement = $db->prepare("UPDATE USER SET TIME_VERIFIED  = CURRENT_TIMESTAMP WHERE VERIFICATION_TOKEN = ? AND TIME_VERIFIED IS NULL");
+            if ($statement->execute(array($verificationToken))) {
+                return $statement->rowCount() == 1;
             }
             else {
                 return false;
             }
         }
         catch(PDOException $e) {
+                return false;
+        }
+    }
+
+    /**
+     * Sender et en email med en token som lar bruker lage nytt passord.
+     * Lagrer tokenen på brukeren.
+     *
+     * @param PDO $db Databasen som oppdateringen skal utføres mot
+     * @param string $userEmail E-postadressen til brukeren som har glemt passordet sitt
+     * @return bool Om brukeren ble funnet i databasen og om oppdatering er vellykket
+     */
+    public static function sendNewPasswordEmail (PDO $db, $userEmail) {
+        $lostPwdToken = User::generateSalt();
+        //Lager ferdig sql setningen, utfører den og returnerer resultatet
+        if (User::updateUserDynamic($db, "LOST_PWD_TOKEN = ?", array($lostPwdToken), $userEmail)) {
+            Email::send($db, Email::NEW_PASSWORD, $userEmail, $lostPwdToken);
+            return true;
+        }
+        else {
             return false;
         }
     }
@@ -398,16 +370,36 @@ class User {
     /**
      * Oppdaterer passordet til brukeren i databasen ved hjelp av e-postadressen hans
      *
-     * @param PDO $db
+     * @param PDO $db Databasen som oppdateringen skal utføres mot
      * @param String $userEmail
      * @param String $password
      * @return bool True hvis oppdateringen var vellykket
      */
     public static function updatePassword(PDO $db, $userEmail, $password) {
+
+        $salt = User::generateSalt();
+        $updateString = "PWD_HASH = ?, SALT = ?, LOST_PWD_TOKEN = NULL";
+        $variables = array(sha1($password . $salt), $salt);
+        //Lager ferdig sql setningen, utfører den og returnerer resultatet
+        return User::updateUserDynamic($db, $updateString, $variables, $userEmail);
+    }
+
+    /**
+     * En generisk update setning som tar imot hvilke ting som skal oppdateres.
+     * Der email angir hvilken bruker som skal oppdateres
+     *
+     * @param PDO $db Databasen som oppdateringen skal utføres mot
+     * @param string $updateString Midten av en update setnimg som inneholder det som skal oppdateres
+     * @param array $variables Verdiene til det som skal oppdateres
+     * @param string $email
+     * @return bool True hvis oppdateringen var vellykket
+     */
+    private static function updateUserDynamic(PDO $db, $updateString, $variables, $email) {
         try{
-            $salt = USER::generateSalt();
-            $statement = $db->prepare("UPDATE USER SET PWD_HASH = ?, SALT = ?, LOST_PWD_TOKEN = NULL WHERE EMAIL = ?");
-            return $statement->execute(array(sha1($password . $salt), $salt, $userEmail));
+            $sqlString = "UPDATE USER SET " . $updateString . " WHERE EMAIL = ?";
+            $statement = $db->prepare($sqlString);
+            $variables[] = $email;
+            return $statement->execute($variables);
         }catch(PDOException $e) {
             return false;
         }

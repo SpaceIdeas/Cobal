@@ -23,6 +23,8 @@ if (isset($_POST['btnNewUsername'])) {
     $_SESSION['user']->setUsername($_POST['inputUsername']);
     //Oppdaterer brukernavnet i databasen
     $_SESSION['user']->updateUsername($db);
+    $alert = new Alert(Alert::SUCCESS, "Din nye alias er nå klart");
+    $alert->displayOnThisPage($smarty);
 
 //True hvis bruker trykket på knapp for å bytte passord
 }else if(isset($_POST['btnNewPassword'])){

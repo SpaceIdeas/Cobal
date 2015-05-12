@@ -34,7 +34,7 @@ if (isset($_POST['btnRegisterUser'])) {
 }
 //Blir kjørt når bruker har trykket på link for å vertifisere eposten sin
 if (isset($_GET['verToken'])) {
-    if (User::verifyUserEmail($db, $_GET ['verToken']) == 1) {
+    if (User::verifyUserEmail($db, $_GET['verToken'])) {
         $alert = new Alert(Alert::SUCCESS, 'Din epost er nå bekreftet. Du kan nå logge inn');
         $alert->displayOnOtherPage('login.php');
     } else {

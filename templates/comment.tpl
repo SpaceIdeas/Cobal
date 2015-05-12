@@ -23,7 +23,7 @@
             <div class="col-sm-1 cuddle-pile">
                 <img src="profileImage.php?commentID={$comment->getID()}" alt="Profilbilde her" width="100" height="100">
             </div>
-            <div class="col-sm-11 text-wrap">{$comment->getText()}</div>
+            <div class="col-sm-11 text-wrap"><p>{$comment->getText()}</p></div>
         </div>
 
     </div>
