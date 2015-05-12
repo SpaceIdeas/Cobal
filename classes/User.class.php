@@ -325,7 +325,7 @@ class User {
             $statement = $db->prepare("UPDATE USER SET VERIFICATION_TOKEN  = ? WHERE EMAIL = ?");
             $statement->execute(array($verificationToken, $userEmail ));
             // Bruker selvlagt e-postklasse for sending av e-post om vertifisering av e-postadresse
-            Email::send( $db, Email::VERIFY_EMAIL, $userEmail, $verificationToken);
+            Email::send($db, Email::VERIFY_EMAIL, $userEmail, $verificationToken);
             return true;
         }
         catch(PDOException $e) {

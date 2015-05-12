@@ -184,8 +184,12 @@ class Post {
         try
         {
             $statement = $db->prepare("UPDATE POST SET TITLE = ?, TEXT = ? WHERE ID = ?");
-            return $statement->execute(array($this->TITLE, $this->TEXT, $this->ID));
-        }catch(Exception $e) {
+            // HTMLPrurefier er et objekt som rensker farlige HTML-tags, sjekker om en img-tag faktisk er et bilde osv.
+            // Denne benyttes slik at et innlegg kan ha undertitler og bilder.
+            // Default konfigurasjon benyttes.
+            $purefier = new HTMLPurifier(HTMLPurifier_Config::createDefault());
+            return $statement->execute(array(htmlentities($this->TITLE), $purefier->purify($this->TEXT), $this->ID));
+        }catch(PDOException $e) {
             return false;
         }
     }
@@ -315,7 +319,6 @@ class Post {
         catch(PDOException $e) {
             return null;
         }
-
     }
 
     /**
