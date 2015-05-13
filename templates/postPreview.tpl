@@ -15,7 +15,7 @@
                         {include file='span/youSpan.tpl'}
                     {/if}
                 </p>
-                {$post->getShortText()}
+                {$post->getText()}
             </div>
             <div class="col-xs-2">
                 <img src="profileImage.php?postID={$post->getID()}" alt="Profilbilde her" height="100" width="100">
