@@ -1,12 +1,5 @@
 <?php
 /**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 07/05/2015
- * Tid: 19:43
- * All Rights Reserved
- */
-/**
  * Dette skriptet viser de slettede blogginnleggene.
  */
 require_once('config.php');

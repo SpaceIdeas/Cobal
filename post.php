@@ -1,11 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 24.04.2015
- * Time: 09:00
- */
-/**
  * Dette scriptet viser et blogginnlegg til en bruker og tilhørende kommentarer. Videre kan innloggede brukere
  * kommentere. Hvis det er vedlegg tilhørende bloggen kan dette vises ved å trykke på en knapp.
  */

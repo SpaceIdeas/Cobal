@@ -1,12 +1,5 @@
 <?php
 /**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 03/05/2015
- * Tid: 13:58
- * All Rights Reserved
- */
-/**
  * Dette skriptet tar inn en ID til et blogginnlegg samt adressen til hvor brukeren skal returneres etter sletting av
  * innlegget. Innlegget slettes hvis det finnes og brukeren sendes dit han skal med suksessmelding eller eventuell
  * feilmelding.

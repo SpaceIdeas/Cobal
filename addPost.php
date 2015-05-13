@@ -1,11 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 26.04.2015
- * Time: 17:27
- */
-/**
  * Dette scriptet er skal vise siden for og ta seg av å legge til et innlegg i databasen.
  */
 require_once('config.php');

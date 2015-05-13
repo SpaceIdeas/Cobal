@@ -1,11 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 23.04.2015
- * Time: 11:29
- */
-/**
  * Denne filen inneholder autoladeren slik at vi slipper å laste inn klassene manuelt.
  */
 

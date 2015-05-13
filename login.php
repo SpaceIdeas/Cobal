@@ -1,12 +1,5 @@
 <?php
 /**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 23/04/2015
- * Tid: 16:43
- * All Rights Reserved
- */
-/**
  * Dette scriptet tar seg av å logge en bruker inn og sender brukeren dit han skal etter innlogging. Det tar seg også
  * av feilmeldinger.
  */

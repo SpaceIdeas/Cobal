@@ -1,11 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Spaceslug
- * Date: 22/04/2015
- * Time: 17:40
- */
-/**
  * Dette skriptet viser et utvalg av de nyeste postene på hovedsiden, poster det eventuelt er søkt etter, poster for
  * en spesiell måned etc. Skriptet henter ut de forespurte postene og viser en kort versjon av disse med deres metadata.
  */

@@ -1,12 +1,5 @@
 <?php
 /**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 03/05/2015
- * Tid: 17:42
- * All Rights Reserved
- */
-/**
  * Denne siden sletter kommentaren med ID-en som er gitt i paramaeteren dersom brukeren er administrator, det sender
  * deretter brukeren tilbake der han kom fra.
  */

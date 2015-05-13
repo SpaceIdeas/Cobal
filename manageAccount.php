@@ -1,12 +1,5 @@
 <?php
 /**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 30/04/2015
- * Tid: 09:40
- * All Rights Reserved
- */
-/**
  * Dette skripter viser brukeren en side hvor han kan oppdatere passordet, brukernavnet og profilbildet sitt.
  */
 require_once ('config.php');

@@ -1,11 +1,5 @@
 <?php
 /**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 26/04/2015
- * Tid: 17:42
- * All Rights Reserved
-/**
  *  Dette scriptet / denne siden er det man skal kunne skrive inn sin e-postadrresse (registrerte) og få tilsendt en
  * e-post med en link hvor man kan oprette et nytt passord hvis man har glemt det.
  */

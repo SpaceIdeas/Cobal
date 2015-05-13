@@ -1,11 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 10.05.2015
- * Time: 20:37
- */
-/**
  * Skriptet tar inn en brukers e-postadresse som en get-parameter og en get-parameter om brukeren skal
  * gjøres til en administrator eller tas fra administratorrettigheter.
  */

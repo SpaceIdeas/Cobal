@@ -1,12 +1,5 @@
 <?php
 /**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 03/05/2015
- * Tid: 13:56
- * All Rights Reserved
- */
-/**
  * Dette scriptet viser slettede kommentarer til en administrator slik hat han kan gjenopprette de om ønskelig.
  */
 require_once ('config.php');

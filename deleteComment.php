@@ -1,12 +1,5 @@
 <?php
 /**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 01/05/2015
- * Tid: 11:59
- * All Rights Reserved
- */
-/**
  * Dette skriptet tar inn iden til en kommentar og hvor brukeren skal returneres til og sletter kommentaren eller gir
  * brukeren feilmelding.
  */
