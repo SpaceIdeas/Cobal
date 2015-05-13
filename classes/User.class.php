@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Spaceslug
- * Date: 23/04/2015
- * Time: 10:54
- */
 
 /**
  * Class User Håndterer alt som har med en brukerkonto å gjøre. Instansen av objektet inneholder relevant informasjone om brukeren.
  * Den har metoder for å hente mer. Klassen inneholder også statiske metoder som f.eks login og registrering
- * @todo Lage færre oppdate setninger
  */
 class User {
     /**

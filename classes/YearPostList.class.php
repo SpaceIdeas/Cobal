@@ -1,11 +1,4 @@
 <?php
-/**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 27/04/2015
- * Tid: 11:04
- * All Rights Reserved
- */
 
 /**
  * Class YearPostList Blir brukt for å holde dataen som blir vist i postList.tpl

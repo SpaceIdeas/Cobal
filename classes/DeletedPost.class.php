@@ -1,12 +1,8 @@
 <?php
-/**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 10/05/2015
- * Tid: 18:57
- * All Rights Reserved
- */
 
+/**
+ * Class DeletedPost Representeret et slettet innlegg fra databasen
+ */
 class DeletedPost {
     /**
      * @var int $POST_ID                Den unike IDen til innlegget

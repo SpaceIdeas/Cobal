@@ -1,12 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 28.04.2015
- * Time: 09:48
- */
-
-/**
  * Class Alert er en klasse laget for å gi feilmeldinger og suksessmeldinger til brukeren.
  *
  * Klassen gir utviklere en mer objektsorienter måte å vise meldinger til brukeren.

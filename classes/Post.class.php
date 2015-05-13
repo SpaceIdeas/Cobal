@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 23.04.2015
- * Time: 13:07
- */
 
 /**
  * Class Post er en klasse for bloginnlegg. Inneholder metoder for å få tak i og manipulere disse.

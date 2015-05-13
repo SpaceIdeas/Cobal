@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 06.05.2015
- * Time: 14:33
- */
 
 /**
  * Class ProfileImage er en klasse som håndterer profilbilder til en bruker.

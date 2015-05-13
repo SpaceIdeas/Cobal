@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 10.05.2015
- * Time: 19:17
- */
 
 /**
  * Class Email Klasse som tar seg av sending av e-post til brukere om vertifisering og opprette et nytt passord.

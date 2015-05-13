@@ -1,11 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 23.04.2015
- * Time: 15:01
- */
 
+/**
+ * Class Comment Representeret en kommentar fra databasen
+ */
 class Comment {
     /**
      * @var int $ID                     Den unike IDen til kommentaren

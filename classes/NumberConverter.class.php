@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 26.04.2015
- * Time: 14:16
- */
 
 /**
  * Class NumberConverter inneholder en statisk metode for å konvertere tall til norske ord.

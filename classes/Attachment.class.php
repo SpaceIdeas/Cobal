@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Øystein
- * Date: 30.04.2015
- * Time: 19:49
- */
 
 /**
  * Class Attachment Inneholder dataen, mimetypen, samt ID-en til Post-en som vedlegget hører til.

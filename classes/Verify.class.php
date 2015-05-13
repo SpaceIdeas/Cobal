@@ -1,11 +1,4 @@
 <?php
-/**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 28/04/2015
- * Tid: 09:46
- * All Rights Reserved
- */
 
 /**
  * Class Verify Klassen består av statiske metoder som vertifiserer diverse ting angående brukeren.

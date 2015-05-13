@@ -1,12 +1,8 @@
 <?php
-/**
- * Laget i PhpStorm.
- * Laget av: Håvard Stien
- * Dato: 03/05/2015
- * Tid: 14:34
- * All Rights Reserved
- */
 
+/**
+ * Class DeletedComment Representerer en slettet kommentar fra databasen
+ */
 class DeletedComment {
     /**
      * @var int $ID                     Den unike IDen til kommentaren
