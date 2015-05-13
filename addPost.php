@@ -1,6 +1,6 @@
 <?php
 /**
- * Dette scriptet er skal vise siden for og ta seg av å legge til et innlegg i databasen.
+ * Dette scriptet skal vise siden for og ta seg av å legge til et innlegg i databasen.
  */
 require_once('config.php');
 require_once('db.php');

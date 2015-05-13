@@ -107,7 +107,7 @@ class User {
      */
     public function updateUsername(PDO $db){
         //Lager ferdig sql setningen, utfører den og returnerer resultatet
-        return User::updateUserDynamic($db, "USERNAME = ?", array($this->username), $this->email);
+        return User::updateUserDynamic($db, "USERNAME = ?", array(htmlentities($this->username)), $this->email);
     }
 
     /**
