@@ -14,20 +14,27 @@
 class Alert {
 
     /**
+     * Feilmelding - rød
+     */
+    const ERROR = 0;
+    /**
+     * Suksess - grønn
+     */
+    const SUCCESS = 1;
+    /**
      * @var int $type       Typen beskjed som skal bli vist, basert på constantene i denne klassen
+     */
+    private $type;
+    /**
      * @var string $message Beskjeden som skal bli vist
      */
-    const ERROR = 0; // Feilmelding - rød
-    const SUCCESS = 1; // Suksess - grønn
-    private $type;
     private $message;
 
     /**
      * Konstruktor for Alert-klassen.
      *
      * @param $type int Typen advarsel, error eller succcess. Definert som konstanter i Alert-klassen.
-     * @param $message string teksten til advarselen.
-     * @
+     * @param $message string teksten til advarselen
      */
     function __construct($type, $message) {
         $this->type = $type;

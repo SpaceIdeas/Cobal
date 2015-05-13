@@ -6,24 +6,42 @@
 class DeletedPost {
     /**
      * @var int $POST_ID                Den unike IDen til innlegget
-     * @var string $TITLE               Tittelen til innlegget
-     * @var string $TEXT                Teksten til innlegget
-     * @var string $AUTHOR_EMAIL        Email til forfatteren av innlegget
-     * @var string $AUTHOR_USERNAME     Brukernavnet til forfatteren av innlegget
-     * @var DateTime $TIME_CREATED      Tidspunktet innlegget ble laget
-     * @var DateTime $TIME_DELETED      Tidspunktet innlegget ble slettet
-     * @var int $HITS                   Antallet treff på innlegget
      */
     private $POST_ID;
+    /**
+     * @var string $TITLE               Tittelen til innlegget
+     */
     private $TITLE;
+    /**
+     * @var string $TEXT                Teksten til innlegget
+     */
     private $TEXT;
+    /**
+     * @var string $AUTHOR_EMAIL        Email til forfatteren av innlegget
+     */
     private $AUTHOR_EMAIL;
+    /**
+     * @var string $AUTHOR_USERNAME     Brukernavnet til forfatteren av innlegget
+     */
     private $AUTHOR_USERNAME;
+    /**
+     * @var DateTime $TIME_CREATED      Tidspunktet innlegget ble laget
+     */
     private $TIME_CREATED;
+    /**
+     * @var DateTime $TIME_DELETED      Tidspunktet innlegget ble slettet
+     */
     private $TIME_DELETED;
+    /**
+     * @var int $HITS                   Antallet treff på innlegget
+     */
     private $HITS;
 
-
+    /**
+     * Returnerer ID-en til innlegget
+     *
+     * @return int ID-en til innlegget
+     */
     public function getPostID(){
         return $this->POST_ID;
     }
@@ -36,7 +54,11 @@ class DeletedPost {
     public function setPostID($postID){
         $this->POST_ID = $postID;
     }
-
+    /**
+     * Returnerer Tittelen til inlegget.
+     *
+     * @return string Tittlen til inlegget
+     */
     public function getTitle(){
         return $this->TITLE;
     }
@@ -48,7 +70,11 @@ class DeletedPost {
     public function setTitle($title) {
         $this->TITLE = $title;
     }
-
+    /**
+     * Returnerer teksten til innlegget
+     *
+     * @return string Teksten til inlegget
+     */
     public function getText(){
         return $this->TEXT;
     }
@@ -60,7 +86,11 @@ class DeletedPost {
     public function setText($text) {
         $this->TEXT = $text;
     }
-
+    /**
+     * Returnerer e-postadressen til forfatteren av innlegget.
+     *
+     * @return string E-postadressen til forfatteren av innlegget
+     */
     public function getAuthorEmail(){
         return $this->AUTHOR_EMAIL;
     }
@@ -72,7 +102,11 @@ class DeletedPost {
     public function setAuthorEmail($authorEmail) {
         $this->AUTHOR_EMAIL = $authorEmail;
     }
-
+    /**
+     * Returnerer brukernavnet til forfatteren av innlegget.
+     *
+     * @return string Brukernavnet til forfatteren av innlegget
+     */
     public function getAuthorUsername()
     {
         return $this->AUTHOR_USERNAME;
@@ -87,6 +121,11 @@ class DeletedPost {
         $this->AUTHOR_USERNAME = $authorUsername;
     }
 
+    /**
+     * Returnerer tidspunktet innlegget ble opprettet.
+     *
+     * @return string
+     */
     public function getTimeCreated(){
         return $this->TIME_CREATED;
     }
@@ -99,6 +138,11 @@ class DeletedPost {
         $this->TIME_CREATED = $timeCreated;
     }
 
+    /**
+     * Returnerer tidspunktet innlegget ble slettet.
+     *
+     * @return string
+     */
     public function getTimeDeleted()
     {
         return $this->TIME_DELETED;
@@ -113,6 +157,11 @@ class DeletedPost {
         $this->TIME_DELETED = $timeDeleted;
     }
 
+    /**
+     * Returnerer antallet treff på innlegget
+     *
+     * @return int
+     */
     public function getHits(){
         return $this->HITS;
     }

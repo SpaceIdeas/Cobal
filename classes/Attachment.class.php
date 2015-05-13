@@ -6,9 +6,17 @@
  * klassen inneholder metoder for å legge til et vedlegg i databasen samt og hente ut et vedlegg fra databasen.
  */
 class Attachment {
-    private $ID;
+    /**
+     * @var blob $DATA Dataen til vedlegget
+     */
     private $DATA;
+    /**
+     * @var string $MIME_TYPE MIME-typen til vedlegget
+     */
     private $MIME_TYPE;
+    /**
+     * @var int $POST_ID Den unike IDen til innlegget vedlegget hører til
+     */
     private $POST_ID;
 
     /**

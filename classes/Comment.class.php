@@ -6,20 +6,34 @@
 class Comment {
     /**
      * @var int $ID                     Den unike IDen til kommentaren
-     * @var string $TEXT                Teksten til kommentaren
-     * @var string $AUTHOR_EMAIL        Email til forfatteren av kommentaren
-     * @var DateTime $TIME_CREATED      Tidspunktet kommentaren ble laget
-     * @var int $POST_ID                Den unike IDen til innlegget kommentaren ble skrevet til
-     * @var bool $DELETED               Angir om kommentaren er slettet
      */
     private $ID;
+    /**
+     * @var string $TEXT                Teksten til kommentaren
+     */
     private $TEXT;
+    /**
+     * @var string $AUTHOR_EMAIL        Email til forfatteren av kommentaren
+     */
     private $AUTHOR_EMAIL;
+    /**
+     * @var DateTime $TIME_CREATED      Tidspunktet kommentaren ble laget
+     */
     private $TIME_CREATED;
+    /**
+     * @var int $POST_ID                Den unike IDen til innlegget kommentaren ble skrevet til
+     */
     private $POST_ID;
+    /**
+     * @var bool $DELETED               Angir om kommentaren er slettet
+     */
     private $DELETED;
 
-
+    /**
+     * Henter IDen til kommentaren
+     *
+     * @return int
+     */
     public function getID(){
         return $this->ID;
     }
@@ -33,6 +47,11 @@ class Comment {
         $this->ID = $id;
     }
 
+    /**
+     * Henter teksten til kommentaren
+     *
+     * @return string
+     */
     public function getText(){
         return $this->TEXT;
     }
@@ -46,6 +65,11 @@ class Comment {
         $this->TEXT = $text;
     }
 
+    /**
+     * Henter emailen til forfatteren av kommentaren
+     *
+     * @return string
+     */
     public function getAuthorEmail(){
         return $this->AUTHOR_EMAIL;
     }
@@ -59,6 +83,11 @@ class Comment {
         $this->AUTHOR_EMAIL = $authorEmail;
     }
 
+    /**
+     * Henter tidspunktet kommentaren ble opprettet
+     *
+     * @return DateTime
+     */
     public function getTimeCreated(){
         return $this->TIME_CREATED;
     }
@@ -72,6 +101,11 @@ class Comment {
         $this->TIME_CREATED = $timeCreated;
     }
 
+    /**
+     * Henter IDen til innlegget kommentaren ble skrevet til
+     *
+     * @return int
+     */
     public function getPostID(){
         return $this->POST_ID;
     }
@@ -85,6 +119,11 @@ class Comment {
         $this->POST_ID = $postID;
     }
 
+    /**
+     * Gir svar på om kommentaren er slettet eller ikke
+     *
+     * @return bool
+     */
     public function isDeleted(){
         return $this->DELETED;
     }

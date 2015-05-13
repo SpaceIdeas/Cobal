@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class ProfileImage er en klasse som håndterer profilbilder til en bruker.
  *
@@ -9,11 +8,15 @@
 class ProfileImage {
     /**
      * @var blob $picture       Bildetdataen
-     * @var string $userEmail   E-postadressen til brukeren som bildet tilhører
-     * @var string $mimeType    Mime-typen til bildet
      */
     private $picture;
+    /**
+     * @var string $userEmail   E-postadressen til brukeren som bildet tilhører
+     */
     private $userEmail;
+    /**
+     * @var string $mimeType    Mime-typen til bildet
+     */
     private $mimeType;
 
     /**

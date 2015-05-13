@@ -6,9 +6,6 @@
     <meta charset="utf-8">
     <meta name="author" content="Laget av Øystein Danielsen og Håvard Stien">
     <link rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap.css">
-    <!-- Optional theme -->
-    <!--link rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap-theme.css"-->
-    <!-- Latest compiled and minified JavaScript -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="bootstrap-3.3.4-dist/js/bootstrap.js"></script>
 </head>

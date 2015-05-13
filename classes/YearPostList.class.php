@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class YearPostList Blir brukt for å holde dataen som blir vist i postList.tpl
  */

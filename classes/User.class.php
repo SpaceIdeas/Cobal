@@ -7,15 +7,23 @@
 class User {
     /**
      * @var string $email       Emailen til brukeren som også er den unike IDen
-     * @var string $username    Brukernavnet til brukeren
-     * @var string $IPAddress   Login IPadressen til brukeren
-     * @var string $UserAgent   Login user agent (browser ID) til brukeren
-     * @var bool $admin         Blir brukt for å finne ut om en bruker har administratorrettigheter, eller ikke
      */
     private $email;
+    /**
+     * @var string $username    Brukernavnet til brukeren
+     */
     private $username;
+    /**
+     * @var string $IPAddress   Login IPadressen til brukeren
+     */
     private $IPAddress;
+    /**
+     * @var string $UserAgent   Login user agent (browser ID) til brukeren
+     */
     private $UserAgent;
+    /**
+     * @var bool $admin         Blir brukt for å finne ut om en bruker har administratorrettigheter, eller ikke
+     */
     private $admin;
 
     /**
@@ -264,7 +272,7 @@ class User {
     }
 
     /**
-     *
+     * Tar bort en brukers administratorrettigheter ved å legge dette til i databasen
      *
      * @param PDO $db Databasen det skal utføres oppdateringer mot
      * @param string $email Brukerens e-postadresse

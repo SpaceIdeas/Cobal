@@ -1,22 +1,31 @@
 <?php
-
 /**
  * Class Post er en klasse for bloginnlegg. Inneholder metoder for å få tak i og manipulere disse.
  */
 class Post {
     /**
      * @var int $ID                     Den unike IDen til innlegget
-     * @var string $TITLE               Titelen til innlegget
-     * @var string $TEXT                Teksten til innlegget
-     * @var string $AUTHOR_EMAIL        Email til forfatteren av innlegget
-     * @var DateTime $TIME_CREATED      Tidspunktet innlegget ble laget
-     * @var int $HITS                   Antallet treff på innlegget
      */
     private $ID;
+    /**
+     * @var string $TITLE               Titelen til innlegget
+     */
     private $TITLE;
+    /**
+     * @var string $TEXT                Teksten til innlegget
+     */
     private $TEXT;
+    /**
+     * @var string $AUTHOR_EMAIL        Email til forfatteren av innlegget
+     */
     private $AUTHOR_EMAIL;
+    /**
+     * @var DateTime $TIME_CREATED      Tidspunktet innlegget ble laget
+     */
     private $TIME_CREATED;
+    /**
+     * @var int $HITS                   Antallet treff på innlegget
+     */
     private $HITS;
 
     /**
@@ -205,6 +214,8 @@ class Post {
     }
 
     /**
+     * Returnerer antall kommentarer som hører til innlegget i norske tall ord
+     *
      * @param PDO $db Databasen som det skal utføres spørringer mot.
      * @return string Antall kommentarer som string.
      */

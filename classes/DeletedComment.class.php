@@ -4,23 +4,41 @@
  * Class DeletedComment Representerer en slettet kommentar fra databasen
  */
 class DeletedComment {
+
     /**
      * @var int $ID                     Den unike IDen til kommentaren
-     * @var string $TEXT                Teksten til kommentaren
-     * @var string $AUTHOR_EMAIL        Email til forfatteren av kommentaren
-     * @var string $AUTHOR_USERNAME     Brukernavnet til forfatteren av kommentaren
-     * @var DateTime $TIME_CREATED      Tidspunktet kommentaren ble laget
-     * @var DateTime $TIME_DELETED      Tidspunktet kommentaren ble slettet
-     * @var int $POST_ID                Den unike IDen til innlegget kommentaren ble skrevet til
      */
     private $ID;
+    /**
+     * @var string $TEXT                Teksten til kommentaren
+     */
     private $TEXT;
+    /**
+     * @var string $AUTHOR_EMAIL        Email til forfatteren av kommentaren
+     */
     private $AUTHOR_EMAIL;
+    /**
+     * @var string $AUTHOR_USERNAME     Brukernavnet til forfatteren av kommentaren
+     */
     private $AUTHOR_USERNAME;
+    /**
+     * @var DateTime $TIME_CREATED      Tidspunktet kommentaren ble laget
+     */
     private $TIME_CREATED;
+    /**
+     * @var DateTime $TIME_DELETED      Tidspunktet kommentaren ble slettet
+     */
     private $TIME_DELETED;
+    /**
+     * @var int $POST_ID                Den unike IDen til innlegget kommentaren ble skrevet til
+     */
     private $POST_ID;
 
+    /**
+     * Henter IDen til kommentaren
+     *
+     * @return int
+     */
     public function getID(){
         return $this->ID;
     }
@@ -34,6 +52,11 @@ class DeletedComment {
         $this->ID = $id;
     }
 
+    /**
+     * Henter teksten til kommentaren
+     *
+     * @return string
+     */
     public function getText(){
         return $this->TEXT;
     }
@@ -47,6 +70,11 @@ class DeletedComment {
         $this->TEXT = $text;
     }
 
+    /**
+     * Henter emailen til forfatteren av kommentaren
+     *
+     * @return string
+     */
     public function getAuthorEmail(){
         return $this->AUTHOR_EMAIL;
     }
@@ -60,6 +88,11 @@ class DeletedComment {
         $this->AUTHOR_EMAIL = $authorEmail;
     }
 
+    /**
+     * Henter brukernavnet til forfatteren av kommentaren
+     *
+     * @return string
+     */
     public function getAuthorUsername()
     {
         return $this->AUTHOR_USERNAME;
@@ -75,6 +108,11 @@ class DeletedComment {
         $this->AUTHOR_USERNAME = $AUTHOR_USERNAME;
     }
 
+    /**
+     * Henter tidspunktet kommentaren ble opprettet
+     *
+     * @return DateTime
+     */
     public function getTimeCreated(){
         return $this->TIME_CREATED;
     }
@@ -88,6 +126,11 @@ class DeletedComment {
         $this->TIME_CREATED = $timeCreated;
     }
 
+    /**
+     * Henter tidspunktet kommentaren ble slettet
+     *
+     * @return DateTime
+     */
     public function getTimeDeleted()
     {
         return $this->TIME_DELETED;
@@ -103,6 +146,11 @@ class DeletedComment {
         $this->TIME_DELETED = $timeDeleted;
     }
 
+    /**
+     * Henter den unike IDen til innlegget kommentaren ble skrevet til
+     *
+     * @return int
+     */
     public function getPostID(){
         return $this->POST_ID;
     }
